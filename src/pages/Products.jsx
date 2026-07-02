@@ -1,3 +1,11 @@
+import { Outlet, useLocation } from "react-router-dom";
+
 export default function Products() {
-  return <div>Products</div>
+  const { pathname } = useLocation();
+
+  if (pathname !== "/products") {
+    return <Outlet />;
+  }
+
+  return <div>Products</div>;
 }
