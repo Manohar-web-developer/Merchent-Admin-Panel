@@ -27,8 +27,8 @@ export default function StatsCard() {
         const Icon = icons[item.icon]
 
         return (
-          <Card>
-            <CardContent className="p-5" key={item.id}>
+          <Card key={item.id}>
+            <CardContent className="p-5" >
 
               <div className="flex items-center justify-between">
 

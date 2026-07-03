@@ -41,20 +41,2928 @@ export const dashboardStats = [
     },
   ];
 
-export const salesOverview = [
-    { month: "Jan", revenue: 542000, orders: 312 },
-    { month: "Feb", revenue: 498000, orders: 289 },
-    { month: "Mar", revenue: 615000, orders: 356 },
-    { month: "Apr", revenue: 587000, orders: 334 },
-    { month: "May", revenue: 672000, orders: 401 },
-    { month: "Jun", revenue: 703000, orders: 418 },
-    { month: "Jul", revenue: 655000, orders: 389 },
-    { month: "Aug", revenue: 721000, orders: 432 },
-    { month: "Sep", revenue: 768000, orders: 456 },
-    { month: "Oct", revenue: 842000, orders: 512 },
-    { month: "Nov", revenue: 915000, orders: 578 },
-    { month: "Dec", revenue: 1027600, orders: 645 },
-];
+  export const salesOverview = [
+    {
+      date: "2026-01-01",
+      revenue: 35700,
+      orders: 50,
+      customers: 42,
+      refunds: 2,
+      profit: 11200
+    },
+    {
+      date: "2026-01-02",
+      revenue: 36500,
+      orders: 49,
+      customers: 40,
+      refunds: 1,
+      profit: 11000
+    },
+    {
+      date: "2026-01-03",
+      revenue: 21700,
+      orders: 28,
+      customers: 25,
+      refunds: 0,
+      profit: 6700
+    },
+    {
+      date: "2026-01-04",
+      revenue: 37000,
+      orders: 47,
+      customers: 43,
+      refunds: 1,
+      profit: 10100
+    },
+    {
+      date: "2026-01-05",
+      revenue: 30600,
+      orders: 44,
+      customers: 37,
+      refunds: 2,
+      profit: 9400
+    },
+    {
+      date: "2026-01-06",
+      revenue: 34500,
+      orders: 46,
+      customers: 44,
+      refunds: 1,
+      profit: 10500
+    },
+    {
+      date: "2026-01-07",
+      revenue: 33500,
+      orders: 42,
+      customers: 38,
+      refunds: 1,
+      profit: 8800
+    },
+    {
+      date: "2026-01-08",
+      revenue: 30300,
+      orders: 44,
+      customers: 37,
+      refunds: 1,
+      profit: 8600
+    },
+    {
+      date: "2026-01-09",
+      revenue: 31100,
+      orders: 42,
+      customers: 36,
+      refunds: 1,
+      profit: 10400
+    },
+    {
+      date: "2026-01-10",
+      revenue: 45300,
+      orders: 64,
+      customers: 59,
+      refunds: 1,
+      profit: 13200
+    },
+    {
+      date: "2026-01-11",
+      revenue: 45800,
+      orders: 60,
+      customers: 55,
+      refunds: 2,
+      profit: 14800
+    },
+    {
+      date: "2026-01-12",
+      revenue: 28000,
+      orders: 39,
+      customers: 33,
+      refunds: 1,
+      profit: 9400
+    },
+    {
+      date: "2026-01-13",
+      revenue: 30800,
+      orders: 40,
+      customers: 35,
+      refunds: 2,
+      profit: 9100
+    },
+    {
+      date: "2026-01-14",
+      revenue: 30200,
+      orders: 40,
+      customers: 34,
+      refunds: 1,
+      profit: 10000
+    },
+    {
+      date: "2026-01-15",
+      revenue: 30000,
+      orders: 37,
+      customers: 33,
+      refunds: 0,
+      profit: 7900
+    },
+    {
+      date: "2026-01-16",
+      revenue: 34000,
+      orders: 43,
+      customers: 38,
+      refunds: 1,
+      profit: 9900
+    },
+    {
+      date: "2026-01-17",
+      revenue: 44700,
+      orders: 55,
+      customers: 51,
+      refunds: 1,
+      profit: 14200
+    },
+    {
+      date: "2026-01-18",
+      revenue: 44900,
+      orders: 63,
+      customers: 57,
+      refunds: 1,
+      profit: 13200
+    },
+    {
+      date: "2026-01-19",
+      revenue: 37400,
+      orders: 47,
+      customers: 40,
+      refunds: 1,
+      profit: 10300
+    },
+    {
+      date: "2026-01-20",
+      revenue: 36700,
+      orders: 51,
+      customers: 46,
+      refunds: 2,
+      profit: 10000
+    },
+    {
+      date: "2026-01-21",
+      revenue: 33400,
+      orders: 42,
+      customers: 37,
+      refunds: 0,
+      profit: 9600
+    },
+    {
+      date: "2026-01-22",
+      revenue: 20600,
+      orders: 26,
+      customers: 24,
+      refunds: 1,
+      profit: 5500
+    },
+    {
+      date: "2026-01-23",
+      revenue: 37600,
+      orders: 54,
+      customers: 48,
+      refunds: 1,
+      profit: 12100
+    },
+    {
+      date: "2026-01-24",
+      revenue: 39800,
+      orders: 53,
+      customers: 47,
+      refunds: 1,
+      profit: 13100
+    },
+    {
+      date: "2026-01-25",
+      revenue: 41000,
+      orders: 54,
+      customers: 49,
+      refunds: 1,
+      profit: 11700
+    },
+    {
+      date: "2026-01-26",
+      revenue: 34800,
+      orders: 47,
+      customers: 42,
+      refunds: 1,
+      profit: 9700
+    },
+    {
+      date: "2026-01-27",
+      revenue: 34300,
+      orders: 48,
+      customers: 41,
+      refunds: 1,
+      profit: 10600
+    },
+    {
+      date: "2026-01-28",
+      revenue: 37500,
+      orders: 47,
+      customers: 39,
+      refunds: 1,
+      profit: 11800
+    },
+    {
+      date: "2026-01-29",
+      revenue: 29800,
+      orders: 37,
+      customers: 33,
+      refunds: 1,
+      profit: 9600
+    },
+    {
+      date: "2026-01-30",
+      revenue: 30400,
+      orders: 44,
+      customers: 39,
+      refunds: 1,
+      profit: 9000
+    },
+    {
+      date: "2026-01-31",
+      revenue: 47700,
+      orders: 58,
+      customers: 48,
+      refunds: 1,
+      profit: 13700
+    },
+    {
+      date: "2026-02-01",
+      revenue: 42000,
+      orders: 59,
+      customers: 52,
+      refunds: 1,
+      profit: 11900
+    },
+    {
+      date: "2026-02-02",
+      revenue: 38000,
+      orders: 51,
+      customers: 48,
+      refunds: 1,
+      profit: 10000
+    },
+    {
+      date: "2026-02-03",
+      revenue: 37100,
+      orders: 45,
+      customers: 42,
+      refunds: 2,
+      profit: 10100
+    },
+    {
+      date: "2026-02-04",
+      revenue: 30900,
+      orders: 42,
+      customers: 35,
+      refunds: 1,
+      profit: 10500
+    },
+    {
+      date: "2026-02-05",
+      revenue: 36700,
+      orders: 49,
+      customers: 43,
+      refunds: 2,
+      profit: 12500
+    },
+    {
+      date: "2026-02-06",
+      revenue: 36100,
+      orders: 51,
+      customers: 44,
+      refunds: 2,
+      profit: 11100
+    },
+    {
+      date: "2026-02-07",
+      revenue: 49200,
+      orders: 72,
+      customers: 65,
+      refunds: 2,
+      profit: 16100
+    },
+    {
+      date: "2026-02-08",
+      revenue: 52200,
+      orders: 76,
+      customers: 64,
+      refunds: 2,
+      profit: 16400
+    },
+    {
+      date: "2026-02-09",
+      revenue: 30200,
+      orders: 38,
+      customers: 32,
+      refunds: 1,
+      profit: 9300
+    },
+    {
+      date: "2026-02-10",
+      revenue: 35000,
+      orders: 46,
+      customers: 43,
+      refunds: 1,
+      profit: 11100
+    },
+    {
+      date: "2026-02-11",
+      revenue: 33100,
+      orders: 43,
+      customers: 37,
+      refunds: 1,
+      profit: 10600
+    },
+    {
+      date: "2026-02-12",
+      revenue: 33800,
+      orders: 41,
+      customers: 39,
+      refunds: 1,
+      profit: 9400
+    },
+    {
+      date: "2026-02-13",
+      revenue: 38700,
+      orders: 48,
+      customers: 45,
+      refunds: 1,
+      profit: 10600
+    },
+    {
+      date: "2026-02-14",
+      revenue: 49200,
+      orders: 64,
+      customers: 61,
+      refunds: 2,
+      profit: 12800
+    },
+    {
+      date: "2026-02-15",
+      revenue: 43600,
+      orders: 56,
+      customers: 53,
+      refunds: 1,
+      profit: 11700
+    },
+    {
+      date: "2026-02-16",
+      revenue: 35000,
+      orders: 49,
+      customers: 44,
+      refunds: 2,
+      profit: 9700
+    },
+    {
+      date: "2026-02-17",
+      revenue: 32000,
+      orders: 43,
+      customers: 40,
+      refunds: 2,
+      profit: 8600
+    },
+    {
+      date: "2026-02-18",
+      revenue: 32200,
+      orders: 47,
+      customers: 43,
+      refunds: 2,
+      profit: 9000
+    },
+    {
+      date: "2026-02-19",
+      revenue: 35100,
+      orders: 47,
+      customers: 39,
+      refunds: 1,
+      profit: 11600
+    },
+    {
+      date: "2026-02-20",
+      revenue: 35100,
+      orders: 44,
+      customers: 39,
+      refunds: 1,
+      profit: 9500
+    },
+    {
+      date: "2026-02-21",
+      revenue: 52400,
+      orders: 66,
+      customers: 62,
+      refunds: 3,
+      profit: 14500
+    },
+    {
+      date: "2026-02-22",
+      revenue: 41300,
+      orders: 52,
+      customers: 49,
+      refunds: 1,
+      profit: 12800
+    },
+    {
+      date: "2026-02-23",
+      revenue: 39300,
+      orders: 49,
+      customers: 46,
+      refunds: 2,
+      profit: 13000
+    },
+    {
+      date: "2026-02-24",
+      revenue: 20500,
+      orders: 28,
+      customers: 26,
+      refunds: 1,
+      profit: 6700
+    },
+    {
+      date: "2026-02-25",
+      revenue: 32500,
+      orders: 41,
+      customers: 34,
+      refunds: 2,
+      profit: 10700
+    },
+    {
+      date: "2026-02-26",
+      revenue: 38300,
+      orders: 51,
+      customers: 44,
+      refunds: 2,
+      profit: 10700
+    },
+    {
+      date: "2026-02-27",
+      revenue: 17500,
+      orders: 24,
+      customers: 22,
+      refunds: 1,
+      profit: 4900
+    },
+    {
+      date: "2026-02-28",
+      revenue: 45900,
+      orders: 56,
+      customers: 50,
+      refunds: 2,
+      profit: 12400
+    },
+    {
+      date: "2026-03-01",
+      revenue: 42800,
+      orders: 53,
+      customers: 45,
+      refunds: 1,
+      profit: 12600
+    },
+    {
+      date: "2026-03-02",
+      revenue: 33200,
+      orders: 43,
+      customers: 38,
+      refunds: 1,
+      profit: 10200
+    },
+    {
+      date: "2026-03-03",
+      revenue: 37400,
+      orders: 55,
+      customers: 52,
+      refunds: 2,
+      profit: 11900
+    },
+    {
+      date: "2026-03-04",
+      revenue: 37100,
+      orders: 51,
+      customers: 42,
+      refunds: 2,
+      profit: 10600
+    },
+    {
+      date: "2026-03-05",
+      revenue: 39000,
+      orders: 50,
+      customers: 43,
+      refunds: 1,
+      profit: 11400
+    },
+    {
+      date: "2026-03-06",
+      revenue: 33200,
+      orders: 48,
+      customers: 42,
+      refunds: 2,
+      profit: 10400
+    },
+    {
+      date: "2026-03-07",
+      revenue: 49500,
+      orders: 69,
+      customers: 61,
+      refunds: 1,
+      profit: 14000
+    },
+    {
+      date: "2026-03-08",
+      revenue: 49000,
+      orders: 63,
+      customers: 55,
+      refunds: 2,
+      profit: 13600
+    },
+    {
+      date: "2026-03-09",
+      revenue: 39800,
+      orders: 50,
+      customers: 42,
+      refunds: 1,
+      profit: 12000
+    },
+    {
+      date: "2026-03-10",
+      revenue: 33800,
+      orders: 43,
+      customers: 39,
+      refunds: 1,
+      profit: 9400
+    },
+    {
+      date: "2026-03-11",
+      revenue: 30500,
+      orders: 43,
+      customers: 38,
+      refunds: 2,
+      profit: 8100
+    },
+    {
+      date: "2026-03-12",
+      revenue: 37100,
+      orders: 52,
+      customers: 47,
+      refunds: 1,
+      profit: 10400
+    },
+    {
+      date: "2026-03-13",
+      revenue: 30400,
+      orders: 39,
+      customers: 36,
+      refunds: 1,
+      profit: 8900
+    },
+    {
+      date: "2026-03-14",
+      revenue: 55000,
+      orders: 73,
+      customers: 60,
+      refunds: 1,
+      profit: 18000
+    },
+    {
+      date: "2026-03-15",
+      revenue: 52800,
+      orders: 68,
+      customers: 64,
+      refunds: 2,
+      profit: 17700
+    },
+    {
+      date: "2026-03-16",
+      revenue: 37100,
+      orders: 48,
+      customers: 43,
+      refunds: 2,
+      profit: 11300
+    },
+    {
+      date: "2026-03-17",
+      revenue: 38600,
+      orders: 52,
+      customers: 44,
+      refunds: 1,
+      profit: 12000
+    },
+    {
+      date: "2026-03-18",
+      revenue: 36200,
+      orders: 47,
+      customers: 40,
+      refunds: 1,
+      profit: 10200
+    },
+    {
+      date: "2026-03-19",
+      revenue: 34100,
+      orders: 45,
+      customers: 38,
+      refunds: 1,
+      profit: 10800
+    },
+    {
+      date: "2026-03-20",
+      revenue: 31400,
+      orders: 43,
+      customers: 38,
+      refunds: 1,
+      profit: 8700
+    },
+    {
+      date: "2026-03-21",
+      revenue: 54700,
+      orders: 72,
+      customers: 66,
+      refunds: 3,
+      profit: 17600
+    },
+    {
+      date: "2026-03-22",
+      revenue: 41600,
+      orders: 57,
+      customers: 52,
+      refunds: 2,
+      profit: 14000
+    },
+    {
+      date: "2026-03-23",
+      revenue: 39000,
+      orders: 52,
+      customers: 47,
+      refunds: 1,
+      profit: 10800
+    },
+    {
+      date: "2026-03-24",
+      revenue: 31200,
+      orders: 43,
+      customers: 39,
+      refunds: 1,
+      profit: 8500
+    },
+    {
+      date: "2026-03-25",
+      revenue: 32300,
+      orders: 42,
+      customers: 35,
+      refunds: 1,
+      profit: 9900
+    },
+    {
+      date: "2026-03-26",
+      revenue: 20900,
+      orders: 30,
+      customers: 26,
+      refunds: 0,
+      profit: 6100
+    },
+    {
+      date: "2026-03-27",
+      revenue: 34600,
+      orders: 44,
+      customers: 38,
+      refunds: 2,
+      profit: 11300
+    },
+    {
+      date: "2026-03-28",
+      revenue: 43100,
+      orders: 63,
+      customers: 56,
+      refunds: 3,
+      profit: 12400
+    },
+    {
+      date: "2026-03-29",
+      revenue: 53500,
+      orders: 69,
+      customers: 63,
+      refunds: 3,
+      profit: 14800
+    },
+    {
+      date: "2026-03-30",
+      revenue: 18000,
+      orders: 26,
+      customers: 24,
+      refunds: 1,
+      profit: 5000
+    },
+    {
+      date: "2026-03-31",
+      revenue: 39600,
+      orders: 56,
+      customers: 50,
+      refunds: 2,
+      profit: 10700
+    },
+    {
+      date: "2026-04-01",
+      revenue: 41900,
+      orders: 60,
+      customers: 49,
+      refunds: 1,
+      profit: 13200
+    },
+    {
+      date: "2026-04-02",
+      revenue: 35600,
+      orders: 46,
+      customers: 38,
+      refunds: 2,
+      profit: 11000
+    },
+    {
+      date: "2026-04-03",
+      revenue: 39900,
+      orders: 50,
+      customers: 45,
+      refunds: 1,
+      profit: 13500
+    },
+    {
+      date: "2026-04-04",
+      revenue: 47500,
+      orders: 64,
+      customers: 56,
+      refunds: 2,
+      profit: 13600
+    },
+    {
+      date: "2026-04-05",
+      revenue: 54700,
+      orders: 79,
+      customers: 75,
+      refunds: 3,
+      profit: 17800
+    },
+    {
+      date: "2026-04-06",
+      revenue: 36300,
+      orders: 46,
+      customers: 43,
+      refunds: 1,
+      profit: 11800
+    },
+    {
+      date: "2026-04-07",
+      revenue: 36900,
+      orders: 50,
+      customers: 46,
+      refunds: 1,
+      profit: 12100
+    },
+    {
+      date: "2026-04-08",
+      revenue: 32500,
+      orders: 40,
+      customers: 34,
+      refunds: 1,
+      profit: 10000
+    },
+    {
+      date: "2026-04-09",
+      revenue: 31900,
+      orders: 40,
+      customers: 34,
+      refunds: 1,
+      profit: 10300
+    },
+    {
+      date: "2026-04-10",
+      revenue: 41500,
+      orders: 53,
+      customers: 45,
+      refunds: 1,
+      profit: 13900
+    },
+    {
+      date: "2026-04-11",
+      revenue: 53600,
+      orders: 72,
+      customers: 66,
+      refunds: 2,
+      profit: 16700
+    },
+    {
+      date: "2026-04-12",
+      revenue: 54800,
+      orders: 79,
+      customers: 67,
+      refunds: 3,
+      profit: 15600
+    },
+    {
+      date: "2026-04-13",
+      revenue: 37100,
+      orders: 49,
+      customers: 43,
+      refunds: 2,
+      profit: 10600
+    },
+    {
+      date: "2026-04-14",
+      revenue: 34800,
+      orders: 49,
+      customers: 41,
+      refunds: 1,
+      profit: 9400
+    },
+    {
+      date: "2026-04-15",
+      revenue: 40400,
+      orders: 57,
+      customers: 48,
+      refunds: 2,
+      profit: 12800
+    },
+    {
+      date: "2026-04-16",
+      revenue: 37800,
+      orders: 53,
+      customers: 44,
+      refunds: 1,
+      profit: 10500
+    },
+    {
+      date: "2026-04-17",
+      revenue: 32100,
+      orders: 43,
+      customers: 37,
+      refunds: 2,
+      profit: 9800
+    },
+    {
+      date: "2026-04-18",
+      revenue: 45100,
+      orders: 56,
+      customers: 49,
+      refunds: 2,
+      profit: 13800
+    },
+    {
+      date: "2026-04-19",
+      revenue: 50000,
+      orders: 71,
+      customers: 59,
+      refunds: 3,
+      profit: 14900
+    },
+    {
+      date: "2026-04-20",
+      revenue: 36600,
+      orders: 53,
+      customers: 48,
+      refunds: 1,
+      profit: 10000
+    },
+    {
+      date: "2026-04-21",
+      revenue: 35600,
+      orders: 43,
+      customers: 36,
+      refunds: 2,
+      profit: 11000
+    },
+    {
+      date: "2026-04-22",
+      revenue: 34700,
+      orders: 46,
+      customers: 40,
+      refunds: 1,
+      profit: 11400
+    },
+    {
+      date: "2026-04-23",
+      revenue: 35700,
+      orders: 47,
+      customers: 42,
+      refunds: 2,
+      profit: 12000
+    },
+    {
+      date: "2026-04-24",
+      revenue: 34700,
+      orders: 45,
+      customers: 38,
+      refunds: 1,
+      profit: 9200
+    },
+    {
+      date: "2026-04-25",
+      revenue: 27800,
+      orders: 36,
+      customers: 31,
+      refunds: 1,
+      profit: 8800
+    },
+    {
+      date: "2026-04-26",
+      revenue: 50700,
+      orders: 65,
+      customers: 61,
+      refunds: 2,
+      profit: 15700
+    },
+    {
+      date: "2026-04-27",
+      revenue: 43100,
+      orders: 58,
+      customers: 52,
+      refunds: 2,
+      profit: 14300
+    },
+    {
+      date: "2026-04-28",
+      revenue: 33200,
+      orders: 47,
+      customers: 40,
+      refunds: 2,
+      profit: 10100
+    },
+    {
+      date: "2026-04-29",
+      revenue: 33900,
+      orders: 44,
+      customers: 40,
+      refunds: 2,
+      profit: 10200
+    },
+    {
+      date: "2026-04-30",
+      revenue: 33400,
+      orders: 49,
+      customers: 43,
+      refunds: 1,
+      profit: 9400
+    },
+    {
+      date: "2026-05-01",
+      revenue: 43600,
+      orders: 55,
+      customers: 49,
+      refunds: 2,
+      profit: 14800
+    },
+    {
+      date: "2026-05-02",
+      revenue: 48200,
+      orders: 70,
+      customers: 64,
+      refunds: 2,
+      profit: 15000
+    },
+    {
+      date: "2026-05-03",
+      revenue: 46900,
+      orders: 62,
+      customers: 56,
+      refunds: 2,
+      profit: 12500
+    },
+    {
+      date: "2026-05-04",
+      revenue: 36500,
+      orders: 47,
+      customers: 44,
+      refunds: 1,
+      profit: 11500
+    },
+    {
+      date: "2026-05-05",
+      revenue: 43700,
+      orders: 55,
+      customers: 49,
+      refunds: 1,
+      profit: 12500
+    },
+    {
+      date: "2026-05-06",
+      revenue: 44000,
+      orders: 60,
+      customers: 53,
+      refunds: 3,
+      profit: 13800
+    },
+    {
+      date: "2026-05-07",
+      revenue: 37600,
+      orders: 53,
+      customers: 46,
+      refunds: 2,
+      profit: 11700
+    },
+    {
+      date: "2026-05-08",
+      revenue: 35200,
+      orders: 47,
+      customers: 44,
+      refunds: 1,
+      profit: 11100
+    },
+    {
+      date: "2026-05-09",
+      revenue: 59700,
+      orders: 78,
+      customers: 66,
+      refunds: 1,
+      profit: 18200
+    },
+    {
+      date: "2026-05-10",
+      revenue: 46000,
+      orders: 56,
+      customers: 53,
+      refunds: 1,
+      profit: 12400
+    },
+    {
+      date: "2026-05-11",
+      revenue: 38800,
+      orders: 50,
+      customers: 44,
+      refunds: 1,
+      profit: 12700
+    },
+    {
+      date: "2026-05-12",
+      revenue: 35900,
+      orders: 47,
+      customers: 41,
+      refunds: 2,
+      profit: 10800
+    },
+    {
+      date: "2026-05-13",
+      revenue: 43200,
+      orders: 60,
+      customers: 55,
+      refunds: 1,
+      profit: 14500
+    },
+    {
+      date: "2026-05-14",
+      revenue: 42700,
+      orders: 59,
+      customers: 51,
+      refunds: 2,
+      profit: 14500
+    },
+    {
+      date: "2026-05-15",
+      revenue: 34900,
+      orders: 46,
+      customers: 40,
+      refunds: 1,
+      profit: 10600
+    },
+    {
+      date: "2026-05-16",
+      revenue: 50000,
+      orders: 71,
+      customers: 65,
+      refunds: 2,
+      profit: 13900
+    },
+    {
+      date: "2026-05-17",
+      revenue: 45600,
+      orders: 58,
+      customers: 53,
+      refunds: 2,
+      profit: 13300
+    },
+    {
+      date: "2026-05-18",
+      revenue: 43000,
+      orders: 53,
+      customers: 47,
+      refunds: 1,
+      profit: 12900
+    },
+    {
+      date: "2026-05-19",
+      revenue: 43600,
+      orders: 54,
+      customers: 47,
+      refunds: 2,
+      profit: 12900
+    },
+    {
+      date: "2026-05-20",
+      revenue: 38300,
+      orders: 50,
+      customers: 42,
+      refunds: 1,
+      profit: 12900
+    },
+    {
+      date: "2026-05-21",
+      revenue: 41600,
+      orders: 54,
+      customers: 50,
+      refunds: 2,
+      profit: 13700
+    },
+    {
+      date: "2026-05-22",
+      revenue: 37200,
+      orders: 48,
+      customers: 44,
+      refunds: 2,
+      profit: 9800
+    },
+    {
+      date: "2026-05-23",
+      revenue: 55400,
+      orders: 68,
+      customers: 65,
+      refunds: 2,
+      profit: 16300
+    },
+    {
+      date: "2026-05-24",
+      revenue: 55500,
+      orders: 69,
+      customers: 61,
+      refunds: 2,
+      profit: 18400
+    },
+    {
+      date: "2026-05-25",
+      revenue: 43100,
+      orders: 60,
+      customers: 52,
+      refunds: 1,
+      profit: 13000
+    },
+    {
+      date: "2026-05-26",
+      revenue: 43100,
+      orders: 61,
+      customers: 51,
+      refunds: 2,
+      profit: 13300
+    },
+    {
+      date: "2026-05-27",
+      revenue: 44600,
+      orders: 64,
+      customers: 56,
+      refunds: 1,
+      profit: 12500
+    },
+    {
+      date: "2026-05-28",
+      revenue: 23900,
+      orders: 30,
+      customers: 27,
+      refunds: 0,
+      profit: 7100
+    },
+    {
+      date: "2026-05-29",
+      revenue: 40800,
+      orders: 53,
+      customers: 46,
+      refunds: 1,
+      profit: 13400
+    },
+    {
+      date: "2026-05-30",
+      revenue: 51900,
+      orders: 69,
+      customers: 59,
+      refunds: 2,
+      profit: 15900
+    },
+    {
+      date: "2026-05-31",
+      revenue: 50500,
+      orders: 62,
+      customers: 56,
+      refunds: 1,
+      profit: 15400
+    },
+    {
+      date: "2026-06-01",
+      revenue: 42900,
+      orders: 62,
+      customers: 56,
+      refunds: 2,
+      profit: 14300
+    },
+    {
+      date: "2026-06-02",
+      revenue: 43600,
+      orders: 57,
+      customers: 49,
+      refunds: 2,
+      profit: 13500
+    },
+    {
+      date: "2026-06-03",
+      revenue: 42700,
+      orders: 55,
+      customers: 51,
+      refunds: 2,
+      profit: 14200
+    },
+    {
+      date: "2026-06-04",
+      revenue: 37800,
+      orders: 51,
+      customers: 46,
+      refunds: 2,
+      profit: 10100
+    },
+    {
+      date: "2026-06-05",
+      revenue: 43100,
+      orders: 61,
+      customers: 51,
+      refunds: 2,
+      profit: 14600
+    },
+    {
+      date: "2026-06-06",
+      revenue: 61000,
+      orders: 77,
+      customers: 66,
+      refunds: 3,
+      profit: 18200
+    },
+    {
+      date: "2026-06-07",
+      revenue: 58400,
+      orders: 80,
+      customers: 67,
+      refunds: 3,
+      profit: 15800
+    },
+    {
+      date: "2026-06-08",
+      revenue: 44700,
+      orders: 57,
+      customers: 54,
+      refunds: 2,
+      profit: 14500
+    },
+    {
+      date: "2026-06-09",
+      revenue: 43900,
+      orders: 64,
+      customers: 57,
+      refunds: 2,
+      profit: 13800
+    },
+    {
+      date: "2026-06-10",
+      revenue: 41400,
+      orders: 52,
+      customers: 49,
+      refunds: 1,
+      profit: 11500
+    },
+    {
+      date: "2026-06-11",
+      revenue: 24800,
+      orders: 33,
+      customers: 31,
+      refunds: 1,
+      profit: 6600
+    },
+    {
+      date: "2026-06-12",
+      revenue: 45500,
+      orders: 63,
+      customers: 55,
+      refunds: 1,
+      profit: 15300
+    },
+    {
+      date: "2026-06-13",
+      revenue: 54700,
+      orders: 79,
+      customers: 74,
+      refunds: 1,
+      profit: 16200
+    },
+    {
+      date: "2026-06-14",
+      revenue: 58800,
+      orders: 72,
+      customers: 63,
+      refunds: 3,
+      profit: 16000
+    },
+    {
+      date: "2026-06-15",
+      revenue: 35800,
+      orders: 48,
+      customers: 42,
+      refunds: 2,
+      profit: 9400
+    },
+    {
+      date: "2026-06-16",
+      revenue: 40000,
+      orders: 49,
+      customers: 46,
+      refunds: 1,
+      profit: 12600
+    },
+    {
+      date: "2026-06-17",
+      revenue: 46600,
+      orders: 64,
+      customers: 56,
+      refunds: 1,
+      profit: 12600
+    },
+    {
+      date: "2026-06-18",
+      revenue: 40300,
+      orders: 52,
+      customers: 47,
+      refunds: 2,
+      profit: 10500
+    },
+    {
+      date: "2026-06-19",
+      revenue: 37700,
+      orders: 54,
+      customers: 48,
+      refunds: 1,
+      profit: 12100
+    },
+    {
+      date: "2026-06-20",
+      revenue: 50600,
+      orders: 63,
+      customers: 54,
+      refunds: 1,
+      profit: 16800
+    },
+    {
+      date: "2026-06-21",
+      revenue: 33700,
+      orders: 48,
+      customers: 40,
+      refunds: 1,
+      profit: 9200
+    },
+    {
+      date: "2026-06-22",
+      revenue: 35200,
+      orders: 52,
+      customers: 48,
+      refunds: 1,
+      profit: 10100
+    },
+    {
+      date: "2026-06-23",
+      revenue: 35600,
+      orders: 45,
+      customers: 40,
+      refunds: 2,
+      profit: 10600
+    },
+    {
+      date: "2026-06-24",
+      revenue: 41300,
+      orders: 59,
+      customers: 52,
+      refunds: 3,
+      profit: 10900
+    },
+    {
+      date: "2026-06-25",
+      revenue: 45700,
+      orders: 61,
+      customers: 54,
+      refunds: 3,
+      profit: 12100
+    },
+    {
+      date: "2026-06-26",
+      revenue: 40000,
+      orders: 52,
+      customers: 46,
+      refunds: 2,
+      profit: 10600
+    },
+    {
+      date: "2026-06-27",
+      revenue: 57600,
+      orders: 84,
+      customers: 72,
+      refunds: 3,
+      profit: 17500
+    },
+    {
+      date: "2026-06-28",
+      revenue: 64100,
+      orders: 85,
+      customers: 75,
+      refunds: 3,
+      profit: 17200
+    },
+    {
+      date: "2026-06-29",
+      revenue: 45800,
+      orders: 59,
+      customers: 54,
+      refunds: 2,
+      profit: 12700
+    },
+    {
+      date: "2026-06-30",
+      revenue: 38100,
+      orders: 52,
+      customers: 46,
+      refunds: 1,
+      profit: 10200
+    },
+    {
+      date: "2026-07-01",
+      revenue: 43600,
+      orders: 60,
+      customers: 50,
+      refunds: 3,
+      profit: 11600
+    },
+    {
+      date: "2026-07-02",
+      revenue: 36500,
+      orders: 53,
+      customers: 49,
+      refunds: 2,
+      profit: 11100
+    },
+    {
+      date: "2026-07-03",
+      revenue: 42400,
+      orders: 58,
+      customers: 48,
+      refunds: 1,
+      profit: 13300
+    },
+    {
+      date: "2026-07-04",
+      revenue: 62500,
+      orders: 80,
+      customers: 76,
+      refunds: 2,
+      profit: 18000
+    },
+    {
+      date: "2026-07-05",
+      revenue: 51500,
+      orders: 67,
+      customers: 57,
+      refunds: 1,
+      profit: 16900
+    },
+    {
+      date: "2026-07-06",
+      revenue: 45100,
+      orders: 59,
+      customers: 55,
+      refunds: 2,
+      profit: 15200
+    },
+    {
+      date: "2026-07-07",
+      revenue: 43300,
+      orders: 56,
+      customers: 46,
+      refunds: 2,
+      profit: 14100
+    },
+    {
+      date: "2026-07-08",
+      revenue: 37900,
+      orders: 49,
+      customers: 42,
+      refunds: 1,
+      profit: 9900
+    },
+    {
+      date: "2026-07-09",
+      revenue: 42800,
+      orders: 58,
+      customers: 49,
+      refunds: 2,
+      profit: 11200
+    },
+    {
+      date: "2026-07-10",
+      revenue: 38400,
+      orders: 52,
+      customers: 45,
+      refunds: 1,
+      profit: 12200
+    },
+    {
+      date: "2026-07-11",
+      revenue: 57900,
+      orders: 84,
+      customers: 69,
+      refunds: 1,
+      profit: 17900
+    },
+    {
+      date: "2026-07-12",
+      revenue: 52900,
+      orders: 68,
+      customers: 60,
+      refunds: 2,
+      profit: 14900
+    },
+    {
+      date: "2026-07-13",
+      revenue: 37300,
+      orders: 50,
+      customers: 43,
+      refunds: 2,
+      profit: 11200
+    },
+    {
+      date: "2026-07-14",
+      revenue: 36400,
+      orders: 50,
+      customers: 45,
+      refunds: 1,
+      profit: 10300
+    },
+    {
+      date: "2026-07-15",
+      revenue: 37700,
+      orders: 53,
+      customers: 46,
+      refunds: 1,
+      profit: 12100
+    },
+    {
+      date: "2026-07-16",
+      revenue: 40800,
+      orders: 52,
+      customers: 46,
+      refunds: 2,
+      profit: 13200
+    },
+    {
+      date: "2026-07-17",
+      revenue: 47000,
+      orders: 69,
+      customers: 57,
+      refunds: 3,
+      profit: 15500
+    },
+    {
+      date: "2026-07-18",
+      revenue: 58500,
+      orders: 75,
+      customers: 66,
+      refunds: 1,
+      profit: 15300
+    },
+    {
+      date: "2026-07-19",
+      revenue: 62500,
+      orders: 82,
+      customers: 76,
+      refunds: 3,
+      profit: 16700
+    },
+    {
+      date: "2026-07-20",
+      revenue: 39200,
+      orders: 51,
+      customers: 45,
+      refunds: 1,
+      profit: 11200
+    },
+    {
+      date: "2026-07-21",
+      revenue: 40400,
+      orders: 57,
+      customers: 51,
+      refunds: 1,
+      profit: 12200
+    },
+    {
+      date: "2026-07-22",
+      revenue: 40700,
+      orders: 52,
+      customers: 48,
+      refunds: 2,
+      profit: 11400
+    },
+    {
+      date: "2026-07-23",
+      revenue: 38800,
+      orders: 51,
+      customers: 47,
+      refunds: 2,
+      profit: 10600
+    },
+    {
+      date: "2026-07-24",
+      revenue: 42700,
+      orders: 54,
+      customers: 50,
+      refunds: 1,
+      profit: 14300
+    },
+    {
+      date: "2026-07-25",
+      revenue: 60100,
+      orders: 78,
+      customers: 73,
+      refunds: 2,
+      profit: 16400
+    },
+    {
+      date: "2026-07-26",
+      revenue: 56800,
+      orders: 79,
+      customers: 68,
+      refunds: 1,
+      profit: 17100
+    },
+    {
+      date: "2026-07-27",
+      revenue: 42300,
+      orders: 61,
+      customers: 57,
+      refunds: 1,
+      profit: 13900
+    },
+    {
+      date: "2026-07-28",
+      revenue: 44400,
+      orders: 59,
+      customers: 52,
+      refunds: 2,
+      profit: 14400
+    },
+    {
+      date: "2026-07-29",
+      revenue: 42300,
+      orders: 53,
+      customers: 48,
+      refunds: 1,
+      profit: 12600
+    },
+    {
+      date: "2026-07-30",
+      revenue: 37400,
+      orders: 54,
+      customers: 51,
+      refunds: 1,
+      profit: 11900
+    },
+    {
+      date: "2026-07-31",
+      revenue: 38900,
+      orders: 54,
+      customers: 47,
+      refunds: 1,
+      profit: 11700
+    },
+    {
+      date: "2026-08-01",
+      revenue: 56000,
+      orders: 78,
+      customers: 68,
+      refunds: 2,
+      profit: 17200
+    },
+    {
+      date: "2026-08-02",
+      revenue: 60900,
+      orders: 88,
+      customers: 73,
+      refunds: 3,
+      profit: 17200
+    },
+    {
+      date: "2026-08-03",
+      revenue: 45300,
+      orders: 56,
+      customers: 52,
+      refunds: 1,
+      profit: 13900
+    },
+    {
+      date: "2026-08-04",
+      revenue: 41400,
+      orders: 51,
+      customers: 46,
+      refunds: 1,
+      profit: 12700
+    },
+    {
+      date: "2026-08-05",
+      revenue: 40900,
+      orders: 56,
+      customers: 52,
+      refunds: 2,
+      profit: 12800
+    },
+    {
+      date: "2026-08-06",
+      revenue: 46500,
+      orders: 60,
+      customers: 53,
+      refunds: 2,
+      profit: 13700
+    },
+    {
+      date: "2026-08-07",
+      revenue: 41700,
+      orders: 59,
+      customers: 50,
+      refunds: 3,
+      profit: 12500
+    },
+    {
+      date: "2026-08-08",
+      revenue: 52400,
+      orders: 76,
+      customers: 71,
+      refunds: 1,
+      profit: 16900
+    },
+    {
+      date: "2026-08-09",
+      revenue: 65600,
+      orders: 96,
+      customers: 83,
+      refunds: 4,
+      profit: 17700
+    },
+    {
+      date: "2026-08-10",
+      revenue: 39200,
+      orders: 49,
+      customers: 45,
+      refunds: 2,
+      profit: 10700
+    },
+    {
+      date: "2026-08-11",
+      revenue: 42500,
+      orders: 55,
+      customers: 47,
+      refunds: 1,
+      profit: 12000
+    },
+    {
+      date: "2026-08-12",
+      revenue: 43100,
+      orders: 57,
+      customers: 49,
+      refunds: 2,
+      profit: 12800
+    },
+    {
+      date: "2026-08-13",
+      revenue: 42000,
+      orders: 52,
+      customers: 49,
+      refunds: 1,
+      profit: 11900
+    },
+    {
+      date: "2026-08-14",
+      revenue: 44200,
+      orders: 54,
+      customers: 50,
+      refunds: 2,
+      profit: 12000
+    },
+    {
+      date: "2026-08-15",
+      revenue: 61800,
+      orders: 77,
+      customers: 69,
+      refunds: 1,
+      profit: 20300
+    },
+    {
+      date: "2026-08-16",
+      revenue: 55500,
+      orders: 71,
+      customers: 61,
+      refunds: 3,
+      profit: 15100
+    },
+    {
+      date: "2026-08-17",
+      revenue: 49900,
+      orders: 70,
+      customers: 62,
+      refunds: 2,
+      profit: 13100
+    },
+    {
+      date: "2026-08-18",
+      revenue: 44100,
+      orders: 62,
+      customers: 59,
+      refunds: 1,
+      profit: 11600
+    },
+    {
+      date: "2026-08-19",
+      revenue: 48600,
+      orders: 63,
+      customers: 58,
+      refunds: 1,
+      profit: 13800
+    },
+    {
+      date: "2026-08-20",
+      revenue: 46700,
+      orders: 67,
+      customers: 61,
+      refunds: 2,
+      profit: 12200
+    },
+    {
+      date: "2026-08-21",
+      revenue: 41000,
+      orders: 51,
+      customers: 45,
+      refunds: 2,
+      profit: 12400
+    },
+    {
+      date: "2026-08-22",
+      revenue: 55900,
+      orders: 77,
+      customers: 64,
+      refunds: 2,
+      profit: 18100
+    },
+    {
+      date: "2026-08-23",
+      revenue: 52800,
+      orders: 65,
+      customers: 58,
+      refunds: 1,
+      profit: 15900
+    },
+    {
+      date: "2026-08-24",
+      revenue: 39600,
+      orders: 54,
+      customers: 49,
+      refunds: 1,
+      profit: 11600
+    },
+    {
+      date: "2026-08-25",
+      revenue: 38900,
+      orders: 48,
+      customers: 40,
+      refunds: 1,
+      profit: 11700
+    },
+    {
+      date: "2026-08-26",
+      revenue: 45200,
+      orders: 62,
+      customers: 55,
+      refunds: 2,
+      profit: 15300
+    },
+    {
+      date: "2026-08-27",
+      revenue: 38100,
+      orders: 48,
+      customers: 42,
+      refunds: 2,
+      profit: 11800
+    },
+    {
+      date: "2026-08-28",
+      revenue: 47700,
+      orders: 66,
+      customers: 55,
+      refunds: 2,
+      profit: 15500
+    },
+    {
+      date: "2026-08-29",
+      revenue: 65300,
+      orders: 88,
+      customers: 80,
+      refunds: 3,
+      profit: 21200
+    },
+    {
+      date: "2026-08-30",
+      revenue: 65300,
+      orders: 88,
+      customers: 76,
+      refunds: 1,
+      profit: 18000
+    },
+    {
+      date: "2026-08-31",
+      revenue: 50500,
+      orders: 67,
+      customers: 64,
+      refunds: 2,
+      profit: 14200
+    },
+    {
+      date: "2026-09-01",
+      revenue: 40600,
+      orders: 56,
+      customers: 52,
+      refunds: 2,
+      profit: 11600
+    },
+    {
+      date: "2026-09-02",
+      revenue: 43100,
+      orders: 54,
+      customers: 49,
+      refunds: 2,
+      profit: 12500
+    },
+    {
+      date: "2026-09-03",
+      revenue: 44800,
+      orders: 60,
+      customers: 56,
+      refunds: 2,
+      profit: 14500
+    },
+    {
+      date: "2026-09-04",
+      revenue: 39300,
+      orders: 51,
+      customers: 47,
+      refunds: 1,
+      profit: 11200
+    },
+    {
+      date: "2026-09-05",
+      revenue: 63700,
+      orders: 88,
+      customers: 79,
+      refunds: 2,
+      profit: 20100
+    },
+    {
+      date: "2026-09-06",
+      revenue: 52500,
+      orders: 65,
+      customers: 56,
+      refunds: 3,
+      profit: 14800
+    },
+    {
+      date: "2026-09-07",
+      revenue: 51200,
+      orders: 74,
+      customers: 67,
+      refunds: 2,
+      profit: 16600
+    },
+    {
+      date: "2026-09-08",
+      revenue: 51300,
+      orders: 73,
+      customers: 66,
+      refunds: 3,
+      profit: 13500
+    },
+    {
+      date: "2026-09-09",
+      revenue: 49000,
+      orders: 67,
+      customers: 58,
+      refunds: 2,
+      profit: 15100
+    },
+    {
+      date: "2026-09-10",
+      revenue: 51300,
+      orders: 70,
+      customers: 64,
+      refunds: 2,
+      profit: 15500
+    },
+    {
+      date: "2026-09-11",
+      revenue: 47300,
+      orders: 66,
+      customers: 55,
+      refunds: 2,
+      profit: 14200
+    },
+    {
+      date: "2026-09-12",
+      revenue: 62400,
+      orders: 87,
+      customers: 74,
+      refunds: 2,
+      profit: 21200
+    },
+    {
+      date: "2026-09-13",
+      revenue: 69000,
+      orders: 92,
+      customers: 77,
+      refunds: 4,
+      profit: 20400
+    },
+    {
+      date: "2026-09-14",
+      revenue: 44700,
+      orders: 65,
+      customers: 59,
+      refunds: 3,
+      profit: 12800
+    },
+    {
+      date: "2026-09-15",
+      revenue: 39600,
+      orders: 52,
+      customers: 49,
+      refunds: 2,
+      profit: 12600
+    },
+    {
+      date: "2026-09-16",
+      revenue: 47500,
+      orders: 60,
+      customers: 53,
+      refunds: 1,
+      profit: 13100
+    },
+    {
+      date: "2026-09-17",
+      revenue: 49600,
+      orders: 73,
+      customers: 65,
+      refunds: 2,
+      profit: 16100
+    },
+    {
+      date: "2026-09-18",
+      revenue: 47200,
+      orders: 68,
+      customers: 58,
+      refunds: 3,
+      profit: 15000
+    },
+    {
+      date: "2026-09-19",
+      revenue: 66700,
+      orders: 84,
+      customers: 70,
+      refunds: 4,
+      profit: 20800
+    },
+    {
+      date: "2026-09-20",
+      revenue: 65100,
+      orders: 89,
+      customers: 83,
+      refunds: 3,
+      profit: 20300
+    },
+    {
+      date: "2026-09-21",
+      revenue: 52200,
+      orders: 70,
+      customers: 66,
+      refunds: 1,
+      profit: 14100
+    },
+    {
+      date: "2026-09-22",
+      revenue: 41300,
+      orders: 57,
+      customers: 52,
+      refunds: 1,
+      profit: 13800
+    },
+    {
+      date: "2026-09-23",
+      revenue: 50700,
+      orders: 71,
+      customers: 64,
+      refunds: 2,
+      profit: 13700
+    },
+    {
+      date: "2026-09-24",
+      revenue: 46500,
+      orders: 62,
+      customers: 52,
+      refunds: 3,
+      profit: 12700
+    },
+    {
+      date: "2026-09-25",
+      revenue: 49100,
+      orders: 64,
+      customers: 59,
+      refunds: 2,
+      profit: 16000
+    },
+    {
+      date: "2026-09-26",
+      revenue: 29600,
+      orders: 38,
+      customers: 34,
+      refunds: 1,
+      profit: 9500
+    },
+    {
+      date: "2026-09-27",
+      revenue: 64900,
+      orders: 87,
+      customers: 78,
+      refunds: 2,
+      profit: 21800
+    },
+    {
+      date: "2026-09-28",
+      revenue: 50400,
+      orders: 65,
+      customers: 56,
+      refunds: 1,
+      profit: 13300
+    },
+    {
+      date: "2026-09-29",
+      revenue: 46000,
+      orders: 65,
+      customers: 58,
+      refunds: 1,
+      profit: 14600
+    },
+    {
+      date: "2026-09-30",
+      revenue: 51300,
+      orders: 63,
+      customers: 53,
+      refunds: 1,
+      profit: 15600
+    },
+    {
+      date: "2026-10-01",
+      revenue: 64300,
+      orders: 90,
+      customers: 77,
+      refunds: 1,
+      profit: 18200
+    },
+    {
+      date: "2026-10-02",
+      revenue: 67200,
+      orders: 94,
+      customers: 88,
+      refunds: 1,
+      profit: 19200
+    },
+    {
+      date: "2026-10-03",
+      revenue: 82900,
+      orders: 105,
+      customers: 93,
+      refunds: 3,
+      profit: 24900
+    },
+    {
+      date: "2026-10-04",
+      revenue: 75300,
+      orders: 93,
+      customers: 82,
+      refunds: 4,
+      profit: 20900
+    },
+    {
+      date: "2026-10-05",
+      revenue: 56400,
+      orders: 75,
+      customers: 70,
+      refunds: 2,
+      profit: 16800
+    },
+    {
+      date: "2026-10-06",
+      revenue: 72100,
+      orders: 97,
+      customers: 91,
+      refunds: 3,
+      profit: 23200
+    },
+    {
+      date: "2026-10-07",
+      revenue: 63400,
+      orders: 83,
+      customers: 70,
+      refunds: 2,
+      profit: 16900
+    },
+    {
+      date: "2026-10-08",
+      revenue: 70600,
+      orders: 98,
+      customers: 93,
+      refunds: 3,
+      profit: 19000
+    },
+    {
+      date: "2026-10-09",
+      revenue: 63400,
+      orders: 80,
+      customers: 69,
+      refunds: 3,
+      profit: 20300
+    },
+    {
+      date: "2026-10-10",
+      revenue: 88800,
+      orders: 118,
+      customers: 97,
+      refunds: 2,
+      profit: 25500
+    },
+    {
+      date: "2026-10-11",
+      revenue: 87500,
+      orders: 114,
+      customers: 101,
+      refunds: 2,
+      profit: 27000
+    },
+    {
+      date: "2026-10-12",
+      revenue: 75400,
+      orders: 96,
+      customers: 82,
+      refunds: 2,
+      profit: 24600
+    },
+    {
+      date: "2026-10-13",
+      revenue: 69900,
+      orders: 97,
+      customers: 90,
+      refunds: 2,
+      profit: 21900
+    },
+    {
+      date: "2026-10-14",
+      revenue: 67500,
+      orders: 85,
+      customers: 78,
+      refunds: 3,
+      profit: 17700
+    },
+    {
+      date: "2026-10-15",
+      revenue: 75200,
+      orders: 95,
+      customers: 87,
+      refunds: 3,
+      profit: 23900
+    },
+    {
+      date: "2026-10-16",
+      revenue: 59500,
+      orders: 77,
+      customers: 69,
+      refunds: 3,
+      profit: 16200
+    },
+    {
+      date: "2026-10-17",
+      revenue: 76700,
+      orders: 94,
+      customers: 78,
+      refunds: 1,
+      profit: 21900
+    },
+    {
+      date: "2026-10-18",
+      revenue: 94400,
+      orders: 128,
+      customers: 118,
+      refunds: 5,
+      profit: 31100
+    },
+    {
+      date: "2026-10-19",
+      revenue: 57500,
+      orders: 82,
+      customers: 69,
+      refunds: 2,
+      profit: 18000
+    },
+    {
+      date: "2026-10-20",
+      revenue: 62600,
+      orders: 89,
+      customers: 84,
+      refunds: 2,
+      profit: 18100
+    },
+    {
+      date: "2026-10-21",
+      revenue: 70800,
+      orders: 92,
+      customers: 84,
+      refunds: 3,
+      profit: 19500
+    },
+    {
+      date: "2026-10-22",
+      revenue: 67600,
+      orders: 95,
+      customers: 90,
+      refunds: 2,
+      profit: 19100
+    },
+    {
+      date: "2026-10-23",
+      revenue: 70600,
+      orders: 97,
+      customers: 84,
+      refunds: 4,
+      profit: 22800
+    },
+    {
+      date: "2026-10-24",
+      revenue: 79700,
+      orders: 103,
+      customers: 90,
+      refunds: 5,
+      profit: 25900
+    },
+    {
+      date: "2026-10-25",
+      revenue: 98200,
+      orders: 136,
+      customers: 117,
+      refunds: 5,
+      profit: 28300
+    },
+    {
+      date: "2026-10-26",
+      revenue: 61900,
+      orders: 83,
+      customers: 70,
+      refunds: 2,
+      profit: 20700
+    },
+    {
+      date: "2026-10-27",
+      revenue: 59500,
+      orders: 78,
+      customers: 70,
+      refunds: 1,
+      profit: 18700
+    },
+    {
+      date: "2026-10-28",
+      revenue: 69700,
+      orders: 101,
+      customers: 88,
+      refunds: 4,
+      profit: 18700
+    },
+    {
+      date: "2026-10-29",
+      revenue: 57000,
+      orders: 75,
+      customers: 71,
+      refunds: 2,
+      profit: 19100
+    },
+    {
+      date: "2026-10-30",
+      revenue: 66600,
+      orders: 94,
+      customers: 89,
+      refunds: 2,
+      profit: 20800
+    },
+    {
+      date: "2026-10-31",
+      revenue: 79400,
+      orders: 104,
+      customers: 93,
+      refunds: 4,
+      profit: 26600
+    },
+    {
+      date: "2026-11-01",
+      revenue: 99400,
+      orders: 124,
+      customers: 105,
+      refunds: 5,
+      profit: 33800
+    },
+    {
+      date: "2026-11-02",
+      revenue: 81600,
+      orders: 101,
+      customers: 95,
+      refunds: 4,
+      profit: 26900
+    },
+    {
+      date: "2026-11-03",
+      revenue: 45900,
+      orders: 66,
+      customers: 63,
+      refunds: 1,
+      profit: 15600
+    },
+    {
+      date: "2026-11-04",
+      revenue: 81700,
+      orders: 101,
+      customers: 94,
+      refunds: 3,
+      profit: 22500
+    },
+    {
+      date: "2026-11-05",
+      revenue: 73600,
+      orders: 99,
+      customers: 84,
+      refunds: 2,
+      profit: 23500
+    },
+    {
+      date: "2026-11-06",
+      revenue: 83700,
+      orders: 106,
+      customers: 89,
+      refunds: 4,
+      profit: 27800
+    },
+    {
+      date: "2026-11-07",
+      revenue: 111400,
+      orders: 161,
+      customers: 146,
+      refunds: 3,
+      profit: 30200
+    },
+    {
+      date: "2026-11-08",
+      revenue: 102600,
+      orders: 143,
+      customers: 122,
+      refunds: 5,
+      profit: 34500
+    },
+    {
+      date: "2026-11-09",
+      revenue: 87800,
+      orders: 129,
+      customers: 117,
+      refunds: 4,
+      profit: 23300
+    },
+    {
+      date: "2026-11-10",
+      revenue: 163000,
+      orders: 221,
+      customers: 196,
+      refunds: 9,
+      profit: 51600
+    },
+    {
+      date: "2026-11-11",
+      revenue: 153300,
+      orders: 190,
+      customers: 163,
+      refunds: 6,
+      profit: 42500
+    },
+    {
+      date: "2026-11-12",
+      revenue: 155400,
+      orders: 198,
+      customers: 178,
+      refunds: 5,
+      profit: 47200
+    },
+    {
+      date: "2026-11-13",
+      revenue: 175500,
+      orders: 227,
+      customers: 193,
+      refunds: 4,
+      profit: 56200
+    },
+    {
+      date: "2026-11-14",
+      revenue: 205200,
+      orders: 276,
+      customers: 252,
+      refunds: 4,
+      profit: 62600
+    },
+    {
+      date: "2026-11-15",
+      revenue: 113400,
+      orders: 151,
+      customers: 135,
+      refunds: 2,
+      profit: 32500
+    },
+    {
+      date: "2026-11-16",
+      revenue: 73400,
+      orders: 104,
+      customers: 93,
+      refunds: 1,
+      profit: 22100
+    },
+    {
+      date: "2026-11-17",
+      revenue: 81900,
+      orders: 109,
+      customers: 96,
+      refunds: 1,
+      profit: 24300
+    },
+    {
+      date: "2026-11-18",
+      revenue: 88700,
+      orders: 121,
+      customers: 112,
+      refunds: 4,
+      profit: 27200
+    },
+    {
+      date: "2026-11-19",
+      revenue: 79300,
+      orders: 115,
+      customers: 109,
+      refunds: 5,
+      profit: 21100
+    },
+    {
+      date: "2026-11-20",
+      revenue: 71600,
+      orders: 97,
+      customers: 89,
+      refunds: 4,
+      profit: 24200
+    },
+    {
+      date: "2026-11-21",
+      revenue: 109900,
+      orders: 134,
+      customers: 117,
+      refunds: 5,
+      profit: 36500
+    },
+    {
+      date: "2026-11-22",
+      revenue: 118900,
+      orders: 154,
+      customers: 137,
+      refunds: 5,
+      profit: 34200
+    },
+    {
+      date: "2026-11-23",
+      revenue: 84500,
+      orders: 112,
+      customers: 102,
+      refunds: 2,
+      profit: 22000
+    },
+    {
+      date: "2026-11-24",
+      revenue: 43200,
+      orders: 56,
+      customers: 50,
+      refunds: 2,
+      profit: 14100
+    },
+    {
+      date: "2026-11-25",
+      revenue: 79900,
+      orders: 111,
+      customers: 105,
+      refunds: 4,
+      profit: 21500
+    },
+    {
+      date: "2026-11-26",
+      revenue: 81800,
+      orders: 104,
+      customers: 97,
+      refunds: 1,
+      profit: 22600
+    },
+    {
+      date: "2026-11-27",
+      revenue: 72200,
+      orders: 95,
+      customers: 87,
+      refunds: 1,
+      profit: 23000
+    },
+    {
+      date: "2026-11-28",
+      revenue: 104400,
+      orders: 147,
+      customers: 137,
+      refunds: 2,
+      profit: 31400
+    },
+    {
+      date: "2026-11-29",
+      revenue: 124300,
+      orders: 159,
+      customers: 137,
+      refunds: 5,
+      profit: 39000
+    },
+    {
+      date: "2026-11-30",
+      revenue: 79200,
+      orders: 113,
+      customers: 102,
+      refunds: 2,
+      profit: 22500
+    },
+    {
+      date: "2026-12-01",
+      revenue: 84400,
+      orders: 105,
+      customers: 99,
+      refunds: 3,
+      profit: 24800
+    },
+    {
+      date: "2026-12-02",
+      revenue: 85000,
+      orders: 105,
+      customers: 95,
+      refunds: 4,
+      profit: 24300
+    },
+    {
+      date: "2026-12-03",
+      revenue: 66700,
+      orders: 91,
+      customers: 84,
+      refunds: 2,
+      profit: 21900
+    },
+    {
+      date: "2026-12-04",
+      revenue: 79200,
+      orders: 100,
+      customers: 94,
+      refunds: 3,
+      profit: 26700
+    },
+    {
+      date: "2026-12-05",
+      revenue: 89700,
+      orders: 126,
+      customers: 107,
+      refunds: 4,
+      profit: 29900
+    },
+    {
+      date: "2026-12-06",
+      revenue: 88600,
+      orders: 113,
+      customers: 95,
+      refunds: 2,
+      profit: 27800
+    },
+    {
+      date: "2026-12-07",
+      revenue: 83200,
+      orders: 118,
+      customers: 108,
+      refunds: 4,
+      profit: 25400
+    },
+    {
+      date: "2026-12-08",
+      revenue: 83200,
+      orders: 115,
+      customers: 109,
+      refunds: 1,
+      profit: 27900
+    },
+    {
+      date: "2026-12-09",
+      revenue: 66400,
+      orders: 81,
+      customers: 71,
+      refunds: 1,
+      profit: 20500
+    },
+    {
+      date: "2026-12-10",
+      revenue: 84400,
+      orders: 111,
+      customers: 102,
+      refunds: 3,
+      profit: 25500
+    },
+    {
+      date: "2026-12-11",
+      revenue: 69800,
+      orders: 93,
+      customers: 82,
+      refunds: 1,
+      profit: 23600
+    },
+    {
+      date: "2026-12-12",
+      revenue: 111900,
+      orders: 138,
+      customers: 120,
+      refunds: 3,
+      profit: 34100
+    },
+    {
+      date: "2026-12-13",
+      revenue: 90900,
+      orders: 127,
+      customers: 120,
+      refunds: 4,
+      profit: 26700
+    },
+    {
+      date: "2026-12-14",
+      revenue: 71500,
+      orders: 98,
+      customers: 91,
+      refunds: 3,
+      profit: 22300
+    },
+    {
+      date: "2026-12-15",
+      revenue: 70000,
+      orders: 88,
+      customers: 83,
+      refunds: 3,
+      profit: 20900
+    },
+    {
+      date: "2026-12-16",
+      revenue: 82200,
+      orders: 117,
+      customers: 107,
+      refunds: 3,
+      profit: 27400
+    },
+    {
+      date: "2026-12-17",
+      revenue: 78800,
+      orders: 114,
+      customers: 94,
+      refunds: 5,
+      profit: 26400
+    },
+    {
+      date: "2026-12-18",
+      revenue: 81700,
+      orders: 111,
+      customers: 103,
+      refunds: 2,
+      profit: 25900
+    },
+    {
+      date: "2026-12-19",
+      revenue: 56400,
+      orders: 77,
+      customers: 69,
+      refunds: 3,
+      profit: 17400
+    },
+    {
+      date: "2026-12-20",
+      revenue: 102000,
+      orders: 150,
+      customers: 134,
+      refunds: 2,
+      profit: 30800
+    },
+    {
+      date: "2026-12-21",
+      revenue: 86800,
+      orders: 127,
+      customers: 118,
+      refunds: 4,
+      profit: 28200
+    },
+    {
+      date: "2026-12-22",
+      revenue: 67000,
+      orders: 97,
+      customers: 81,
+      refunds: 2,
+      profit: 20200
+    },
+    {
+      date: "2026-12-23",
+      revenue: 70800,
+      orders: 96,
+      customers: 83,
+      refunds: 2,
+      profit: 21600
+    },
+    {
+      date: "2026-12-24",
+      revenue: 111800,
+      orders: 144,
+      customers: 134,
+      refunds: 5,
+      profit: 36700
+    },
+    {
+      date: "2026-12-25",
+      revenue: 107100,
+      orders: 146,
+      customers: 130,
+      refunds: 2,
+      profit: 27900
+    },
+    {
+      date: "2026-12-26",
+      revenue: 164900,
+      orders: 223,
+      customers: 206,
+      refunds: 7,
+      profit: 54200
+    },
+    {
+      date: "2026-12-27",
+      revenue: 104000,
+      orders: 152,
+      customers: 129,
+      refunds: 6,
+      profit: 34400
+    },
+    {
+      date: "2026-12-28",
+      revenue: 66100,
+      orders: 96,
+      customers: 90,
+      refunds: 4,
+      profit: 20200
+    },
+    {
+      date: "2026-12-29",
+      revenue: 47500,
+      orders: 66,
+      customers: 62,
+      refunds: 2,
+      profit: 15200
+    },
+    {
+      date: "2026-12-30",
+      revenue: 74300,
+      orders: 108,
+      customers: 91,
+      refunds: 2,
+      profit: 24300
+    },
+    {
+      date: "2026-12-31",
+      revenue: 85800,
+      orders: 118,
+      customers: 108,
+      refunds: 2,
+      profit: 29100
+    }
+  ];
 
 export const recentOrders = [
     { id: "ORD-10231", customerName: "Aarav Sharma", customerEmail: "aarav.sharma@gmail.com", product: "Wireless Bluetooth Earbuds", amount: 1899, quantity: 1, paymentMethod: "UPI", orderStatus: "Delivered", orderDate: "2026-06-28" },

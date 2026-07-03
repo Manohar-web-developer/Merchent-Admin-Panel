@@ -9,7 +9,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -35,7 +35,10 @@ function Header() {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [])
+  const [search, setSearch] = useState("");
 
+  console.log(search);
+  
   const user = [
 
     { id: 1, name: "Manohar" },
@@ -51,7 +54,7 @@ function Header() {
         </div>
         <div className="flex-1">
           <InputGroup className="max-w-sm">
-            <InputGroupInput ref={inputRef} placeholder="Search..." />
+            <InputGroupInput ref={inputRef} placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
             <InputGroupAddon>
               <SearchIcon className="text-muted-foreground" />
             </InputGroupAddon>

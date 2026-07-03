@@ -3,13 +3,9 @@ import {
   Package,
   ShoppingCart,
   Users,
-  BarChart3,
   Settings,
-  AlignVerticalJustifyStart,
   ChartNoAxesCombined,
   Ticket,
-  User,
-  LogOut,
 } from "lucide-react";
 
 import {
@@ -25,11 +21,7 @@ import {
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -37,15 +29,14 @@ import { useState } from "react";
 export default function AppSidebar() {
   const [openMenu, setOpenMenu] = useState("");
   const { state, setOpen } = useSidebar()
-  const sidebar = useSidebar()
 
   return (
     <>
       <Sidebar variant="sidebar" collapsible="icon" >
         <div className=" px-2">
           <SidebarHeader>
-            <div className="flex items-center gap-2 px-2">
-              <Package className="w-6 h-6" />
+            <div className="flex items-center gap-2">
+              <Package className="w-5 h-5" />
               {state === "expanded" && (
                 <span className="font-bold">
                   ShopVista
