@@ -238,36 +238,7 @@ export default function AppSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
-          <SidebarFooter>
-            <SidebarMenu>
-              <SidebarMenuItem>
-
-                <SidebarMenuButton className='cursor-pointer'>
-                  <User className="w-4 h-4" />
-                  {state === "expanded" && (
-                    <div className="flex flex-col items-start">
-                      <span className="text-sm font-medium">
-                        Manohar
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        Admin
-                      </span>
-                    </div>
-                  )}
-                </SidebarMenuButton>
-
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton className='cursor-pointer'>
-                  <LogOut className="w-4 h-4" />
-                  {state === "expanded" && (
-                    <span>Logout</span>
-                  )}
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarFooter>
+         
         </div>
       </Sidebar>
     </>

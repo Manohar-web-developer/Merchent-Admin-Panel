@@ -5,14 +5,14 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Header from "./Header";
 
 export default function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-
       <main className="flex-1">
-        <SidebarTrigger />
+        <Header/>
         <Outlet />
       </main>
     </SidebarProvider>
