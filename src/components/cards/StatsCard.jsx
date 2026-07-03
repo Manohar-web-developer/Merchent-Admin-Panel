@@ -21,38 +21,42 @@ const icons = {
 import { dashboardStats } from '../Data/DummyData.js'
 export default function StatsCard() {
   return <>
-    <Card>
+
     {
       dashboardStats.map((item) => {
-        const Icon = icons[item.icon]        
+        const Icon = icons[item.icon]
 
-        return (<CardContent className="p-5" key={item.id}>
+        return (
+          <Card>
+            <CardContent className="p-5" key={item.id}>
 
-        <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
 
-          <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center">
-            <Icon className="text-violet-600" />
-          </div>
+                <div className={`w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center`}>
+                  <Icon className={`${item.iconColor} $`} />
+                </div>
 
-        </div>
+              </div>
 
-        <h3 className="mt-4 text-muted-foreground">
-          Total Revenue
-        </h3>
+              <h3 className="mt-4 text-muted-foreground">
+                {item.title}
+              </h3>
 
-        <h2 className="text-xl md:text-2xl font-bold mt-2">
-          ₹24,58,300
-        </h2>
+              <h2 className="text-xl md:text-2xl font-bold mt-2">
+                ₹{item.value.toLocaleString("en-IN")}
+              </h2>
 
-        <div className="flex items-center gap-2 mt-3 text-green-600">
-          <TrendingUp size={16} />
-          <span>18.2%</span>
-        </div>
+              <div className="flex items-center gap-2 mt-3 text-green-600">
+                <TrendingUp size={16} />
+                <span>{item.growth}%</span>
+              </div>
 
-      </CardContent>)
-})
+            </CardContent>
+          </Card>
+        )
+      })
     }
-      {/* <CardContent className="p-5">
+    {/* <CardContent className="p-5">
 
         <div className="flex items-center justify-between">
 
@@ -76,7 +80,6 @@ export default function StatsCard() {
         </div>
 
       </CardContent> */}
-    </Card>
 
   </>
 }

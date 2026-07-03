@@ -56,7 +56,7 @@ function Header() {
               <SearchIcon className="text-muted-foreground" />
             </InputGroupAddon>
             <InputGroupAddon align="inline-end">
-              <Kbd>⌘K</Kbd>
+              <Kbd className='hidden md:block'>⌘K</Kbd>
             </InputGroupAddon>
           </InputGroup>
         </div>
