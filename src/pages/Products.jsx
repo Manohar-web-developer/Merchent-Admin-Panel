@@ -144,7 +144,7 @@ export default function Products() {
   const filteredProducts = products.filter((item) => {
     const categoryMatch = category === "all" ? true : item.collectionName === category
     const statusMatch = status === "all" ? true : item.status === status
-    const searchMatch = search === "" ? true : item.title.toLocaleLowerCase().includes(search) || item.sku.toLocaleLowerCase().includes(search) || item.collectionName.includes(search)
+    const searchMatch = search === "" ? true : item.title.toLocaleLowerCase().trim().includes(search) || item.sku.toLocaleLowerCase().includes(search) || item.collectionName.includes(search)
 
     return categoryMatch && statusMatch && searchMatch
 
@@ -280,60 +280,62 @@ export default function Products() {
 export function PaginationBottom({ currentPage, setCurrentPage, setItemsPerPage, totalPages, pages }) {
 
   return (
-    <div className="flex items-center justify-between gap-4">
-      <Field orientation="horizontal" className="w-fit">
-        <FieldLabel htmlFor="select-rows-per-page">Product per page</FieldLabel>
-        <Select defaultValue="25" onValueChange={(value) => {
-          setItemsPerPage(Number(value))
-          setCurrentPage(1)
-        }}>
-          <SelectTrigger className="w-20" id="select-rows-per-page">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent align="start" >
-            <SelectGroup>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </Field>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem className='cursor-pointer' onClick={() => {
-            if (currentPage > 1) {
-              setCurrentPage((prev) => prev - 1)
-            }
+    <div className="w-full p-5">
+      <div className="flex items-center justify-between gap-4 w-[90%] mx-auto">
+        <Field orientation="horizontal" className="w-fit whitespace-nowrap">
+          <FieldLabel htmlFor="select-rows-per-page">Product per page</FieldLabel>
+          <Select defaultValue="25" onValueChange={(value) => {
+            setItemsPerPage(Number(value))
+            setCurrentPage(1)
           }}>
-            <PaginationPrevious />
-          </PaginationItem>
-          {
-            pages.map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            ))
-          }
-          {totalPages > 5 && (
-            <PaginationItem>
-              <PaginationEllipsis />
+            <SelectTrigger className="w-20" id="select-rows-per-page">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent align="start" >
+              <SelectGroup>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </Field>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem className='cursor-pointer' onClick={() => {
+              if (currentPage > 1) {
+                setCurrentPage((prev) => prev - 1)
+              }
+            }}>
+              <PaginationPrevious />
             </PaginationItem>
-          )}
-          <PaginationItem  className='cursor-pointer' onClick={() => {
-            if (currentPage < totalPages) {
-              setCurrentPage((prev) => prev + 1)
+            {
+              pages.map((page) => (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))
             }
-          }}>
-            <PaginationNext />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            {totalPages > 5 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+            <PaginationItem className='cursor-pointer' onClick={() => {
+              if (currentPage < totalPages) {
+                setCurrentPage((prev) => prev + 1)
+              }
+            }}>
+              <PaginationNext />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   )
 }
