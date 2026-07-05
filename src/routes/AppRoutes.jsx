@@ -29,6 +29,7 @@ import Coupons from "../pages/Coupons";
 import Settings from "../pages/Settings";
 import PaymentMethods from "../pages/PaymentMethods";
 import Shipping from "../pages/Shipping";
+import EditProducts from "@/pages/EditProducts";
 
 export default function AppRoutes() {
   return (
@@ -41,6 +42,7 @@ export default function AppRoutes() {
         {/* Products */}
         <Route path="/products" element={<Products />}>
           <Route path="new" element={<NewProducts />} />
+          <Route path="edit/:handle" element={<EditProducts />} />
           <Route path="categories" element={<Categories />} />
           <Route path="brands" element={<Brands />} />
         </Route>

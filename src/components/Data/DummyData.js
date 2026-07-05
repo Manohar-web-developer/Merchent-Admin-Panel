@@ -3109,3 +3109,44 @@ export const productInventory = [
     { id: "INV029", name: "Organic Honey 500g", sku: "GROC-HON-029", category: "Groceries", brand: "Patanjali", price: 249, stock: 312, sales: 456, status: "In Stock" },
     { id: "INV030", name: "Men's Analog Watch", sku: "ACC-WAT-030", category: "Accessories", brand: "Titan", price: 4299, stock: 45, sales: 198, status: "In Stock" },
 ];
+export const products = [
+  {
+    id: 7869654630590,
+    title: "90's Oval Platter Wood",
+    handle: "90s-oval-platter-wood-ls-0128",
+    vendor: "livingshapes",
+    productType: "Serving Bowls & Tray",
+    price: 1999,
+    compareAtPrice: 2856,
+    stock: null,
+    status: "Active",
+    image: "https://cdn.shopify.com/s/files/1/0644/0710/9822/files/LS-0128_1_copy.jpg?v=1756704597",
+    createdAt: "2024-01-15"
+  },
+  {
+    id: 8590256537790,
+    title: "Abnor Wooden Swivel Bar Chair",
+    handle: "abnor-wooden-swivel-bar-chair-ls-0788",
+    vendor: "Living Shapes",
+    productType: "Bar Chair",
+    price: 19999,
+    compareAtPrice: 28570,
+    stock: null,
+    status: "Active",
+    image: "https://cdn.shopify.com/s/files/1/0644/0710/9822/files/Gemini_Generated_Image_3s7m43s7m43s7m43.jpg?v=1759503481",
+    createdAt: "2025-10-01"
+  },
+  {
+    id: 8120760893630,
+    title: "Abstract Cushion Cover",
+    handle: "abstract-cushion-cover",
+    vendor: "Living Shapes",
+    productType: "Cushion & Throws",
+    price: 1099,
+    compareAtPrice: 1570,
+    stock: null,
+    status: "Active",
+    image: "https://cdn.shopify.com/s/files/1/0644/0710/9822/files/S-5541-_1_ca3a5501-3835-4bfb-b63d-ae8a992ced14.jpg?v=1773809819",
+    createdAt: "2024-05-06"
+  }
+];

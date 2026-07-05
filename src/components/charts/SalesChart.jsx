@@ -6,7 +6,7 @@ import { Field } from "@/components/ui/field"
 import { Calendar } from "@/components/ui/calendar"
 import { addDays, format } from "date-fns"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, } from "@/components/ui/chart"
 import { salesOverview } from "../Data/DummyData"
 import { Button } from "@base-ui/react"
@@ -35,10 +35,8 @@ const filteredData = salesOverview.filter((item)=> {
     <Card className="pt-0">
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1">
-          <CardTitle>Area Chart - Interactive</CardTitle>
-          <CardDescription>
-            Showing revenue performance over time
-          </CardDescription>
+          <CardTitle>Sales Overview</CardTitle>
+         
         </div>
         <Field className="mx-auto w-60 flex ">
           <Popover>
