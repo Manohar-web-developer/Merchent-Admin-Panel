@@ -1,30 +1,13 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldDescription
+import {Field,FieldGroup, FieldLabel,
 } from "@/components/ui/field"
-import {
-  Card,
-  CardContent,
-  CardHeader,
+import { Card, CardContent, CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger,SelectValue,} from "@/components/ui/select"
 import { products } from "@/components/Data/ProductData"
 
 import {
@@ -64,7 +47,7 @@ export function NewProductsHeader() {
           </Breadcrumb>
         </div>
         <div>
-          <button className="text-white bg-[#5A34FD] flex px-4 py-3 gap-2 rounded-lg cursor-pointer"><p>Publish Product</p></button>
+          <button className="text-white bg-[#5A34FD] flex px-4 py-3 gap-2 rounded-lg cursor-pointer" type="submit">Publish Product</button>
         </div>
       </div>
     </>
@@ -258,6 +241,104 @@ export default function NewProducts() {
                       </div>
                     </Field>
                   </FieldGroup>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="p-5 bg-white shadow-2xs border border-light-50 rounded-lg">
+              <Card>
+                <CardHeader>
+                  <CardTitle className='font-bold capitalize' >Pricing And Inventory </CardTitle>
+                </CardHeader>
+
+                <CardContent>
+                  <FieldGroup className='grid grid-cols-4 pb-5'>
+                    <Field >
+                      <FieldLabel htmlFor="input-required">
+                        Price <span className="text-destructive">*</span>
+                      </FieldLabel>
+                      <Input
+                        id="input-required"
+                        placeholder="0.00"
+                        type="number"
+                        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        required
+                      />
+
+                    </Field>
+                    <Field>
+                      <FieldLabel >
+                        Compare at price
+                      </FieldLabel>
+                      <Input
+                        id="input-required"
+                        placeholder="0.00"
+                        required
+                        type="number"
+                        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                    </Field>
+                    <Field>
+                      <FieldLabel >
+                        Cost Price
+                      </FieldLabel>
+                      <Input
+                        id="input-required"
+                        placeholder="0.00"
+                        required
+                        type="number"
+                        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                    </Field>
+                    <Field >
+                      <FieldLabel htmlFor="input-required">
+                        Stock Quantity <span className="text-destructive">*</span>
+                      </FieldLabel>
+                      <Input
+                        id="input-required"
+                        placeholder="0"
+                        required
+                        type="number"
+                        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+
+                    </Field>
+                  </FieldGroup>
+
+                </CardContent>
+              </Card>
+            </div>
+            <div className="p-5 bg-white shadow-2xs border border-light-50 rounded-lg">
+              <Card>
+                <CardHeader>
+                  <CardTitle className='font-bold capitalize' >Seo Information</CardTitle>
+                </CardHeader>
+
+                <CardContent>
+                  <FieldGroup className='grid grid-cols-2 pb-5'>
+                    <Field>
+                      <FieldLabel htmlFor="block-start-textarea"> Meta Title </FieldLabel>
+                      <InputGroup>
+                        <InputGroupTextarea
+                          id="block-start-textarea"
+                          placeholder="Enter Meta Title"
+                          className="text-sm"
+                        />
+                      </InputGroup>
+
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="block-start-textarea">Meta Description </FieldLabel>
+                      <InputGroup>
+                        <InputGroupTextarea
+                          id="block-start-textarea"
+                          placeholder="Enter Meta description"
+                          className="text-sm"
+                        />
+                      </InputGroup>
+
+                    </Field>
+                  </FieldGroup>
+
                 </CardContent>
               </Card>
             </div>

@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex-1">
+      <main className="flex-1 min-w-0">
         <Header/>
         <Outlet />
       </main>

@@ -30,6 +30,7 @@ import Settings from "../pages/Settings";
 import PaymentMethods from "../pages/PaymentMethods";
 import Shipping from "../pages/Shipping";
 import EditProducts from "@/pages/EditProducts";
+import Material from "@/pages/Material";
 
 export default function AppRoutes() {
   return (
@@ -45,6 +46,7 @@ export default function AppRoutes() {
           <Route path="edit/:handle" element={<EditProducts />} />
           <Route path="categories" element={<Categories />} />
           <Route path="brands" element={<Brands />} />
+          <Route path="material" element={<Material />} />
         </Route>
 
         {/* Orders */}

@@ -101,6 +101,14 @@ export default function AppSidebar() {
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
 
+                     <SidebarMenuSubItem>
+                      <SidebarMenuSubButton className='cursor-pointer' >
+                        <Link to="/products/material">
+                          Material
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+
                   </SidebarMenuSub>
                 )}
 
