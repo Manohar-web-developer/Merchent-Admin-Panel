@@ -47,7 +47,7 @@ export default function AppRoutes() {
           <Route path="edit/:handle" element={<EditProducts />} />
           <Route path="categories" element={<Categories />} />
           <Route path="brands" element={<Brands />} />
-          <Route path="brands/add-brand" element={<AddBrands />} />
+          <Route path="brands/add" element={<AddBrands/>} />
           <Route path="material" element={<Material />} />
         </Route>
 
