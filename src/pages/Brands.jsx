@@ -25,16 +25,18 @@ import axios from "axios";
 export default function Brands() {
 
   const [products, setProducts] = useState([]);
+  const [CurrentId, setCurrentId] = useState([])
+  const [selectedCheckbox, setSelectedCheckbox] = useState([])
 
   useEffect(() => {
-    axios.post("http://localhost:4000/api/admin/brand/view", {
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/view`, {
       page: 1,
       limit: 10,
     })
       .then((res) => {
-        console.log(res.data);
-
-        setProducts(res.data._data)
+        if (res.data._data) {
+          setProducts(res.data)
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -153,7 +155,6 @@ export default function Brands() {
             {/* Left Side Controls */}
             <div className="flex items-center gap-3 flex-wrap">
               <div className="flex items-center gap-2 pr-1">
-                <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" />
                 <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">
                   0 selected
                 </span>
@@ -205,7 +206,19 @@ export default function Brands() {
             <TableHeader className="bg-[#FAFBFD] border-b border-gray-100">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="py-3.5 px-4 sm:px-5 w-10">
-                  <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" />
+                  <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" checked={
+                    products._data?.length > 0 &&
+                    selectedCheckbox.length === products._data.length
+                  }
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedCheckbox(
+                          products._data.map((value) => value._id)
+                        );
+                      } else {
+                        setSelectedCheckbox([]);
+                      }
+                    }} />
                 </TableHead>
                 <TableHead className="py-3.5 px-4 sm:px-5 text-gray-500 font-semibold uppercase tracking-wider text-[11px]">
                   Brand
@@ -226,51 +239,82 @@ export default function Brands() {
             </TableHeader>
             <TableBody className="divide-y divide-gray-100 bg-white">
 
-              <TableRow className="hover:bg-gray-50/70 transition-colors">
-                <TableCell className="py-3.5 px-4 sm:px-5 w-10">
-                  <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" />
-                </TableCell>
-                <TableCell className="py-3.5 px-4 sm:px-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg border border-gray-200/80 bg-white flex items-center justify-center font-bold text-xs text-gray-900 shadow-2xs shrink-0">
-                      NK
-                    </div>
-                    <span className="font-semibold text-gray-900 text-sm tracking-tight">
-                      Nike
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-3.5 px-4 sm:px-5 text-gray-600 font-medium text-xs sm:text-sm">
-                  18 Products
-                </TableCell>
-                <TableCell className="py-3.5 px-4 sm:px-5">
-                  <Badge className="bg-[#E6F8EF] text-[#10B981] font-semibold text-xs px-3 py-1 rounded-full border-0 inline-flex items-center gap-1.5 shadow-none hover:bg-[#E6F8EF]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
-                    Active
-                  </Badge>
-                </TableCell>
-                <TableCell className="py-3.5 px-4 sm:px-5 text-gray-500 font-medium text-xs sm:text-sm whitespace-nowrap">
-                  20 May 2024
-                </TableCell>
-                <TableCell className="py-3.5 px-4 sm:px-5 text-right">
-                  <div className="flex items-center justify-end gap-1.5">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#5A34FD] hover:border-[#5A34FD]/30 shadow-2xs cursor-default"
-                    >
-                      <Pencil className="w-3.5 h-3.5" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-2xs cursor-default"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+              {
+                products._data?.map((value, index) => {
+                  return (
+                    <TableRow className="hover:bg-gray-50/70 transition-colors" key={value._id}>
+                      <TableCell className="py-3.5 px-4 sm:px-5 w-10">
+                        <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" checked={selectedCheckbox.includes(value._id)} onCheckedChange={(checked)=> {
+                          if(checked){
+                            setSelectedCheckbox([...selectedCheckbox, value._id])
+                          }else{
+                            setSelectedCheckbox(selectedCheckbox.filter((id) => id !== value._id))
+                          }
+                        }} />
+                      </TableCell>
+                      <TableCell className="py-3.5 px-4 sm:px-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-lg border border-gray-200/80 bg-white flex items-center justify-center font-bold text-xs text-gray-900 shadow-2xs shrink-0 uppercase">
+                            {value.name[0] + value.name[value.name.length - 1]}
+                          </div>
+                          <span className="font-semibold text-gray-900 text-sm tracking-tight">
+                            {
+                              value.name
+                            }
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-4 sm:px-5 text-gray-600 font-medium text-xs sm:text-sm">
+                        {
+                          value.productCount
+                        } Products
+                      </TableCell>
+                      <TableCell className="py-3.5 px-4 sm:px-5">
+                        <Badge
+                          className={`font-semibold text-xs px-3 py-1 rounded-full border-0 inline-flex items-center gap-1.5 shadow-none hover:bg-transparent ${value.status
+                            ? "bg-[#E6F8EF] text-[#10B981]"
+                            : "bg-[#FEE2E2] text-[#EF4444]"
+                            }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${value.status ? "bg-[#10B981]" : "bg-[#EF4444]"
+                              }`}
+                          ></span>
+
+                          {value.status ? "Active" : "Inactive"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-4 sm:px-5 text-gray-500 font-medium text-xs sm:text-sm whitespace-nowrap">
+                        {new Date(value.createdAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </TableCell>
+                      <TableCell className="py-3.5 px-4 sm:px-5 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#5A34FD] hover:border-[#5A34FD]/30 shadow-2xs cursor-default"
+                          >
+                            <Pencil className="w-3.5 h-3.5" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-2xs cursor-default"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              }
+
+
             </TableBody>
           </Table>
 

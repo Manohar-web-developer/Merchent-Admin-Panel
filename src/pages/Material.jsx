@@ -35,7 +35,7 @@ function Material() {
   const getMaterialData = () => {
     axios
       .post(
-        `${import.meta.env.VITE_API_BASE_URL}/material/view`,
+        `${import.meta.env.VITE_API_BASE_URL}material/view`,
         FilterData
       )
       .then((res) => {
