@@ -11,7 +11,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { toast } from "@/components/ui/Toast";
+import { toast } from "@/components/ui/toast";
 
 
 function Material() {

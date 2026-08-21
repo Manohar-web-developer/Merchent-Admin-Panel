@@ -46,8 +46,13 @@ export default function AppRoutes() {
           <Route path="new" element={<NewProducts />} />
           <Route path="edit/:handle" element={<EditProducts />} />
           <Route path="categories" element={<Categories />} />
-          <Route path="brands" element={<Brands />} />
-          <Route path="brands/add" element={<AddBrands/>} />
+          <Route path="brands">
+            <Route index element={<Brands />} />
+            <Route path="add" element={<AddBrands />} />
+            <Route path="edit/:id" element={<AddBrands />} />
+          </Route>
+
+
           <Route path="material" element={<Material />} />
         </Route>
 

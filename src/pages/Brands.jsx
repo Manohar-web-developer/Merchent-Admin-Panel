@@ -1,17 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Plus,
-  Tag,
-  FileCheck,
-  Package,
-  Search,
-  Filter,
-  ChevronDown,
-  Pencil,
-  Trash2,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Plus, Tag, FileCheck, Package, Search, Filter, ChevronDown, Pencil, Trash2, ChevronLeft, ChevronRight, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,29 +8,37 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious,} from "@/components/ui/pagination"
 import axios from "axios";
 
 export default function Brands() {
 
   const [products, setProducts] = useState([]);
-  const [CurrentId, setCurrentId] = useState([])
-  const [selectedCheckbox, setSelectedCheckbox] = useState([])
+  const [selectedCheckbox, setSelectedCheckbox] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/view`, {
-      page: 1,
-      limit: 10,
+      page: currentPage,
+      limit: limit,
     })
       .then((res) => {
-        if (res.data._data) {
-          setProducts(res.data)
+        if (res.data) {
+          setProducts(res.data);
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-  console.log(products)
+        console.log(err);
+      });
+  }, [currentPage]);
+
+  const pagination = products?.pagination || {};
+  const totalRecords = pagination.totalRecords ?? (products?.totalRecords || products?._data?.length || 0);
+  const totalPages = pagination.totalPages ?? (products?.totalPages || (totalRecords > 0 ? Math.ceil(totalRecords / 10) : 1));
+  const activePage = pagination.currentPage ?? currentPage;
+  const limit = pagination.limit ?? 10;
+  const startItem = totalRecords > 0 ? (activePage - 1) * limit + 1 : 0;
+  const endItem = Math.min(activePage * limit, totalRecords);
   return (
     <div className="min-h-screen bg-[#FAFBFD] p-4 sm:p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       {/* 1. Header */}
@@ -244,10 +240,10 @@ export default function Brands() {
                   return (
                     <TableRow className="hover:bg-gray-50/70 transition-colors" key={value._id}>
                       <TableCell className="py-3.5 px-4 sm:px-5 w-10">
-                        <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" checked={selectedCheckbox.includes(value._id)} onCheckedChange={(checked)=> {
-                          if(checked){
+                        <Checkbox className="rounded border-gray-300 data-checked:bg-[#5A34FD] data-checked:border-[#5A34FD]" checked={selectedCheckbox.includes(value._id)} onCheckedChange={(checked) => {
+                          if (checked) {
                             setSelectedCheckbox([...selectedCheckbox, value._id])
-                          }else{
+                          } else {
                             setSelectedCheckbox(selectedCheckbox.filter((id) => id !== value._id))
                           }
                         }} />
@@ -293,17 +289,19 @@ export default function Brands() {
                       </TableCell>
                       <TableCell className="py-3.5 px-4 sm:px-5 text-right">
                         <div className="flex items-center justify-end gap-1.5">
+                          <Link to={`/products/brands/edit/${value._id}`}>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="w-8 h-8 rounded-lg cursor-pointer border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#5A34FD] hover:border-[#5A34FD]/30 shadow-2xs "
+                            >
+                              <Pencil className="w-3.5 h-3.5 " />
+                            </Button>
+                          </Link>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#5A34FD] hover:border-[#5A34FD]/30 shadow-2xs cursor-default"
-                          >
-                            <Pencil className="w-3.5 h-3.5" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-2xs cursor-default"
+                            className="w-8 h-8 rounded-lg cursor-pointer border border-gray-200 bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-2xs "
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </Button>
@@ -321,51 +319,58 @@ export default function Brands() {
           {/* 4. Footer Pagination */}
           <div className="p-4 sm:p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white">
             <span className="text-xs font-medium text-gray-500">
-              Showing 1 to 7 of 24 brands
+              {totalRecords > 0
+                ? `Showing ${startItem} to ${endItem} of ${totalRecords} brands`
+                : "No brands found"}
             </span>
 
-            <div className="flex items-center gap-1.5 self-center sm:self-auto">
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-400 cursor-default shadow-2xs"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
-              </Button>
+            {totalPages > 0 && (
+              <Pagination className="mx-0 w-auto">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (activePage > 1) {
+                          setCurrentPage(activePage - 1);
+                        }
+                      }}
+                      className={activePage <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
 
-              <Button className="w-8 h-8 rounded-lg border border-[#5A34FD] bg-[#F0EEFF] text-[#5A34FD] font-semibold text-xs cursor-default hover:bg-[#F0EEFF] p-0 shadow-2xs">
-                1
-              </Button>
-              <Button
-                variant="outline"
-                className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium cursor-default p-0 shadow-2xs"
-              >
-                2
-              </Button>
-              <Button
-                variant="outline"
-                className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium cursor-default p-0 shadow-2xs"
-              >
-                3
-              </Button>
-              <span className="px-1.5 text-xs text-gray-400 font-medium select-none">
-                ...
-              </span>
-              <Button
-                variant="outline"
-                className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium cursor-default p-0 shadow-2xs"
-              >
-                4
-              </Button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href="#"
+                        isActive={page === activePage}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(page);
+                        }}
+                        className="cursor-pointer"
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
 
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 cursor-default shadow-2xs"
-              >
-                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-              </Button>
-            </div>
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (activePage < totalPages) {
+                          setCurrentPage(activePage + 1);
+                        }
+                      }}
+                      className={activePage >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            )}
           </div>
         </CardContent>
       </Card>
