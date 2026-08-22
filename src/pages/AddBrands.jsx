@@ -61,7 +61,6 @@ export default function AddBrands() {
     const form = e.target
     const formData = new FormData()
     formData.append("name", form.name.value)
-    formData.append("slug", form.slug.value)
     formData.append("description", form.description.value)
     formData.append("website", form.website.value)
     formData.append("displayOrder", form.displayOrder.value)
@@ -127,9 +126,9 @@ export default function AddBrands() {
     }
   }
   return (
-    <div className="min-h-screen bg-[#FAFBFD] p-6 md:p-8 space-y-6">
+    <div className="min-h-screen bg-[#FAFBFD] p-3.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
       {/* Top Header & Breadcrumbs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <Breadcrumb className="mb-2">
             <BreadcrumbList>
@@ -148,21 +147,21 @@ export default function AddBrands() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight ">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
             {id ? "Edit Brand" : "Add Brand"}
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
             {id ? "Update brand information" : "Create a new brand and add details"}
           </p>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-3">
-          <Link to="/products/brands">
+        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+          <Link to="/products/brands" className="flex-1 sm:flex-initial">
             <Button
               type="button"
               variant="outline"
-              className="bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium px-4 py-2 rounded-lg text-sm cursor-pointer shadow-2xs"
+              className="w-full bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium px-4 py-2 rounded-lg text-sm cursor-pointer shadow-2xs"
             >
               Cancel
             </Button>
@@ -170,7 +169,7 @@ export default function AddBrands() {
           <Button
             type="submit"
             form="brandForm"
-            className="bg-[#5A34FD] hover:bg-[#4a29e0] text-white font-medium px-5 py-2 rounded-lg text-sm cursor-pointer shadow-2xs transition-colors"
+            className="flex-1 sm:flex-initial bg-[#5A34FD] hover:bg-[#4a29e0] text-white font-medium px-5 py-2 rounded-lg text-sm cursor-pointer shadow-2xs transition-colors"
           >
             {id ? "Update Brand" : "Save Brand"}
           </Button>

@@ -87,8 +87,8 @@ export default function AppSidebar() {
 
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton className='cursor-pointer' >
-                        <Link to="/products/categories">
-                          Categories
+                        <Link to="/products/collection">
+                          Collections
                         </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
