@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,14 +7,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Image as ImageIcon, Upload, Sliders, ListOrdered, } from "lucide-react";
 import axios from "axios";
-import { toast } from "@/components/ui/Toast";
+import { toast } from "@/components/ui/toast";
 
 
 export default function AddBrands() {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [details, setDetails] = useState();
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState();
   const [logo, setLogo] = useState(null);
   const baseurl = import.meta.env.VITE_API_IMAGE_URL;
   const [logoPreview, setLogoPreview] = useState(null);
@@ -24,19 +25,16 @@ export default function AddBrands() {
     if (id) {
       axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/details/${id}`)
         .then((res) => {
-          console.log(res.data);
-          
           if (res.data.data) {
             setDetails(res.data.data);
             const preview = baseurl + res.data.data.logo
-            console.log(preview);
             setLogoPreview(preview)
             setLogo(res.data.data.logo)
 
-            if (res.data.data.status === "1") {
-              setStatus(true)
+            if (res.data.data.status === 1) {
+              setStatus(true);
             } else {
-              setStatus(false)
+              setStatus(false);
             }
           }
         }).catch((err) => {
@@ -79,28 +77,43 @@ export default function AddBrands() {
         formData
       )
         .then((res) => {
-          if (res.data.res) {
-            toast.success(res.data.message)
-            setTimeout(() => {
-              window.location.href = "/products/brands"
-            }, 1000);
+          if (res.data.result || res.status === 201) {
+            toast.add({
+              type: "success",
+              description: res.data.message,
+            })
+            navigate("/products/brands")
           }
         }).catch((err) => {
-          console.log("FULL ERROR:", err);
-          console.log("ERROR RESPONSE:", err.response?.data);
-        })
+          console.log("CREATE BRAND ERROR:", err);
+
+          toast.add({
+            type: "error",
+            description:
+              err.response?.data?.message ||
+              "Something went wrong",
+          });
+        });
     } else {
       axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/create`, formData)
         .then((res) => {
-          if (res.data.res) {
-            toast.success(res.data.message)
-            setTimeout(() => {
-              window.location.href = "/products/brands"
-            }, 1000);
+          if (res.data.result || res.status === 201) {
+            toast.add({
+              type: "success",
+              description: res.data.message,
+            })
+            navigate("/products/brands")
           }
         }).catch((err) => {
-          console.log(err.message);
-        })
+          toast.add({
+            type: "error",
+            title: "Error",
+            description:
+              err.response?.data?.message ||
+              "Brand already exists or something went wrong",
+          });
+        });
+
     }
 
   }
@@ -167,8 +180,9 @@ export default function AddBrands() {
       {/* Main Grid Layout - 12 Columns */}
       <form onSubmit={handleSubmit} id="brandForm" >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column - 7 Columns: Brand Information */}
-          <div className="lg:col-span-7">
+          {/* Left Column - 7 Columns: Brand Information & Display Order */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Card 1: Brand Information */}
             <Card className="bg-white rounded-xl border border-gray-200/80 shadow-2xs p-6">
               <CardContent className="p-0 space-y-6">
                 {/* Card Header */}
@@ -183,9 +197,9 @@ export default function AddBrands() {
                 </div>
 
                 {/* Form Fields */}
-                <div className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* 1. Brand Name */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 sm:col-span-2">
                     <label className="text-sm font-semibold text-gray-900 flex items-center gap-1">
                       Brand Name <span className="text-red-500">*</span>
                     </label>
@@ -195,30 +209,13 @@ export default function AddBrands() {
                       placeholder="Enter brand name"
                       onChange={(e) => removeError(e)}
                       defaultValue={details?.name}
-                      className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD]"
+                      className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD] w-full"
                     />
                     {nameError && <p className="text-red-500 text-sm">Brand name is required</p>}
                   </div>
 
-                  {/* 2. Slug */}
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-semibold text-gray-900 flex items-center gap-1">
-                      Slug
-                    </label>
-                    <Input
-                      type="text"
-                      name="slug"
-                      defaultValue={details?.slug}
-                      placeholder="brand-slug (optional)"
-                      className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD]"
-                    />
-                    <p className="text-xs text-gray-500 pt-0.5">
-                      URL friendly unique identifier. Auto-generated from brand name.
-                    </p>
-                  </div>
-
-                  {/* 3. Description */}
-                  <div className="space-y-1.5">
+                  {/* 2. Description */}
+                  <div className="space-y-1.5 sm:col-span-2">
                     <label className="text-sm font-semibold text-gray-900">
                       Description
                     </label>
@@ -227,15 +224,15 @@ export default function AddBrands() {
                       name="description"
                       defaultValue={details?.description}
                       rows={4}
-                      className="min-h-[110px] rounded-lg border-gray-200 bg-white p-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD] resize-y"
+                      className="min-h-[110px] rounded-lg border-gray-200 bg-white p-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD] resize-y w-full"
                     />
                     <p className="text-xs text-gray-500 pt-0.5">
                       Brief description about the brand. This will not be visible to customers.
                     </p>
                   </div>
 
-                  {/* 4. Website */}
-                  <div className="space-y-1.5">
+                  {/* 3. Website */}
+                  <div className="space-y-1.5 sm:col-span-2">
                     <label className="text-sm font-semibold text-gray-900">
                       Website
                     </label>
@@ -244,7 +241,7 @@ export default function AddBrands() {
                       name="website"
                       defaultValue={details?.website}
                       placeholder="https://brandwebsite.com"
-                      className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD]"
+                      className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD] w-full"
                     />
                     <p className="text-xs text-gray-500 pt-0.5">
                       Official website of the brand (optional)
@@ -253,9 +250,37 @@ export default function AddBrands() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Card 2: Display Order */}
+            <Card className="bg-white rounded-xl border border-gray-200/80 shadow-2xs p-6">
+              <CardContent className="p-0 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-[#EEEDFF] text-[#5A34FD] flex items-center justify-center shrink-0">
+                    <ListOrdered className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-semibold text-gray-900">Display Order</h2>
+                    <p className="text-xs text-gray-500">Set display order for this brand</p>
+                  </div>
+                </div>
+
+                {/* Static Number Input */}
+                <div className="space-y-1.5 pt-1">
+                  <Input
+                    type="number"
+                    name="displayOrder"
+                    defaultValue={details?.displayOrder}
+                    className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD] w-full"
+                  />
+                  <p className="text-xs text-gray-500 pt-0.5">
+                    Brands with lower order value will be displayed first.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Right Column - 5 Columns: Brand Logo, Status, Display Order */}
+          {/* Right Column - 5 Columns: Brand Logo, Status */}
           <div className="lg:col-span-5 space-y-6">
             {/* Card 1: Brand Logo */}
             <Card className="bg-white rounded-xl border border-gray-200/80 shadow-2xs p-6">
@@ -383,34 +408,6 @@ export default function AddBrands() {
                       </span>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Card 3: Display Order */}
-            <Card className="bg-white rounded-xl border border-gray-200/80 shadow-2xs p-6">
-              <CardContent className="p-0 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-[#EEEDFF] text-[#5A34FD] flex items-center justify-center shrink-0">
-                    <ListOrdered className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-base font-semibold text-gray-900">Display Order</h2>
-                    <p className="text-xs text-gray-500">Set display order for this brand</p>
-                  </div>
-                </div>
-
-                {/* Static Number Input */}
-                <div className="space-y-1.5 pt-1">
-                  <Input
-                    type="number"
-                    name="displayOrder"
-                    defaultValue={details?.displayOrder}
-                    className="h-10 rounded-lg border-gray-200 bg-white px-3.5 text-sm text-gray-900 focus-visible:ring-1 focus-visible:ring-[#5A34FD] focus-visible:border-[#5A34FD]"
-                  />
-                  <p className="text-xs text-gray-500 pt-0.5">
-                    Brands with lower order value will be displayed first.
-                  </p>
                 </div>
               </CardContent>
             </Card>

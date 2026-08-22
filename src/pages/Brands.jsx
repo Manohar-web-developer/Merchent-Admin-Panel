@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Plus, Tag, FileCheck, Package, Search, Filter, ChevronDown, Pencil, Trash2, ChevronLeft, ChevronRight, } from "lucide-react";
+import { Plus, Tag, FileCheck, Package, Search, Filter, ChevronDown, Pencil, Trash2, ChevronLeft, ChevronRight, CheckCircle, Trash2Icon, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,29 +8,44 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious,} from "@/components/ui/pagination"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, } from "@/components/ui/pagination"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import axios from "axios";
+import { toast } from "@/components/ui/toast";
 
 export default function Brands() {
 
   const [products, setProducts] = useState([]);
   const [selectedCheckbox, setSelectedCheckbox] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/view`, {
       page: currentPage,
       limit: limit,
+      name: search,
     })
       .then((res) => {
-        if (res.data) {
-          setProducts(res.data);
-        }
+        setSelectedCheckbox([]);
+        fetchBrands();
       })
       .catch((err) => {
         console.log(err);
       });
   }, [currentPage]);
+
+  const fetchBrands = async () => {
+    const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/view`, {
+      page: currentPage,
+      limit: limit,
+      name: search,
+    });
+    setProducts(res.data);
+  };
+
+  const handleSearch = () => {
+    fetchBrands();
+  }
 
   const pagination = products?.pagination || {};
   const totalRecords = pagination.totalRecords ?? (products?.totalRecords || products?._data?.length || 0);
@@ -39,6 +54,54 @@ export default function Brands() {
   const limit = pagination.limit ?? 10;
   const startItem = totalRecords > 0 ? (activePage - 1) * limit + 1 : 0;
   const endItem = Math.min(activePage * limit, totalRecords);
+
+
+  const deleteRecord = (id) => {
+    const targetIds = Array.isArray(id) ? id : [id];
+    axios.put(`${import.meta.env.VITE_API_BASE_URL}brand/delete`, {
+      ids: targetIds
+    })
+      .then((res) => {
+
+        if (res.data) {
+          toast.add({
+            type: "success",
+            description: res.data.message,
+          })
+          fetchBrands();
+          setSelectedCheckbox([])
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setProducts(prev => ({ ...prev, _data: prev._data.filter(item => item._id !== id) }));
+
+  }
+
+  const statusUpdate = (id, status) => {
+    const targetIds = Array.isArray(id) ? id : [id];
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/status`, {
+      ids: targetIds,
+      status: status
+    })
+      .then((res) => {
+        if (res.data) {
+          toast.add({
+            type: "success",
+            description: res.data.message,
+          })
+          fetchBrands();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+
+
   return (
     <div className="min-h-screen bg-[#FAFBFD] p-4 sm:p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       {/* 1. Header */}
@@ -152,27 +215,58 @@ export default function Brands() {
             <div className="flex items-center gap-3 flex-wrap">
               <div className="flex items-center gap-2 pr-1">
                 <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">
-                  0 selected
+                  {selectedCheckbox.length || 0} selected
                 </span>
               </div>
 
               {/* Bulk Actions Button */}
-              <Button
-                variant="ghost"
-                className="bg-[#F0EEFF] text-[#5A34FD] border border-[#E0DCFF] hover:bg-[#E4E0FF] px-3.5 py-2 h-auto rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow-2xs cursor-default"
-              >
-                <span>Bulk Actions</span>
-                <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant="ghost" className="bg-[#F0EEFF] text-[#5A34FD] border border-[#E0DCFF] hover:bg-[#E4E0FF] px-3.5 py-2 h-auto rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow-2xs cursor-default" />}>
+                  <span>Bulk Actions</span>
+                  <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>Status</DropdownMenuLabel>
+                    <DropdownMenuItem className="cursor-pointer text-[#10B981]" onClick={() => statusUpdate(selectedCheckbox, "1")}>
+                      <CheckCircle className="w-3.5 h-3.5 text-[#10B981] mr-2" />
+                      Active
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer text-[#EF4444]" onClick={() => statusUpdate(selectedCheckbox, "0")}>
+                      <Tag className="w-3.5 h-3.5 text-[#EF4444] mr-2" />
+                      Inactive
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="cursor-pointer  text-[#EF4444]" onClick={() => deleteRecord(selectedCheckbox)}>
+                      <Trash2Icon className="w-3.5 h-3.5 text-[#EF4444] mr-2" />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
 
               {/* Change Status Button */}
-              <Button
-                variant="outline"
-                className="bg-white text-[#5A34FD] border border-gray-200 hover:bg-gray-50 px-3.5 py-2 h-auto rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow-2xs cursor-default"
-              >
-                <span>Change Status</span>
-                <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant="ghost" className="bg-[#F0EEFF] text-[#5A34FD] border border-[#E0DCFF] hover:bg-[#E4E0FF] px-3.5 py-2 h-auto rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow-2xs cursor-default" />}>
+                  <span>Change Status</span>
+                  <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="cursor-pointer text-[#10B981]" onClick={() => statusUpdate(selectedCheckbox, "1")}>
+                      <CheckCircle className="w-3.5 h-3.5 text-[#10B981] mr-2" />
+                      Active
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer text-[#EF4444]" onClick={() => statusUpdate(selectedCheckbox, "0")}>
+                      <Tag className="w-3.5 h-3.5 text-[#EF4444] mr-2" />
+                      Inactive
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             {/* Right Side Controls */}
@@ -183,7 +277,9 @@ export default function Brands() {
                 <Input
                   type="text"
                   placeholder="Search brands..."
-                  readOnly
+                  onKeyUp={handleSearch}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="h-9 w-full pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-xs text-gray-900 placeholder:text-gray-400 shadow-2xs focus-visible:ring-0 focus-visible:border-gray-200 cursor-default"
                 />
               </div>
@@ -300,6 +396,7 @@ export default function Brands() {
                           </Link>
                           <Button
                             variant="outline"
+                            onClick={() => deleteRecord(value._id)}
                             size="icon"
                             className="w-8 h-8 rounded-lg cursor-pointer border border-gray-200 bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-2xs "
                           >
