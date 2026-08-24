@@ -6,7 +6,7 @@ import Dashboard from "../pages/Dashboard";
 // Products
 import Products from "../pages/Products";
 import NewProducts from "../pages/NewProducts";
-import Categories from "../pages/Categories";
+import Categories from "../pages/Collection";
 import Brands from "../pages/Brands";
 
 // Orders
@@ -32,6 +32,11 @@ import Shipping from "../pages/Shipping";
 import EditProducts from "@/pages/EditProducts";
 import Material from "@/pages/Material";
 import AddBrands from "@/pages/AddBrands";
+import AddCategories from "@/components/layout/AddCategories";
+import Collection from "../pages/Collection";
+import Category from "@/pages/Category";
+import SubCategory from "@/pages/SubCategory";
+import SubSubCategory from "@/pages/SubSubCategory";
 
 export default function AppRoutes() {
   return (
@@ -45,7 +50,13 @@ export default function AppRoutes() {
         <Route path="/products" element={<Products />}>
           <Route path="new" element={<NewProducts />} />
           <Route path="edit/:handle" element={<EditProducts />} />
-          <Route path="collection" element={<Categories />} />
+
+          {/* <Route path="collection">
+            <Route index element={<Collection />} />
+            <Route path="add" element={<AddCategories />} />
+            <Route path="edit/:id" element={<AddCategories />} />
+          </Route> */}
+
           <Route path="brands">
             <Route index element={<Brands />} />
             <Route path="add" element={<AddBrands />} />
@@ -79,6 +90,9 @@ export default function AppRoutes() {
           <Route path="payment-methods" element={<PaymentMethods />} />
           <Route path="shipping" element={<Shipping />} />
         </Route>
+        <Route path="/category" element={<Category />} />
+        <Route path="/sub-category" element={<SubCategory />} />
+        <Route path="/sub-sub-category" element={<SubSubCategory />} />
       </Route>
     </Routes>
   );

@@ -56,7 +56,7 @@ function Material() {
 
     axios
       .post(
-        `${import.meta.env.VITE_API_BASE_URL}/material/details/${materialId}`
+        `${import.meta.env.VITE_API_BASE_URL}material/details/${materialId}`
       )
       .then((res) => {
         setFormData({
@@ -156,7 +156,7 @@ function Material() {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/material/change-status`,
+        `${import.meta.env.VITE_API_BASE_URL}material/change-status`,
         {
           ids: selectedCheckbox,
         }
@@ -187,7 +187,7 @@ function Material() {
     try {
       const targetIds = Array.isArray(ids) ? ids : [ids];
       const res = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/material/delete`,
+        `${import.meta.env.VITE_API_BASE_URL}material/delete`,
         {
           ids: targetIds,
         }
