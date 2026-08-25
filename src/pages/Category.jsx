@@ -7,6 +7,7 @@ import axios from "axios";
 
 function Category() {
   const [Categories,setCategories] = useState([])
+
   useEffect(()=>{
     axios.post(`http://localhost:4000/api/admin/category/view`, {
       limit: 100
@@ -15,6 +16,7 @@ function Category() {
       setCategories(res.data._data)
     })
   }, [])
+  
   return (
     <div className="w-full h-full bg-secondary-200 p-9 flex flex-col min-h-0 overflow-hidden">
       <div className="flex items-center justify-between shrink-0">
@@ -34,9 +36,7 @@ function Category() {
 
         </div>
         <div className="flex-1 flex min-h-0 overflow-hidden">
-          <div className="w-full bg-white flex flex-col h-full min-h-0 overflow-hidden">
-            <CategoryFilters categories={Categories}/>
-          </div>
+          <CategoryFilters />
         </div>
       </div>
     </div>

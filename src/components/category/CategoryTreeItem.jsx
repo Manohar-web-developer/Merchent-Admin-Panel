@@ -67,7 +67,7 @@ function CategoryTreeItem({ category, level = 0 }) {
 
                     {category.children.map((child) => (
                         <CategoryTreeItem
-                            key={child.id}
+                            key={child._id}
                             category={child}
                             level={level + 1}
                         />
