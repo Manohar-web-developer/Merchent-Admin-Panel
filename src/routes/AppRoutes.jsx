@@ -33,10 +33,7 @@ import EditProducts from "@/pages/EditProducts";
 import Material from "@/pages/Material";
 import AddBrands from "@/pages/AddBrands";
 import AddCategories from "@/components/layout/AddCategories";
-import Collection from "../pages/Collection";
 import Category from "@/pages/Category";
-import SubCategory from "@/pages/SubCategory";
-import SubSubCategory from "@/pages/SubSubCategory";
 
 export default function AppRoutes() {
   return (
@@ -91,8 +88,7 @@ export default function AppRoutes() {
           <Route path="shipping" element={<Shipping />} />
         </Route>
         <Route path="/category" element={<Category />} />
-        <Route path="/sub-category" element={<SubCategory />} />
-        <Route path="/sub-sub-category" element={<SubSubCategory />} />
+        
       </Route>
     </Routes>
   );

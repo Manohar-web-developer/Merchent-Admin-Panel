@@ -3,6 +3,26 @@ import CategoryTreeItem from "./CategoryTreeItem";
 import { Search } from "lucide-react";
 
 function CategoryTree({ categories }) {
+
+    const categoryMap = {};
+
+    categories.forEach((category) => {
+        categoryMap[category._id] = {
+            ...category,
+            children: []
+        }
+    });
+    categories.forEach((category) => {
+        if (category.parent) {
+            const ParentId = category.parent._id;
+
+            categoryMap[ParentId]?.children.push(categoryMap[category._id])
+        }
+    })
+
+    const rootCategory = categories.filter((category) => !category.parent).map((category) => categoryMap[category._id])
+
+
     return (
         <div className="flex w-full h-full flex-col justify-start p-3 min-h-0 overflow-hidden">
             <div className="relative mb-3 shrink-0">
@@ -18,11 +38,13 @@ function CategoryTree({ categories }) {
                 />
             </div>
             <div className="flex-1 min-h-0 overflow-y-auto pr-1">
-                {categories.map((category) => {
-                    return (
-                        <CategoryTreeItem key={category.id} category={category} />
-                    )
-                })}
+                {rootCategory.map((category) => (
+                    <CategoryTreeItem
+                        key={category._id}
+                        category={category}
+                        level={0}
+                    />
+                ))}
             </div>
         </div>
     );

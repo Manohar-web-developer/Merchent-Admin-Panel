@@ -267,66 +267,10 @@ export default function AppSidebar() {
                       <Folder className="w-4 h-4" />
                       <span>Category</span>
                     </div>
-                    {state === "expanded" && (
-                      <ChevronRight
-                        className={cn(
-                          "w-4 h-4 transition-transform duration-200",
-                          isCategoryOpen && "rotate-90"
-                        )}
-                      />
-                    )}
                   </SidebarMenuButton>
                 </Link>
 
-                {state === "expanded" && isCategoryOpen && (
-                  <SidebarMenuSub className="border-l-0 mx-0 ml-7 px-0 py-0 flex flex-col gap-0.5">
-                    {/* Sub Category Level */}
-                    <SidebarMenuSubItem className="relative flex flex-col">
-                      <span className="absolute -left-3 top-0 w-3 h-[14px] border-l border-b border-sidebar-border rounded-bl-sm pointer-events-none" />
-                      <Link to='/sub-category' className="w-full">
-                        <SidebarMenuSubButton
-                          className='cursor-pointer w-full justify-between'
-                          isActive={isSubCategoryActive}
-                          onClick={() => {
-                            setIsSubCategoryOpen((prev) => !prev);
-                          }}
-                        >
-                          <div className="flex items-center gap-2">
-                            <Folders className="w-4 h-4" />
-                            <span>Sub Category</span>
-                          </div>
-                          <ChevronRight
-                            className={cn(
-                              "w-4 h-4 transition-transform duration-200",
-                              isSubCategoryOpen && "rotate-90"
-                            )}
-                          />
-                        </SidebarMenuSubButton>
-                      </Link>
-
-                      {/* Sub Sub Category Level */}
-                      {isSubCategoryOpen && (   
-                        <SidebarMenuSub className="border-l-0 mx-0 ml-7 px-0 py-0 flex flex-col gap-0.5 mt-0.5">
-                          <SidebarMenuSubItem className="relative flex flex-col">
-                            {/* L-shaped Tree Connector Line (└──) */}
-                            <span className="absolute -left-3 top-0 w-3 h-[14px] border-l border-b border-sidebar-border rounded-bl-sm pointer-events-none" />
-                            <Link to='/sub-sub-category' className="w-full">
-                              <SidebarMenuSubButton
-                                className='cursor-pointer w-full justify-between'
-                                isActive={isSubSubCategoryActive}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <FolderTree className="w-4 h-4" />
-                                  <span>Sub Sub Category</span>
-                                </div>
-                              </SidebarMenuSubButton>
-                            </Link>
-                          </SidebarMenuSubItem>
-                        </SidebarMenuSub>
-                      )}
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                )}
+                
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>

@@ -36,8 +36,6 @@ function Header() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [])
   const [search, setSearch] = useState("");
-
-  console.log(search);
   
   const user = [
 

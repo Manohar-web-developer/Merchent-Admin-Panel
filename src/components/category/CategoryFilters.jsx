@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Button } from '../ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-export default function CategoryFilters() {
+export default function CategoryFilters({ categories = [] }) {
     return (
         <div className='bg-white w-full h-full border border-gray-200 rounded-xl p-3 flex flex-col min-h-0 overflow-hidden'>
             <div className="flex w-full justify-between items-center gap-5 mb-3 shrink-0">
@@ -57,7 +57,7 @@ export default function CategoryFilters() {
                 </div>
             </div>
             <div className="flex-1 min-h-0 overflow-hidden">
-                <CategoryTable />
+                <CategoryTable categories={categories} />
             </div>
         </div>
     )

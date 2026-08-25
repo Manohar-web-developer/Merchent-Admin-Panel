@@ -1,174 +1,79 @@
 import React from "react";
-import {
-    Table,
-    TableHeader,
-    TableBody,
-    TableRow,
-    TableHead,
-    TableCell,
-} from "@/components/ui/table";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-    MoreHorizontal,
-    Pencil,
-    Trash2,
-    FolderTree,
-    Folder,
-    Folders,
-    Eye,
+    Pencil, Trash2, Folder,
 } from "lucide-react";
 
-const mockCategories = [
-    {
-        id: "1",
-        name: "Furniture",
-        parent: "—",
-        level: 0,
-        status: "Active",
-    },
-    {
-        id: "2",
-        name: "Living Room",
-        parent: "Furniture",
-        level: 1,
-        status: "Active",
-    },
-    {
-        id: "3",
-        name: "Sofas",
-        parent: "Living Room",
-        level: 2,
-        status: "Active",
-    },
-    {
-        id: "4",
-        name: "Coffee Tables",
-        parent: "Living Room",
-        level: 2,
-        status: "Inactive",
-    },
-    {
-        id: "5",
-        name: "Bedroom",
-        parent: "Furniture",
-        level: 1,
-        status: "Active",
-    },
-    {
-        id: "6",
-        name: "Electronics",
-        parent: "—",
-        level: 0,
-        status: "Active",
-    },
-    {
-        id: "7",
-        name: "Mobiles",
-        parent: "Electronics",
-        level: 1,
-        status: "Active",
-    },
-    {
-        id: "8",
-        name: "Smartphones",
-        parent: "Mobiles",
-        level: 2,
-        status: "Inactive",
-    },
-    
-];
-
-export default function CategoryTable() {
+export default function CategoryTable({ categories = [] }) {
     return (
         <div className="w-full h-full border border-gray-200 bg-white shadow-xs overflow-y-auto rounded-lg">
-            <Table>
+            <Table className="w-full table-fixed">
                 <TableHeader className="bg-gray-50/80 sticky top-0 z-10 backdrop-blur-xs">
-                    <TableRow>
-                        <TableHead className="font-semibold text-gray-700">
+                    <TableRow className="border-b border-gray-200">
+                        <TableHead className="w-12 pl-4 pr-2 py-3.5 align-middle">
+                            <Checkbox id="select-all-categories" className='cursor-pointer'/>
+                        </TableHead>
+                        <TableHead className="w-[36%] px-4 py-3.5 font-semibold text-gray-700 align-middle">
                             Category Name
                         </TableHead>
 
-                        <TableHead className="font-semibold text-gray-700">
+                        <TableHead className="w-[24%] px-4 py-3.5 font-semibold text-gray-700 align-middle">
                             Parent Category
                         </TableHead>
 
-                        <TableHead className="font-semibold text-gray-700">
+                        <TableHead className="w-[18%] px-4 py-3.5 font-semibold text-gray-700 text-center align-middle">
                             Status
                         </TableHead>
 
-                        <TableHead className="font-semibold text-gray-700 text-right pr-6" >
+                        <TableHead className="w-[18%] pl-4 pr-6 py-3.5 font-semibold text-gray-700 text-right align-middle">
                             Actions
                         </TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {mockCategories.map((category, index) => {
-
-                        const nextCategory = mockCategories[index + 1];
-
-                        const isLastChild =
-                            !nextCategory ||
-                            nextCategory.level < category.level;
-
+                    {categories.map((category) => {
                         return (
                             <TableRow
-                                key={category.id}
-                                className="hover:bg-gray-50/60 transition-colors"
+                                key={category._id}
+                                className="hover:bg-gray-50/60 transition-colors border-b border-gray-200"
                             >
+                                {/* Checkbox */}
+                                <TableCell className="w-12 pl-4 pr-2 py-3.5 align-middle">
+                                    <Checkbox id={`category-${category._id}`} className='cursor-pointer'/>
+                                </TableCell>
                                 {/* Category */}
-                                <TableCell>
-                                    <div
-                                        className="relative flex items-center gap-2"
-                                        style={{
-                                            marginLeft: `${category.level * 20}px`,
-                                        }}
-                                    >
-                                        {category.level > 1 && (
-                                            <div
-                                                className="absolute left-[-12px] top-0 bottom-0 border-l border-gray-200"
-                                            />
-                                        )}
-
-                                        {category.level === 0 ? (
-                                            <Folder size={14} strokeWidth={1} />
-                                        ) : category.level === 1 ? (
-                                            <Folders size={14} strokeWidth={1} />
-                                        ) : (
-                                            <FolderTree size={14} strokeWidth={1} />
-                                        )}
-
-                                        <span>{category.name}</span>
+                                <TableCell className="w-[36%] px-4 py-3.5 align-middle">
+                                    <div className="flex items-center gap-2">
+                                        <Folder size={14} strokeWidth={1} className="shrink-0 text-gray-500" />
+                                        <span className="truncate text-gray-900 text-sm">{category.name}</span>
                                     </div>
                                 </TableCell>
 
                                 {/* Parent */}
-                                <TableCell className="text-gray-600 py-3.5">
-                                    {category.parent}
+                                <TableCell className="w-[24%] px-4 py-3.5 text-gray-600 align-middle text-sm">
+                                    {category.parent?.name || "—"}
                                 </TableCell>
 
                                 {/* Status */}
-                                <TableCell className="py-3.5">
+                                <TableCell className="w-[18%] px-4 py-3.5 text-center align-middle">
                                     <Badge
                                         variant={
-                                            category.status === "Active"
+                                            category.status
                                                 ? "active"
                                                 : "inactive"
                                         }
                                     >
-                                        {category.status}
+                                        {category.status ? "Active"
+                                            : "Inactive"}
                                     </Badge>
                                 </TableCell>
 
                                 {/* Actions */}
-                                <TableCell className="text-right py-3.5 pr-4">
+                                <TableCell className="w-[18%] pl-4 pr-6 py-3.5 text-right align-middle">
                                     <div className="flex items-center justify-end gap-1">
 
                                         <Button variant="ghost" size="sm" className="h-8 w-8 text-gray-500 hover:text-gray-900 rounded-lg cursor-pointer text-green-600 hover:bg-green-600 hover:bg-opacity-10" title="Edit">
@@ -185,6 +90,6 @@ export default function CategoryTable() {
                     })}
                 </TableBody>
             </Table>
-        </div>      
+        </div>
     );
 }
