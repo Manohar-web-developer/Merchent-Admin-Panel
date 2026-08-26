@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -22,11 +22,10 @@ import {
 
 
 
-export default function CategoryTable({ categories, pagination, setCurrentPage, currentPage }) {
+export default function CategoryTable({ categories, pagination, setCurrentPage, currentPage, selectedCategories, setSelectedCategories }) {
 
   const totalPages = pagination?.totalPages;
-  
-  const [selectedCategories, setSelectedCategories] = useState([]);
+
 
   const handlePageClick = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -35,7 +34,8 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
   };
 
 
-  
+
+
   return (
     <div className="flex flex-col h-full min-h-0 border border-gray-200 bg-white shadow-xs rounded-lg overflow-hidden">
       <Table
@@ -86,7 +86,7 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
                       } else {
                         setSelectedCategories(selectedCategories.filter((id) => id !== category._id));
                       }
-                    }   }
+                    }}
                   />
                 </TableCell>
                 {/* Category */}
@@ -146,22 +146,23 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" onClick={() => handlePageClick(currentPage - 1)} disabled={currentPage === 1}/>
+              <PaginationPrevious href="#" onClick={() => handlePageClick(currentPage - 1)} disabled={currentPage === 1} />
             </PaginationItem>
             {
               Array.from({ length: totalPages }).map((_, index) => {
                 const pageNumber = index + 1;
                 const isActive = currentPage === pageNumber;
                 return (
-                <PaginationItem key={index}>
-                  <PaginationLink href="#" onClick={() => handlePageClick(pageNumber)} className={isActive ? "bg-primary text-white" : ""}>
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-              )})}
+                  <PaginationItem key={index}>
+                    <PaginationLink href="#" onClick={() => handlePageClick(pageNumber)} className={isActive ? "bg-primary text-white" : ""}>
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              })}
 
             <PaginationItem>
-              <PaginationNext href="#" onClick={() => handlePageClick(currentPage + 1)} disabled={currentPage === totalPages}/>
+              <PaginationNext href="#" onClick={() => handlePageClick(currentPage + 1)} disabled={currentPage === totalPages} />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
