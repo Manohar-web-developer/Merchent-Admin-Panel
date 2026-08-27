@@ -10,16 +10,15 @@ import {
   SelectValue,
 } from "../ui/select";
 import axios from "axios";
-import { toast } from "@/components/ui/toast"
 
-export default function CategoryFilters() {
+export default function CategoryFilters({ setDialogeOpen, setEditCategory }) {
   const [categories, setCategories] = useState([]);
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [sortNumber, setSortNumber] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
 
 
@@ -41,19 +40,31 @@ export default function CategoryFilters() {
   }, [currentPage, searchValue, sortNumber, refresh]);
 
   const statusChange = (status) => {
-  axios
-    .post(`${import.meta.env.VITE_API_BASE_URL}category/status`, {
-      ids: selectedCategories,
-      status: status,
+    axios
+      .post(`${import.meta.env.VITE_API_BASE_URL}category/status`, {
+        ids: selectedCategories,
+        status: status,
+      })
+      .then((res) => {
+        setSelectedCategories([]);
+        setRefresh((prev) => !prev);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const deleteCategory = (id) => {
+    axios.put(`${import.meta.env.VITE_API_BASE_URL}category/delete`, {
+      ids: Array.isArray(id) ? id : [id],
     })
-    .then((res) => {
-      setSelectedCategories([]);
-      setRefresh((prev) => !prev);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+      .then((res) => {
+        setSelectedCategories([]);
+        setRefresh((prev) => !prev);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="bg-white w-full h-full border border-gray-200 rounded-xl p-3 flex flex-col min-h-0 overflow-hidden">
 
@@ -99,6 +110,7 @@ export default function CategoryFilters() {
                 variant="destructive"
                 size="sm"
                 className="h-9 cursor-pointer"
+                onClick={() => deleteCategory(selectedCategories)}
               >
                 Delete
               </Button>
@@ -152,7 +164,13 @@ export default function CategoryFilters() {
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories} />
+          setSelectedCategories={setSelectedCategories}
+          deleteCategory={deleteCategory}
+          onEdit={(cat) => {
+            if (setEditCategory) setEditCategory(cat);
+            if (setDialogeOpen) setDialogeOpen(true);
+          }}
+        />
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ import {
 
 
 
-export default function CategoryTable({ categories, pagination, setCurrentPage, currentPage, selectedCategories, setSelectedCategories }) {
+export default function CategoryTable({ categories, pagination, setCurrentPage, currentPage, selectedCategories, setSelectedCategories, deleteCategory, onEdit }) {
 
   const totalPages = pagination?.totalPages;
 
@@ -32,10 +32,6 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
       setCurrentPage(pageNumber);
     }
   };
-
-
-
-
   return (
     <div className="flex flex-col h-full min-h-0 border border-gray-200 bg-white shadow-xs rounded-lg overflow-hidden">
       <Table
@@ -123,6 +119,7 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
                       size="sm"
                       className="h-8 w-8 text-gray-500 hover:text-gray-900 rounded-lg cursor-pointer text-green-600 hover:bg-green-600 hover:bg-opacity-10"
                       title="Edit"
+                      onClick={() => onEdit && onEdit(category)}
                     >
                       <Pencil size={16} />
                     </Button>
@@ -131,6 +128,7 @@ export default function CategoryTable({ categories, pagination, setCurrentPage, 
                       size="sm"
                       className="h-8 w-8 text-gray-500 hover:text-gray-900 rounded-lg cursor-pointer text-red-600 hover:bg-red-600 hover:bg-opacity-10"
                       title="Delete"
+                      onClick={() => deleteCategory(category._id)}
                     >
                       <Trash2 size={16} />
                     </Button>

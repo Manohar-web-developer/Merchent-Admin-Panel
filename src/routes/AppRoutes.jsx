@@ -88,7 +88,6 @@ export default function AppRoutes() {
           <Route path="shipping" element={<Shipping />} />
         </Route>
         <Route path="/category" element={<Category />} />
-        
       </Route>
     </Routes>
   );
