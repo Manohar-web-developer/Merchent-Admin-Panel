@@ -34,6 +34,7 @@ import Material from "@/pages/Material";
 import AddBrands from "@/pages/AddBrands";
 import AddCategories from "@/components/layout/AddCategories";
 import Category from "@/pages/Category";
+import Testimonials from "@/pages/Testimonials";
 
 export default function AppRoutes() {
   return (
@@ -88,6 +89,11 @@ export default function AppRoutes() {
           <Route path="shipping" element={<Shipping />} />
         </Route>
         <Route path="/category" element={<Category />} />
+
+        {/* Website */}
+        <Route path="/website" >
+          <Route path="testimonials" element={<Testimonials />} />
+        </Route>
       </Route>
     </Routes>
   );

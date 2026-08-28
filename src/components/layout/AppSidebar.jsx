@@ -10,6 +10,7 @@ import {
   Folders,
   FolderTree,
   ChevronRight,
+  ChevronsDown,
 } from "lucide-react";
 
 import {
@@ -46,8 +47,8 @@ export default function AppSidebar() {
   return (
     <>
       <Sidebar variant="sidebar" collapsible="icon" >
-        <div className=" px-2">
-          <SidebarHeader>
+        <div className=" px-2 mt-8 ">
+          {/* <SidebarHeader>
             <div className="flex items-center gap-2">
               <Package className="w-5 h-5" />
               {state === "expanded" && (
@@ -56,9 +57,9 @@ export default function AppSidebar() {
                 </span>
               )}
             </div>
-          </SidebarHeader>
+          </SidebarHeader> */}
           <SidebarContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-3">
               <SidebarMenuItem>
                 <Link to='/' >
                   <SidebarMenuButton className='cursor-pointer' onClick={() => setOpenMenu(openMenu === "dashboard" ? '' : "dashboard")} >
@@ -70,7 +71,7 @@ export default function AppSidebar() {
               <SidebarMenuItem>
 
                 <Link to="/products">
-                  <SidebarMenuButton className='cursor-pointer' onClick={() => {
+                  <SidebarMenuButton className='cursor-pointer flex items-center justify-between' onClick={() => {
 
                     if (state === "collapsed") {
                       setOpen(true);
@@ -80,8 +81,11 @@ export default function AppSidebar() {
                       openMenu === "products" ? "" : "products"
                     );
                   }} >
-                    <Package className="w-4 h-4" />
-                    <span>Products</span>
+                    <div className='flex items-center gap-2'>
+                      <Package className="w-4 h-4" />
+                      <span>Products</span>
+                    </div>
+                    {openMenu === 'products' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
 
                   </SidebarMenuButton>
                 </Link>
@@ -114,7 +118,7 @@ export default function AppSidebar() {
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
 
-                     <SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
                       <SidebarMenuSubButton className='cursor-pointer' >
                         <Link to="/products/material">
                           Material
@@ -128,14 +132,17 @@ export default function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Link to='/orders'>
-                  <SidebarMenuButton className='cursor-pointer' onClick={() => {
-                    if(state === "collapsed") {
+                  <SidebarMenuButton className='cursor-pointer  flex items-center justify-between' onClick={() => {
+                    if (state === "collapsed") {
                       setOpen(true)
                     }
                     setOpenMenu(openMenu === "orders" ? '' : "orders");
                   }}>
-                    <ShoppingCart className="w-4 h-4" />
-                    <span>Orders</span>
+                    <div className='flex items-center gap-2'>
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>Orders</span>
+                    </div>
+                    {openMenu === 'orders' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
 
                   </SidebarMenuButton>
                 </Link>
@@ -172,13 +179,18 @@ export default function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Link to='/analytics'>
-                  <SidebarMenuButton className='cursor-pointer' onClick={() =>{
-                    if(state === "collapsed"){
+                  <SidebarMenuButton className='cursor-pointer  flex items-center justify-between' onClick={() => {
+                    if (state === "collapsed") {
                       setOpen(true)
                     }
-                    setOpenMenu(openMenu === "analytics" ? '' : "analytics")}}>
-                    <ChartNoAxesCombined className="w-4 h-4" />
-                    <span>Analytics</span>
+                    setOpenMenu(openMenu === "analytics" ? '' : "analytics")
+                  }}>
+                    <div className='flex items-center gap-2'>
+
+                      <ChartNoAxesCombined className="w-4 h-4" />
+                      <span>Analytics</span>
+                    </div>
+                    {openMenu === 'analytics' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
 
                   </SidebarMenuButton>
                 </Link>
@@ -215,13 +227,18 @@ export default function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Link to='/settings'>
-                  <SidebarMenuButton className='cursor-pointer' onClick={() => {
-                    if(state === "collapsed"){
+                  <SidebarMenuButton className='cursor-pointer  flex items-center justify-between' onClick={() => {
+                    if (state === "collapsed") {
                       setOpen(true)
                     }
-                    setOpenMenu(openMenu === "settings" ? '' : "settings")}}>
-                    <Settings className="w-4 h-4" />
-                    <span>Settings</span>
+                    setOpenMenu(openMenu === "settings" ? '' : "settings")
+                  }}>
+                    <div className='flex items-center gap-2'>
+                      <Settings className="w-4 h-4" />
+                      <span>Settings</span>
+
+                    </div>
+                    {openMenu === 'settings' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
 
                   </SidebarMenuButton>
                 </Link>
@@ -254,14 +271,6 @@ export default function AppSidebar() {
                 <Link to='/category'>
                   <SidebarMenuButton
                     className='cursor-pointer w-full justify-between'
-                    isActive={isCategoryTreeActive}
-                    onClick={() => {
-                      if (state === "collapsed") {
-                        setOpen(true);
-                      }
-                      setOpenMenu(openMenu === "category" ? '' : "category");
-                      setIsCategoryOpen((prev) => !prev);
-                    }}
                   >
                     <div className="flex items-center gap-2">
                       <Folder className="w-4 h-4" />
@@ -270,11 +279,47 @@ export default function AppSidebar() {
                   </SidebarMenuButton>
                 </Link>
 
-                
+
               </SidebarMenuItem>
+
+              {/* Webiste Navigation */}
+
+              <SidebarMenuItem>
+
+                <SidebarMenuButton className='cursor-pointer flex items-center justify-between' onClick={() => {
+                  if (state === "collapsed") {
+                    setOpen(true)
+                  }
+                  setOpenMenu(openMenu === "website" ? '' : "website")
+                }}>
+                  <div className='flex items-center gap-2'>
+                    <Settings className="w-4 h-4" />
+                    <span>Website</span>
+                  </div>
+                  {openMenu === 'website' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+
+                </SidebarMenuButton>
+
+                {
+                  state === "expanded" && openMenu === 'website' && (
+                    <SidebarMenuSub>
+
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton className='cursor-pointer' >
+                          <Link to="/website/testimonials">
+                            Testimonials
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+
+                    </SidebarMenuSub>
+                  )}
+              </SidebarMenuItem>
+
+
             </SidebarMenu>
           </SidebarContent>
-         
+
         </div>
       </Sidebar>
     </>
