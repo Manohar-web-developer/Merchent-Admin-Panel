@@ -63,7 +63,7 @@ export default function Collection() {
   const inactiveCount = collections.filter((c) => c.status === "Inactive").length;
 
   return (
-    <div className="min-h-screen bg-[#FAFBFD] p-3 sm:p-6 md:p-8 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
+    <div className="w-full min-h-full bg-[#FAFBFD] p-3 sm:p-6 md:p-8 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
       {/* 1. Header Section */}
       <div className="flex items-center justify-between gap-3">
         <div>

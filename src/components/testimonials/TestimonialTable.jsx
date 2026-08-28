@@ -10,6 +10,7 @@ import {
   Clock,
   XCircle,
   ShieldCheck,
+  Image as ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -89,6 +90,35 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
         <span className="text-[11px] font-bold text-gray-700 ml-1">
           {rating}.0
         </span>
+      </div>
+    );
+  };
+
+  const renderImageThumbnails = (images) => {
+    if (!images || images.length === 0) {
+      return <span className="text-xs text-gray-300 font-normal">-</span>;
+    }
+
+    const visibleImages = images.slice(0, 2);
+    const remainingCount = images.length - visibleImages.length;
+
+    return (
+      <div className="flex items-center gap-1.5">
+        <div className="flex items-center -space-x-2">
+          {visibleImages.map((url, idx) => (
+            <img
+              key={idx}
+              src={url}
+              alt={`Thumbnail ${idx + 1}`}
+              className="w-7 h-7 rounded-lg object-cover border-2 border-white shadow-2xs hover:z-10 hover:scale-110 transition-transform"
+            />
+          ))}
+        </div>
+        {remainingCount > 0 && (
+          <span className="text-[10px] font-bold text-purple-700 bg-purple-100/80 px-1.5 py-0.5 rounded-md border border-purple-200">
+            +{remainingCount}
+          </span>
+        )}
       </div>
     );
   };
@@ -181,14 +211,17 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
                 <TableHead className="w-10 px-4 py-3 text-center">
                   <Checkbox className="rounded border-gray-300" />
                 </TableHead>
-                <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider min-w-[180px]">
+                <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider min-w-[170px]">
                   Customer Name
                 </TableHead>
                 <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
                   Rating
                 </TableHead>
-                <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider min-w-[280px]">
+                <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider min-w-[260px]">
                   Review
+                </TableHead>
+                <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
+                  Images
                 </TableHead>
                 <TableHead className="px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
                   Status
@@ -238,6 +271,11 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
                     <p className="text-xs text-gray-700 line-clamp-2 leading-relaxed">
                       "{item.review}"
                     </p>
+                  </TableCell>
+
+                  {/* Images Thumbnails / Indicator */}
+                  <TableCell className="px-4 py-3.5 whitespace-nowrap">
+                    {renderImageThumbnails(item.images)}
                   </TableCell>
 
                   {/* Status Badge */}

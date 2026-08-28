@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, ShieldCheck, Calendar, User, Mail, MessageSquareQuote, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { Star, ShieldCheck, Calendar, User, Mail, MessageSquareQuote, CheckCircle2, Clock, XCircle, Image as ImageIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -114,6 +114,35 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
               <MessageSquareQuote className="w-5 h-5 text-gray-300 absolute right-3 bottom-3" />
               "{testimonial.review}"
             </div>
+          </div>
+
+          {/* Attached Review Images Gallery */}
+          <div className="space-y-2">
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+              <ImageIcon className="w-3.5 h-3.5 text-[#5A34FD]" />
+              Attached Review Photos ({testimonial.images?.length || 0})
+            </span>
+
+            {testimonial.images?.length > 0 ? (
+              <div className="flex flex-wrap items-center gap-2.5">
+                {testimonial.images.map((imgUrl, index) => (
+                  <div
+                    key={index}
+                    className="w-20 h-20 rounded-xl border border-gray-200 overflow-hidden shadow-2xs group relative bg-gray-100 cursor-pointer"
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={`Review attachment ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-400 italic">
+                No images attached with this review.
+              </div>
+            )}
           </div>
         </div>
 
