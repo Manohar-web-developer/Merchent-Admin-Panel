@@ -11,24 +11,26 @@ import { Badge } from "@/components/ui/badge";
 
 export default function TestimonialDetailModal({ open, onOpenChange, testimonial }) {
   if (!testimonial) return null;
+  console.log(testimonial);
+
 
   const renderStatusBadge = (status) => {
     switch (status) {
-      case "Active":
+      case "approved" || "Approved" || "APPROVED":
         return (
           <Badge className="bg-[#E6F8EF] text-[#10B981] border border-[#A7F3D0] hover:bg-[#E6F8EF] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Active
           </Badge>
         );
-      case "Pending":
+      case "Pending" || "pending" || "PENDING":
         return (
           <Badge className="bg-[#FEF3C7] text-[#D97706] border border-[#FDE68A] hover:bg-[#FEF3C7] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
             Pending
           </Badge>
         );
-      case "Rejected":
+      case "Rejected" || "rejected" || "REJECTED":
         return (
           <Badge className="bg-[#FEEFEF] text-[#EF4444] border border-[#FCA5A5] hover:bg-[#FEEFEF] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <XCircle className="w-3.5 h-3.5" />
@@ -53,19 +55,19 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
               <div>
                 <DialogTitle className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
                   {testimonial.customerName}
-                  {testimonial.verifiedPurchase && (
+                  {/* {testimonial.verifiedPurchase && (
                     <span className="inline-flex items-center text-[10px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full gap-1">
                       <ShieldCheck className="w-3 h-3 text-emerald-400" /> Verified
                     </span>
-                  )}
+                  )} */}
                 </DialogTitle>
-                <DialogDescription className="text-xs text-gray-300 flex items-center gap-1.5 mt-0.5">
+                {/* <DialogDescription className="text-xs text-gray-300 flex items-center gap-1.5 mt-0.5">
                   <Mail className="w-3 h-3 text-gray-400" />
                   {testimonial.customerEmail}
-                </DialogDescription>
+                </DialogDescription> */}
               </div>
             </div>
-            <div>{renderStatusBadge(testimonial.status)}</div>
+            <div>{renderStatusBadge(testimonial?.status)}</div>
           </div>
         </div>
 
@@ -81,11 +83,10 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
-                    className={`w-4 h-4 ${
-                      star <= testimonial.rating
-                        ? "fill-amber-400 text-amber-400"
-                        : "fill-gray-200 text-gray-300"
-                    }`}
+                    className={`w-4 h-4 ${star <= testimonial.rating
+                      ? "fill-amber-400 text-amber-400"
+                      : "fill-gray-200 text-gray-300"
+                      }`}
                   />
                 ))}
                 <span className="text-xs font-bold text-gray-900 ml-1">
@@ -100,7 +101,11 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
               </span>
               <div className="text-xs font-medium text-gray-700 inline-flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5 text-gray-400" />
-                {testimonial.createdDate}
+                {new Date(`${testimonial.createdAt}`).toDateString("en-US", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric"
+                })}
               </div>
             </div>
           </div>
@@ -112,7 +117,7 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
             </span>
             <div className="relative p-4 rounded-xl bg-gray-50 border border-gray-200/80 text-xs text-gray-800 leading-relaxed font-normal italic">
               <MessageSquareQuote className="w-5 h-5 text-gray-300 absolute right-3 bottom-3" />
-              "{testimonial.review}"
+              "{testimonial.reviewContent}"
             </div>
           </div>
 
@@ -131,7 +136,7 @@ export default function TestimonialDetailModal({ open, onOpenChange, testimonial
                     className="w-20 h-20 rounded-xl border border-gray-200 overflow-hidden shadow-2xs group relative bg-gray-100 cursor-pointer"
                   >
                     <img
-                      src={imgUrl}
+                      src={`http://localhost:4000/uploads/testimonials/${imgUrl}`}
                       alt={`Review attachment ${index + 1}`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
                     />

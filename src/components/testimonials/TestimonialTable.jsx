@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Search,
   ChevronDown,
@@ -42,27 +42,49 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { dummyTestimonials } from "@/data/testimonialsData";
+import axios from "axios";
+// import { dummyTestimonials } from "@/data/testimonialsData";
+
+
 
 export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
+
+  const [testimonialData, setTestimonialData] = useState([]);
+  const [fullData, setFullData] = useState([]);
+
+  useEffect(() => {
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}testimonial/view`, {
+      page: 1,
+      limit: 100,
+    })
+      .then((res) => {
+        console.log(res.data);
+
+        setTestimonialData(res.data._data)
+        setFullData(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
   // Pure static table presentation
   const renderStatusBadge = (status) => {
     switch (status) {
-      case "Active":
+      case "approved" || "Approved" || "APPROVED":
         return (
           <Badge className="bg-[#E6F8EF] text-[#10B981] border border-[#A7F3D0] hover:bg-[#E6F8EF] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <CheckCircle2 className="w-3 h-3" />
-            Active
+            Approved
           </Badge>
         );
-      case "Pending":
+      case "pending" || "Pending" || "PENDING":
         return (
           <Badge className="bg-[#FEF3C7] text-[#D97706] border border-[#FDE68A] hover:bg-[#FEF3C7] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <Clock className="w-3 h-3" />
             Pending
           </Badge>
         );
-      case "Rejected":
+      case "rejected" || "Rejected" || "REJECTED":
         return (
           <Badge className="bg-[#FEEFEF] text-[#EF4444] border border-[#FCA5A5] hover:bg-[#FEEFEF] px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center gap-1">
             <XCircle className="w-3 h-3" />
@@ -80,11 +102,10 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`w-3.5 h-3.5 ${
-              star <= rating
-                ? "fill-amber-400 text-amber-400"
-                : "fill-gray-200 text-gray-300"
-            }`}
+            className={`w-3.5 h-3.5 ${star <= rating
+              ? "fill-amber-400 text-amber-400"
+              : "fill-gray-200 text-gray-300"
+              }`}
           />
         ))}
         <span className="text-[11px] font-bold text-gray-700 ml-1">
@@ -105,7 +126,7 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
     return (
       <div className="flex items-center gap-1.5">
         <div className="flex items-center -space-x-2">
-          {visibleImages.map((url, idx) => (
+          {visibleImages?.map((url, idx) => (
             <img
               key={idx}
               src={url}
@@ -198,7 +219,7 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
 
           {/* Sub-bar: Selection Counter */}
           <div className="flex items-center justify-between text-xs text-gray-500 pt-1 border-t border-gray-50">
-            <span>0 of {dummyTestimonials.length} items selected</span>
+            {/* <span>0 of {dummyTestimonials.length} items selected</span> */}
             <span className="text-[11px] text-gray-400">Static UI Preview</span>
           </div>
         </div>
@@ -236,9 +257,9 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
             </TableHeader>
 
             <TableBody className="divide-y divide-gray-100">
-              {dummyTestimonials.map((item) => (
+              {testimonialData?.map((item) => (
                 <TableRow
-                  key={item.id}
+                  key={item._id}
                   className="hover:bg-gray-50/60 transition-colors group"
                 >
                   {/* Checkbox */}
@@ -251,12 +272,6 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
                     <div>
                       <div className="text-xs font-semibold text-gray-900 group-hover:text-[#5A34FD] transition-colors flex items-center gap-1.5">
                         {item.customerName}
-                        {item.verifiedPurchase && (
-                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" title="Verified Customer" />
-                        )}
-                      </div>
-                      <div className="text-[11px] text-gray-400 font-normal">
-                        {item.customerEmail}
                       </div>
                     </div>
                   </TableCell>
@@ -269,13 +284,13 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
                   {/* Review snippet */}
                   <TableCell className="px-4 py-3.5 max-w-md">
                     <p className="text-xs text-gray-700 line-clamp-2 leading-relaxed">
-                      "{item.review}"
+                      "{item.reviewContent}"
                     </p>
                   </TableCell>
 
                   {/* Images Thumbnails / Indicator */}
                   <TableCell className="px-4 py-3.5 whitespace-nowrap">
-                    {renderImageThumbnails(item.images)}
+                    {renderImageThumbnails(item?.images)}
                   </TableCell>
 
                   {/* Status Badge */}
@@ -285,7 +300,7 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
 
                   {/* Created Date */}
                   <TableCell className="px-4 py-3.5 whitespace-nowrap text-xs text-gray-500 font-medium">
-                    {item.createdDate}
+                    {item?.createdAt}
                   </TableCell>
 
                   {/* Action Buttons: View / Edit / Delete */}
@@ -331,8 +346,8 @@ export default function TestimonialTable({ onOpenEdit, onOpenDetail }) {
         <div className="p-3.5 sm:p-5 border-t border-gray-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-xs text-gray-500 font-normal text-center sm:text-left">
             Showing <span className="font-semibold text-gray-900">1</span> to{" "}
-            <span className="font-semibold text-gray-900">{dummyTestimonials.length}</span> of{" "}
-            <span className="font-semibold text-gray-900">128</span> entries
+            <span className="font-semibold text-gray-900">{testimonialData?.length}</span> of{" "}
+            <span className="font-semibold text-gray-900">{fullData?.pagination?.totalRecords}</span> entries
           </div>
 
           <div className="flex items-center gap-1">
