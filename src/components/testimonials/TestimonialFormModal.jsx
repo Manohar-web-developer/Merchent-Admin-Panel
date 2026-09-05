@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Star, User, MessageSquareQuote, UploadCloud, Image as ImageIcon, X, Plus } from "lucide-react";
 import {
   Dialog,
@@ -14,16 +14,30 @@ import { Textarea } from "@/components/ui/textarea";
 export default function TestimonialFormModal({ open, onOpenChange, initialData = null }) {
 
   const isEditMode = Boolean(initialData);
+  const fileInputRef = useRef(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [rating, setRating] = useState(initialData?.rating || 0);
+  const [formData, setFormData] = useState({
+    name: "",
+    reviewContent: "",
+    status: "",
+    review: ""
+  })
 
-  // Static dummy preview images for visual demonstration
-  const sampleImages = initialData?.images?.length
-    ? initialData.images
-    : [
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=200&auto=format&fit=crop&q=80",
-    ];
-  console.log(initialData);
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedImages(files);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    console.log(selectedImages);
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md sm:max-w-xl bg-white rounded-2xl border border-gray-200/80 shadow-2xl p-0 overflow-hidden">
@@ -58,6 +72,7 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                 <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <Input
                   type="text"
+                  name="customerName"
                   placeholder="e.g. Sarah Jenkins"
                   defaultValue={initialData?.customerName || ""}
                   className="pl-9 h-10 rounded-xl border-gray-200 bg-gray-50/50 text-xs focus:bg-white focus:border-[#5A34FD] focus-visible:ring-[#5A34FD]/20"
@@ -90,12 +105,13 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                 <div className="flex items-center gap-1 bg-gray-50/80 px-3 h-10 rounded-xl border border-gray-200/80 justify-between">
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => {
-                      const currentRating = initialData?.rating || 5;
-                      const isFilled = star <= currentRating;
+                      const isFilled = star <= rating;
+
                       return (
                         <button
                           key={star}
                           type="button"
+                          onClick={() => setRating(star)}
                           className="p-0.5 hover:scale-110 transition-transform cursor-pointer"
                         >
                           <Star
@@ -108,8 +124,9 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                       );
                     })}
                   </div>
+
                   <span className="text-[11px] font-semibold text-gray-600">
-                    {initialData?.rating || 5}.0 / 5
+                    {rating}.0 / 5
                   </span>
                 </div>
               </div>
@@ -141,7 +158,7 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
               </div>
 
               {/* Drag & Drop Upload Zone */}
-              <div className="border-2 border-dashed border-gray-200 hover:border-[#5A34FD]/60 bg-gray-50/60 hover:bg-purple-50/30 transition-all rounded-xl p-4 text-center cursor-pointer group">
+              <div className="border-2 border-dashed border-gray-200 hover:border-[#5A34FD]/60 bg-gray-50/60 hover:bg-purple-50/30 transition-all rounded-xl p-4 text-center cursor-pointer group" onClick={() => { fileInputRef.current.click(); }}>
                 <div className="w-9 h-9 rounded-full bg-purple-100/70 text-[#5A34FD] flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
                   <UploadCloud className="w-5 h-5" />
                 </div>
@@ -151,21 +168,29 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                 <p className="text-[11px] text-gray-400 mt-0.5">
                   PNG, JPG or WEBP (up to 5MB each)
                 </p>
+                <input type="file" ref={fileInputRef} className="hidden" accept="image/*" name="" id="" onChange={(e) => {
+                  const files = Array.from(e.target.files)
+                  const previews = files.map((file) => ({
+                    file,
+                    url: URL.createObjectURL(file),
+                  }));
+                  setSelectedImages((prev) => [...prev, ...previews].slice(0, 5));
+                }} />
               </div>
 
               {/* Static Image Previews Section */}
               <div className="space-y-1.5 pt-1">
                 <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block">
-                  Attached Photo Previews ({sampleImages.length})
+                  Attached Photo Previews ({selectedImages.length})
                 </span>
                 <div className="flex flex-wrap items-center gap-2.5">
-                  {sampleImages.map((url, index) => (
+                  {selectedImages.map((image, index) => (
                     <div
-                      key={index}
+                      key={`new-${index}`}
                       className="relative w-16 h-16 rounded-xl border border-gray-200 bg-gray-100 overflow-hidden group shadow-2xs shrink-0"
                     >
                       <img
-                        src={url}
+                        src={image.url}
                         alt={`Review preview ${index + 1}`}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                       />
@@ -174,6 +199,9 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                           type="button"
                           className="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-xs cursor-pointer hover:bg-rose-600 transition-colors"
                           title="Remove photo"
+                          onClick={() => {
+                            setSelectedImages((prev) => prev.filter((_, i) => i !== index))
+                          }}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -186,6 +214,7 @@ export default function TestimonialFormModal({ open, onOpenChange, initialData =
                     type="button"
                     className="w-16 h-16 rounded-xl border-2 border-dashed border-gray-200 hover:border-[#5A34FD] text-gray-400 hover:text-[#5A34FD] bg-gray-50/50 hover:bg-purple-50/20 flex flex-col items-center justify-center gap-0.5 transition-all cursor-pointer shrink-0"
                     title="Add more photos"
+                    onClick={() => fileInputRef.current.click()}
                   >
                     <Plus className="w-4 h-4 stroke-[2.5]" />
                     <span className="text-[9px] font-semibold">Add Photo</span>
