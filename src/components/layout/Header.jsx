@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
 import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -24,6 +25,7 @@ import {
 
 function Header() {
   const inputRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -38,12 +40,17 @@ function Header() {
   const [search, setSearch] = useState("");
   
   const user = [
-
     { id: 1, name: "Manohar" },
     { id: 2, name: "Rahul" },
     { id: 3, name: "Amit" },
-
   ]
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
+    navigate("/login");
+  };
+
   return (
     <>
       <header className="p-5 flex items-center justify-center w-full border-b gap-5">
@@ -106,7 +113,7 @@ function Header() {
                 Help & Support
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600">
                 Logout
               </DropdownMenuItem>
 

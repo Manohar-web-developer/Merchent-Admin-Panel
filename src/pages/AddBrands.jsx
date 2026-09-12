@@ -15,7 +15,7 @@ export default function AddBrands() {
   const { id } = useParams();
 
   const [details, setDetails] = useState();
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(); 
   const [logo, setLogo] = useState(null);
   const baseurl = import.meta.env.VITE_API_IMAGE_URL;
   const [logoPreview, setLogoPreview] = useState(null);
