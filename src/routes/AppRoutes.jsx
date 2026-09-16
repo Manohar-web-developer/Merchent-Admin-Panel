@@ -39,6 +39,7 @@ import AddBrands from "@/pages/AddBrands";
 import AddCategories from "@/components/layout/AddCategories";
 import Category from "@/pages/Category";
 import Testimonials from "@/pages/Testimonials";
+import BannerSlider from "@/pages/BannerSlider";
 
 export default function AppRoutes() {
   return (
@@ -103,6 +104,7 @@ export default function AppRoutes() {
           {/* Website */}
           <Route path="/website" >
             <Route path="testimonials" element={<Testimonials />} />
+            <Route path="banner-slider" element={<BannerSlider />} />
           </Route>
         </Route>
       </Route>

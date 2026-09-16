@@ -312,6 +312,14 @@ export default function AppSidebar() {
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
 
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton className='cursor-pointer' >
+                          <Link to="/website/banner-slider">
+                            Banner Slider
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+
                     </SidebarMenuSub>
                   )}
               </SidebarMenuItem>
