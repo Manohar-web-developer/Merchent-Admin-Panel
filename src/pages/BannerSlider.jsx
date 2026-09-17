@@ -57,7 +57,7 @@ export default function BannerSlider() {
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
     const [displayOrder, setDisplayOrder] = useState(0);
-    const [status, setStatus] = useState(true);
+    const [BannerStatus, setBannerStatus] = useState(true);
     // Desktop upload state
     const desktopBannerRef = useRef(null);
     const [desktopFile, setDesktopFile] = useState(null);
@@ -158,7 +158,7 @@ export default function BannerSlider() {
         setTitle("");
         setLink("");
         setDisplayOrder(0);
-        setStatus(true);
+        setBannerStatus(true);
         setDesktopFile(null);
         setDesktopPreviewUrl(null);
         setMobileFile(null);
@@ -167,6 +167,50 @@ export default function BannerSlider() {
         if (desktopBannerRef.current) desktopBannerRef.current.value = "";
         if (mobileBannerRef.current) mobileBannerRef.current.value = "";
     };
+    // Fatch Products
+  
+    const fatchProducts = async () => {
+        try {
+            const result = await axios.post(`${import.meta.env.VITE_API_BASE_URL}banners/view`)
+            const data = await result.data._data;
+            const newBanners = data.map((banner) => ({
+                id: banner._id,
+                title: banner.title,
+                link: banner.link,
+                displayOrder: banner.displayOrder,
+                active: banner.status,
+
+                desktopPreviewUrl: banner.desktopBanner
+                    ? `${import.meta.env.VITE_API_IMAGE_URL_Banners}${banner.desktopBanner}`
+                    : null,
+
+                mobilePreviewUrl: banner.mobileBanner
+                    ? `${import.meta.env.VITE_API_IMAGE_URL_Banners}${banner.mobileBanner}`
+                    : null,
+            }));
+
+            setBanners(newBanners)
+            
+        } catch (error) {
+            console.error(
+                "BANNER VIEW ERROR:",
+                error.response?.data || error
+            );
+
+            toast.add({
+                title: "Banner Creation Failed",
+                description:
+                    error.response?.data?.message || "Something went wrong",
+                type: "error",
+            });
+        }
+    }
+
+
+    useEffect(() => {
+        fatchProducts()
+    }, [])
+
     // Handle Form Submit (Add / Update Banner)
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -175,40 +219,18 @@ export default function BannerSlider() {
             const formData = new FormData(e.target);
 
             // Switch ki value manually add karo
-            formData.set("status", String(status));
+            formData.set("status", String(BannerStatus));
 
             const result = await axios.post(
                 `${import.meta.env.VITE_API_BASE_URL}banners/create`,
                 formData
             );
 
-            console.log("CREATE RESULT:", result.data);
-
-            const data = result.data.result;
-
-            const newBanner = {
-                id: data._id,
-                title: data.title,
-                link: data.link,
-                displayOrder: data.displayOrder,
-                active: data.status,
-
-                desktopPreviewUrl: data.desktopBanner
-                    ? `${import.meta.env.VITE_API_IMAGE_URL_Banners}${data.desktopBanner}`
-                    : null,
-
-                mobilePreviewUrl: data.mobileBanner
-                    ? `${import.meta.env.VITE_API_IMAGE_URL_Banners}/uploads/banners/${data.mobileBanner}`
-                    : null,
-            };
-
-            setBanners((prev) => [...prev, newBanner]);
-
             toast.add({
                 title: result.data.message,
                 type: "success",
             });
-
+            fatchProducts()
             resetForm();
 
         } catch (error) {
@@ -231,7 +253,7 @@ export default function BannerSlider() {
         setTitle(banner.title);
         setLink(banner.link);
         setDisplayOrder(banner.displayOrder || 0);
-        setStatus(banner.active);
+        setBannerStatus(banner.active);
         setDesktopPreviewUrl(banner.desktopPreviewUrl || null);
         setMobilePreviewUrl(banner.mobilePreviewUrl || null);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -528,14 +550,14 @@ export default function BannerSlider() {
                                                 <Switch
                                                     id="status-toggle"
                                                     name="status"
-                                                    checked={status}
-                                                    onCheckedChange={setStatus}
+                                                    checked={BannerStatus}
+                                                    onCheckedChange={setBannerStatus}
                                                 />
                                                 <Label
                                                     htmlFor="status-toggle"
                                                     className="text-xs sm:text-sm font-semibold text-gray-800 cursor-pointer"
                                                 >
-                                                    {status ? "Active" : "Inactive"}
+                                                    {BannerStatus ? "Active" : "Inactive"}
                                                 </Label>
                                             </div>
                                         </div>
