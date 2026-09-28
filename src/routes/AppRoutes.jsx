@@ -37,7 +37,7 @@ import AddBrands from "../pages/AddBrands";
 import Category from "../pages/Category";
 import Testimonials from "../pages/Testimonials";
 import BannerSlider from "../pages/BannerSlider";
-import Login from "../pages/login";
+import Login from "../pages/Login";
 import Register from "../pages/Register";
 import HeaderMenu from "../pages/HeaderMenu";
 import PublicRoute from "../components/layout/PublicRoute";
