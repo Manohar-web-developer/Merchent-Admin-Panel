@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
     Home,
     Image as ImageIcon,
@@ -9,8 +9,6 @@ import {
     Trash2,
     GripVertical,
     X,
-    UploadCloud,
-    Check,
 } from "lucide-react";
 
 import {
@@ -47,9 +45,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "@/components/ui/toast";
+import { toast } from "sonner";
 import axios from "axios";
-import { Toast } from "@base-ui/react";
 
 export default function BannerSlider() {
     const [banners, setBanners] = useState([])
@@ -76,11 +73,7 @@ export default function BannerSlider() {
     const handleDesktopFileSelect = (file) => {
         if (!file) return;
         if (!file.type.startsWith("image/")) {
-            toast.add({
-                title: "Invalid File Type",
-                description: "Please select a valid image file (JPG, PNG, WebP).",
-                type: "error",
-            });
+            toast.error("Please select a valid image file (JPG, PNG, WebP).");
             return;
         }
         setDesktopFile(file);
@@ -90,11 +83,7 @@ export default function BannerSlider() {
     const handleMobileFileSelect = (file) => {
         if (!file) return;
         if (!file.type.startsWith("image/")) {
-            toast.add({
-                title: "Invalid File Type",
-                description: "Please select a valid image file (JPG, PNG, WebP).",
-                type: "error",
-            });
+            toast.error("Please select a valid image file (JPG, PNG, WebP).");
             return;
         }
         setMobileFile(file);
@@ -167,18 +156,18 @@ export default function BannerSlider() {
         if (desktopBannerRef.current) desktopBannerRef.current.value = "";
         if (mobileBannerRef.current) mobileBannerRef.current.value = "";
     };
-    // Fatch Products
-  
-    const fatchProducts = async () => {
+
+    // Fetch Banners from API
+    const fetchBanners = async () => {
         try {
-            const result = await axios.post(`${import.meta.env.VITE_API_BASE_URL}banners/view`)
-            const data = await result.data._data;
+            const result = await axios.post(`${import.meta.env.VITE_API_BASE_URL}banners/view`);
+            const data = result.data?._data || [];
             const newBanners = data.map((banner) => ({
                 id: banner._id,
-                title: banner.title,
-                link: banner.link,
-                displayOrder: banner.displayOrder,
-                active: banner.status,
+                title: banner.title || "",
+                link: banner.link || "",
+                displayOrder: banner.displayOrder ?? 0,
+                active: banner.status ?? true,
 
                 desktopPreviewUrl: banner.desktopBanner
                     ? `${import.meta.env.VITE_API_IMAGE_URL_Banners}${banner.desktopBanner}`
@@ -189,88 +178,115 @@ export default function BannerSlider() {
                     : null,
             }));
 
-            setBanners(newBanners)
-            
+            setBanners(newBanners);
         } catch (error) {
             console.error(
                 "BANNER VIEW ERROR:",
                 error.response?.data || error
             );
 
-            toast.add({
-                title: "Banner Creation Failed",
-                description:
-                    error.response?.data?.message || "Something went wrong",
-                type: "error",
-            });
+            toast.error(error.response?.data?.message || "Failed to Fetch Banners");
         }
-    }
-
+    };
 
     useEffect(() => {
-        fatchProducts()
-    }, [])
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchBanners();
+    }, []);
 
     // Handle Form Submit (Add / Update Banner)
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const formData = new FormData(e.target);
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("link", link);
+            formData.append("displayOrder", displayOrder);
+            formData.append("status", String(BannerStatus));
 
-            // Switch ki value manually add karo
-            formData.set("status", String(BannerStatus));
+            if (desktopFile) {
+                formData.append("desktopBanner", desktopFile);
+            }
+            if (mobileFile) {
+                formData.append("mobileBanner", mobileFile);
+            }
 
-            const result = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}banners/create`,
-                formData
-            );
+            if (editingBannerId) {
+                formData.append("id", editingBannerId);
+                const result = await axios.put(
+                    `${import.meta.env.VITE_API_BASE_URL}banners/update/${editingBannerId}`,
+                    formData
+                );
 
-            toast.add({
-                title: result.data.message,
-                type: "success",
-            });
-            fatchProducts()
+                toast.success(result.data?.message || "Banner Updated Successfully");
+            } else {
+                const result = await axios.post(
+                    `${import.meta.env.VITE_API_BASE_URL}banners/create`,
+                    formData
+                );
+
+                toast.success(result.data?.message || "Banner Created Successfully");
+            }
+
+            fetchBanners();
             resetForm();
-
         } catch (error) {
             console.error(
-                "BANNER CREATE ERROR:",
+                "BANNER SUBMIT ERROR:",
                 error.response?.data || error
             );
 
-            toast.add({
-                title: "Banner Creation Failed",
-                description:
-                    error.response?.data?.message || "Something went wrong",
-                type: "error",
-            });
+            toast.error(error.response?.data?.message || (editingBannerId ? "Banner Update Failed" : "Banner Creation Failed"));
         }
     };
+
     // Action Handlers
     const handleEdit = (banner) => {
         setEditingBannerId(banner.id);
-        setTitle(banner.title);
-        setLink(banner.link);
+        setTitle(banner.title || "");
+        setLink(banner.link || "");
         setDisplayOrder(banner.displayOrder || 0);
         setBannerStatus(banner.active);
+        setDesktopFile(null);
+        setMobileFile(null);
         setDesktopPreviewUrl(banner.desktopPreviewUrl || null);
         setMobilePreviewUrl(banner.mobilePreviewUrl || null);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
-    const handleDelete = (id) => {
-        setBanners((prev) => prev.filter((b) => b.id !== id));
-        toast.add({
-            title: "Banner Deleted",
-            description: "Banner removed from slider list.",
-            type: "info",
-        });
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await axios.delete(
+                `${import.meta.env.VITE_API_BASE_URL}banners/delete/${id}`
+            );
+
+            toast.success(res.data?.message || "Banner Deleted Successfully");
+
+            fetchBanners();
+        } catch (error) {
+            console.error("BANNER DELETE ERROR:", error.response?.data || error);
+            toast.error(error.response?.data?.message || "Failed to Delete Banner");
+        }
     };
-    const handleToggleStatus = (id) => {
-        setBanners((prev) =>
-            prev.map((b) => (b.id === id ? { ...b, active: !b.active } : b))
-        );
+
+    const handleToggleStatus = async (id, currentStatus) => {
+        const newStatus = !currentStatus;
+        try {
+            const res = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}banners/status`,
+                { id, status: newStatus }
+            );
+
+            toast.success(res.data?.message || "Status Updated Successfully");
+
+            fetchBanners();
+        } catch (error) {
+            console.error("BANNER STATUS UPDATE ERROR:", error.response?.data || error);
+            toast.error(error.response?.data?.message || "Failed to Update Status");
+        }
     };
+
     const handleView = (banner) => {
         setViewBanner(banner);
         setIsViewOpen(true);
@@ -683,7 +699,7 @@ export default function BannerSlider() {
                                                     <Switch
                                                         name="status"
                                                         checked={banner.active}
-                                                        onCheckedChange={() => handleToggleStatus(banner.id)}
+                                                        onCheckedChange={() => handleToggleStatus(banner.id, banner.active)}
                                                     />
                                                     <span className="text-xs sm:text-sm font-semibold text-gray-800">
                                                         {banner.active ? "Active" : "Inactive"}

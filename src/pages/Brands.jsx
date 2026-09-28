@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, } from "@/components/ui/pagination"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import axios from "axios";
-import { toast } from "@/components/ui/toast";
+import { toast } from "sonner";
 
 export default function Brands() {
 
@@ -64,16 +64,14 @@ export default function Brands() {
       .then((res) => {
 
         if (res.data) {
-          toast.add({
-            type: "success",
-            description: res.data.message,
-          })
+          toast.success(res.data.message);
           fetchBrands();
           setSelectedCheckbox([])
         }
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to delete record");
       });
 
     setProducts(prev => ({ ...prev, _data: prev._data.filter(item => item._id !== id) }));
@@ -88,15 +86,13 @@ export default function Brands() {
     })
       .then((res) => {
         if (res.data) {
-          toast.add({
-            type: "success",
-            description: res.data.message,
-          })
+          toast.success(res.data.message);
           fetchBrands();
         }
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to update status");
       });
   }
 

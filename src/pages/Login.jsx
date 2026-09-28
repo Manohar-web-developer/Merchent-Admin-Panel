@@ -1,367 +1,287 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  Store,
-  Loader2,
-  AlertCircle,
-  CheckCircle2,
-  ArrowRight,
-  ShieldCheck,
-  X,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Store, ShieldCheck, TrendingUp, ShoppingBag, Users, BarChart3 } from 'lucide-react';
+import LoginImage from '/LoginImage.png';
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { login } from '@/redux/loginSlice';
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    rememberMe: false,
-  });
+  const token = Cookies.get("user_token");
+  const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [forgotModalOpen, setForgotModalOpen] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState("");
-  const [forgotSuccess, setForgotSuccess] = useState(false);
 
-  // Handle Input Changes & Clear Specific Field Errors
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: val,
-    }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-  };
-
-  // Client-side Form Validation
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Email address is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Password is required.";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Submit Handler Placeholder
-  const handleLoginSubmit = async (e) => {
+  const formSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const form = e.target;
+    const errorFiled = [];
+    const inputs = form.querySelectorAll("input");
 
-    setIsLoading(true);
+    inputs.forEach((input) => {
+      if (!input.value.trim()) {
+        errorFiled.push(input.name);
+      }
+    });
 
-    console.log("====================================");
-    console.log("🚀 LOGIN FORM SUBMITTED:");
-    console.log("Email:", formData.email);
-    console.log("Password:", formData.password);
-    console.log("Remember Me:", formData.rememberMe);
-    console.log("====================================");
+    setErrors(errorFiled);
 
-    // =========================================================================
-    // 🔌 API INTEGRATION PLACEHOLDER FOR USER
-    // Baad me API connect karne ke liye yahan Axios call karein:
-    //
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}auth/login`, {
-        email: formData.email,
-        password: formData.password,
-      });
-      localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
-    } catch (err) {
-      setErrors({ general: err.response?.data?.message || "Login failed" });
-    } finally {
-      setIsLoading(false);
+    if (errorFiled.length === 0 && !token) {
+      setLoading(true);
+      axios
+        .post(
+          `${import.meta.env.VITE_API_BASE_URL}user/login`,
+          form
+        )
+        .then((result) => {
+          Cookies.set("user_token", result.data.token, { expires: 7 })
+          dispatch(login(result.data.token))
+          toast.success(result.data.message);
+          e.target.reset();
+          navigate('/dashboard');
+        })
+        .catch((error) => {
+          toast.error(
+            error.response?.data?.message ||
+            "Something went wrong. Please try again."
+          );
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
-    // =========================================================================
-
-    // Temporary simulation timer & token set for testing route protection
-    setTimeout(() => {
-      setIsLoading(false);
-      localStorage.setItem("token", "demo_auth_token");
-      navigate("/dashboard");
-    }, 600);
   };
 
-  // Forgot Password Modal Submit Handler
-  const handleForgotSubmit = (e) => {
-    e.preventDefault();
-    if (!forgotEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forgotEmail)) {
-      alert("Please enter a valid email address for password reset.");
-      return;
+  const removeError = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    // Normal input
+    if (value.trim() === "") {
+      setErrors((prev) =>
+        prev.includes(name) ? prev : [...prev, name]
+      );
+    } else {
+      setErrors((prev) => prev.filter((v) => v !== name));
     }
-    console.log("🔑 FORGOT PASSWORD REQUESTED FOR:", forgotEmail);
-    setForgotSuccess(true);
-    setTimeout(() => {
-      setForgotSuccess(false);
-      setForgotModalOpen(false);
-      setForgotEmail("");
-    }, 2000);
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#FAFBFD] flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden font-sans">
-      {/* Background Decorative Blur Orbs */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#5A34FD]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#5A34FD]/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[#f8f5f0] flex items-center justify-center p-4 sm:p-6 lg:p-10 font-sans text-stone-800 antialiased selection:bg-stone-900 selection:text-white">
+      {/* Main Outer Split-Screen Card */}
+      <div className="w-full max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl shadow-stone-900/10 border border-stone-200/80 flex flex-col lg:flex-row min-h-[680px]">
 
-      {/* Main Container */}
-      <div className="w-full max-w-md relative z-10 space-y-6">
-        {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#5A34FD] to-[#7B5CFF] flex items-center justify-center text-white mx-auto shadow-lg shadow-[#5A34FD]/25">
-            <Store className="w-7 h-7" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-            Merchant Admin Panel
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500">
-            Sign in to manage your store, products, and orders
-          </p>
-        </div>
+        {/* LEFT SIDE: Login Form */}
+        <div className="w-full lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-between bg-white z-10 border-b lg:border-b-0 lg:border-r border-stone-200/60">
 
-        {/* Login Form Card */}
-        <div className="bg-white border border-gray-200/80 rounded-2xl shadow-xl shadow-gray-200/40 p-6 sm:p-8 space-y-6">
-          <div className="border-b border-gray-100 pb-4">
-            <h2 className="text-lg font-bold text-gray-900">Sign In</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Enter your admin credentials below
-            </p>
-          </div>
-
-          <form onSubmit={handleLoginSubmit} className="space-y-4" noValidate>
-            {/* Email Field */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="email"
-                className="text-xs font-semibold text-gray-700 flex items-center gap-1"
-              >
-                Email Address <span className="text-red-500">*</span>
-              </label>
-              <div className="relative flex items-center">
-                <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 pointer-events-none" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="admin@shopvista.com"
-                  className={`w-full h-11 pl-10 pr-3.5 bg-gray-50/50 border ${
-                    errors.email ? "border-red-500 focus:ring-red-500/20" : "border-gray-200 focus:border-[#5A34FD] focus:ring-[#5A34FD]/20"
-                  } rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:bg-white focus:ring-2 transition-all`}
-                />
-              </div>
-              {errors.email && (
-                <p className="text-xs text-red-500 font-medium flex items-center gap-1 mt-1">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            {/* Password Field */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="password"
-                className="text-xs font-semibold text-gray-700 flex items-center gap-1"
-              >
-                Password <span className="text-red-500">*</span>
-              </label>
-              <div className="relative flex items-center">
-                <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 pointer-events-none" />
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className={`w-full h-11 pl-10 pr-10 bg-gray-50/50 border ${
-                    errors.password ? "border-red-500 focus:ring-red-500/20" : "border-gray-200 focus:border-[#5A34FD] focus:ring-[#5A34FD]/20"
-                  } rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:bg-white focus:ring-2 transition-all`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-lg"
-                  title={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
-                  ) : (
-                    <Eye className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-xs text-red-500 font-medium flex items-center gap-1 mt-1">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  {errors.password}
-                </p>
-              )}
-            </div>
-
-            {/* Remember Me & Forgot Password Row */}
-            <div className="flex items-center justify-between pt-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                  className="w-4 h-4 rounded border-gray-300 text-[#5A34FD] focus:ring-[#5A34FD]/30 cursor-pointer accent-[#5A34FD]"
-                />
-                <span className="text-xs font-medium text-gray-600">
-                  Remember me
-                </span>
-              </label>
-
-              <button
-                type="button"
-                onClick={() => setForgotModalOpen(true)}
-                className="text-xs font-semibold text-[#5A34FD] hover:text-[#4C2BD8] transition-colors cursor-pointer"
-              >
-                Forgot Password?
-              </button>
-            </div>
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-11 bg-[#5A34FD] hover:bg-[#4C2BD8] text-white font-semibold text-sm rounded-xl shadow-md shadow-[#5A34FD]/20 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 mt-2"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Signing In...</span>
-                </>
-              ) : (
-                <>
-                  <span>Sign In</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </Button>
-          </form>
-
-          {/* Register Redirect Link */}
-          <div className="pt-4 border-t border-gray-100 text-center">
-            <p className="text-xs text-gray-500">
-              Don't have an admin account?{" "}
-              <Link
-                to="/register"
-                className="font-bold text-[#5A34FD] hover:text-[#4C2BD8] transition-colors cursor-pointer inline-flex items-center gap-0.5 ml-1"
-              >
-                Register here
-              </Link>
-            </p>
-          </div>
-        </div>
-
-        {/* Footer info */}
-        <p className="text-center text-xs text-gray-400">
-          © {new Date().getFullYear()} Merchant Admin Panel. All rights reserved.
-        </p>
-      </div>
-
-      {/* Forgot Password Modal */}
-      {forgotModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl border border-gray-200 max-w-md w-full p-6 space-y-4 shadow-2xl relative animate-in fade-in zoom-in duration-200">
-            <button
-              type="button"
-              onClick={() => setForgotModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
+          {/* Top Brand Header */}
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#5A34FD] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-stone-900 flex items-center justify-center text-white shadow-md shadow-stone-900/20">
+                <Store className="w-5 h-5 text-amber-400" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900">
-                  Reset Password
-                </h3>
-                <p className="text-xs text-gray-500">
-                  Enter your admin email to receive reset instructions
-                </p>
+                <span className="font-bold text-lg text-stone-900 tracking-tight block leading-tight">Merchant Hub</span>
+                <span className="text-[11px] font-medium text-stone-400 tracking-wide uppercase">Admin Portal</span>
               </div>
             </div>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-600 text-xs font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Secure Connection</span>
+            </div>
+          </div>
 
-            {forgotSuccess ? (
-              <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Password reset link has been sent to your email address.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleForgotSubmit} className="space-y-4 pt-1">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-gray-700">
-                    Email Address
-                  </label>
+          {/* Login Form Section */}
+          <div className="my-auto py-8 max-w-md w-full mx-auto space-y-7">
+            {/* Header Text */}
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
+                Welcome Back
+              </h1>
+              <p className="text-stone-500 text-sm leading-relaxed">
+                Please enter your credentials to sign in to your e-commerce admin panel.
+              </p>
+            </div>
+
+            {/* Static Form Container */}
+            <form onSubmit={(e) => formSubmit(e)} className="space-y-5">
+              {/* Email Input */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider">
+                  Email Address
+                </label>
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400 group-focus-within:text-stone-900 transition-colors">
+                    <Mail className="w-4 h-4" />
+                  </div>
                   <input
                     type="email"
-                    required
-                    value={forgotEmail}
-                    onChange={(e) => setForgotEmail(e.target.value)}
-                    placeholder="admin@shopvista.com"
-                    className="w-full h-10 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs outline-none focus:border-[#5A34FD] focus:bg-white"
+                    name='email'
+                    placeholder="admin@merchant.com"
+                    onChange={removeError}
+                    className="w-full pl-10 pr-4 py-3 bg-stone-50/80 border border-stone-200 rounded-xl text-stone-900 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:bg-white focus:border-transparent transition-all shadow-xs"
                   />
                 </div>
-                <div className="flex items-center justify-end gap-2 pt-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setForgotModalOpen(false)}
-                    className="h-9 px-4 text-xs font-medium text-gray-700 cursor-pointer"
+                {
+                  errors.includes("email") && <p className='text-sm text-red-500 '>Email Address is Required</p>
+                }
+              </div>
+
+              {/* Password Input */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider">
+                    Password
+                  </label>
+                  <a
+                    href="#forgot-password"
+                    onClick={(e) => e.preventDefault()}
+                    className="text-xs font-semibold text-stone-600 hover:text-stone-900 hover:underline transition-colors"
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="h-9 px-4 text-xs font-semibold bg-[#5A34FD] hover:bg-[#4C2BD8] text-white cursor-pointer"
-                  >
-                    Send Reset Link
-                  </Button>
+                    Forgot password?
+                  </a>
                 </div>
-              </form>
-            )}
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400 group-focus-within:text-stone-900 transition-colors">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name='password'
+                    onChange={removeError}
+                    placeholder="••••••••••••"
+                    className="w-full pl-10 pr-11 py-3 bg-stone-50/80 border border-stone-200 rounded-xl text-stone-900 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:bg-white focus:border-transparent transition-all shadow-xs"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {
+                  errors.includes("password") && <p className='text-sm text-red-500 '>Password is Required</p>
+                }
+              </div>
+
+              {/* Remember Me Checkbox */}
+              <div className="flex items-center justify-between pt-1">
+                <label className="flex items-center gap-2.5 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="w-4 h-4 text-stone-900 border-stone-300 rounded focus:ring-stone-900 cursor-pointer accent-stone-900"
+                  />
+                  <span className="text-xs font-medium text-stone-600 group-hover:text-stone-900 transition-colors">
+                    Keep me signed in for 30 days
+                  </span>
+                </label>
+              </div>
+
+              {/* Sign In Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3.5 px-4 bg-stone-900 hover:bg-stone-800 active:bg-stone-950 text-white font-semibold rounded-xl text-sm shadow-lg shadow-stone-900/15 transition-all flex items-center justify-center gap-2 cursor-pointer group"
+              >
+                {loading ? "Signing In..." : "Sign In"}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </form>
+
+            {/* Create Account Navigation Link */}
+            <div className="pt-2 text-center text-xs text-stone-500">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-stone-900 font-bold hover:underline">
+                Create Account
+              </Link>
+            </div>
+          </div>
+
+          {/* Footer Info */}
+          <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-2">
+            <span>© 2026 Merchant Admin. All rights reserved.</span>
+            <div className="flex items-center gap-4">
+              <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-stone-600 transition-colors">Privacy Policy</a>
+              <span>•</span>
+              <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-stone-600 transition-colors">Support</a>
+            </div>
           </div>
         </div>
-      )}
+
+        {/* RIGHT SIDE: Reference Image & Hero Presentation */}
+        <div className="w-full lg:w-1/2 bg-gradient-to-br from-[#f9f6f1] via-[#f3ede3] to-[#e8ded0] p-8 sm:p-12 lg:p-14 flex flex-col justify-between relative overflow-hidden">
+          {/* Ambient Radial Glow Overlays */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-200/40 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-orange-100/50 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Header Text */}
+          <div className="relative z-10 space-y-4">
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-stone-200/80 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-semibold text-stone-700 tracking-wide uppercase">All-in-One Admin Panel</span>
+            </div>
+
+            <div className="max-w-lg space-y-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 leading-tight tracking-tight">
+                Manage Your E-commerce Business with Ease
+              </h2>
+              <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                Track orders, manage products, monitor sales, and grow your business — all in one place.
+              </p>
+            </div>
+          </div>
+
+          {/* Laptop / Dashboard Image Visual */}
+          <div className="relative z-10 my-6 flex-1 flex items-center justify-center">
+            <div className="w-full max-w-lg group relative">
+              {/* Outer Glow Blur */}
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-200 via-stone-200 to-amber-300 rounded-2xl blur-md opacity-50 group-hover:opacity-75 transition duration-500" />
+
+              {/* Image Frame */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-stone-300/80 bg-white">
+                <img
+                  src={LoginImage}
+                  alt="E-commerce Dashboard Laptop Visual"
+                  className="w-full h-auto max-h-[380px] sm:max-h-[420px] object-cover object-right-top transform group-hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Feature Badges Grid */}
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-xl border border-white/90 shadow-xs text-center flex flex-col items-center gap-1">
+              <ShoppingBag className="w-4 h-4 text-stone-700" />
+              <span className="block text-xs font-semibold text-stone-900">Product Management</span>
+            </div>
+            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-xl border border-white/90 shadow-xs text-center flex flex-col items-center gap-1">
+              <TrendingUp className="w-4 h-4 text-stone-700" />
+              <span className="block text-xs font-semibold text-stone-900">Order Tracking</span>
+            </div>
+            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-xl border border-white/90 shadow-xs text-center flex flex-col items-center gap-1">
+              <BarChart3 className="w-4 h-4 text-stone-700" />
+              <span className="block text-xs font-semibold text-stone-900">Sales Analytics</span>
+            </div>
+            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-xl border border-white/90 shadow-xs text-center flex flex-col items-center gap-1">
+              <Users className="w-4 h-4 text-stone-700" />
+              <span className="block text-xs font-semibold text-stone-900">Customer Management</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }
+
+

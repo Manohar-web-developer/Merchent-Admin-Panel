@@ -102,13 +102,13 @@ export default function AppSidebar() {
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
 
-                    {/* <SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
                       <SidebarMenuSubButton className='cursor-pointer' >
                         <Link to="/products/collection">
                           Collections
                         </Link>
                       </SidebarMenuSubButton>
-                    </SidebarMenuSubItem> */}
+                    </SidebarMenuSubItem>
 
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton className='cursor-pointer' >

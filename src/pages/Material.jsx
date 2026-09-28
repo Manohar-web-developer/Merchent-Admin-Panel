@@ -11,7 +11,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { toast } from "@/components/ui/toast";
+import { toast } from "sonner";
 
 
 function Material() {
@@ -85,24 +85,11 @@ function Material() {
         );
 
         if (res.data?._error?.errors?.name?.message) {
-          toast.add({
-            type: "error",
-            title: "Error",
-            description: res.data._error.errors.name.message,
-            position: "top-center",
-            duration: 3000,
-          });
-
+          toast.error(res.data._error.errors.name.message);
           return;
         }
 
-        toast.add({
-          type: "success",
-          title: "Success",
-          description: "Material added successfully",
-          position: "top-center",
-          duration: 3000,
-        });
+        toast.success("Material added successfully");
 
       } else {
         await axios.put(
@@ -110,13 +97,7 @@ function Material() {
           FormData
         );
 
-        toast.add({
-          type: "success",
-          title: "Success",
-          description: "Material updated successfully",
-          position: "top-center",
-          duration: 3000,
-        });
+        toast.success("Material updated successfully");
       }
 
       setDialogOpen(false);
@@ -133,14 +114,7 @@ function Material() {
 
     } catch (error) {
       console.log(error);
-
-      toast.add({
-        type: "error",
-        title: "Error",
-        description: "Something went wrong",
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Something went wrong");
     }
   };
   const removeError = (e) => {
@@ -162,25 +136,13 @@ function Material() {
         }
       );
 
-      toast.add({
-        type: "success",
-        title: "Success",
-        description: res.data?._message || "Status updated successfully",
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.success(res.data?._message || "Status updated successfully");
 
       getMaterialData();
       setSelectedCheckbox([]);
     } catch (error) {
       console.log(error);
-      toast.add({
-        type: "error",
-        title: "Error",
-        description: "Something went wrong",
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Something went wrong");
     }
   };
   const deleteMaterial = async (ids) => {
@@ -194,27 +156,14 @@ function Material() {
       );
 
       if (res.data._status) {
-        toast.add({
-          type: "success",
-          title: "Success",
-          description: res.data._message || "Material deleted successfully",
-          position: "top-center",
-          duration: 3000,
-        });
+        toast.success(res.data._message || "Material deleted successfully");
 
         getMaterialData();
         setSelectedCheckbox([]);
       }
     } catch (error) {
       console.log(error);
-
-      toast.add({
-        type: "error",
-        title: "Error",
-        description: "Something went wrong",
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Something went wrong");
     }
     getMaterialData();
 

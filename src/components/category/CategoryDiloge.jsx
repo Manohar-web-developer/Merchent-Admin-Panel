@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { toast } from "@/components/ui/toast"
+import { toast } from "sonner"
 import {
     Dialog,
     DialogContent,
@@ -61,7 +61,7 @@ function CategoryDiloge({ dialogeOpen, setDialogeOpen, categories, onSuccess, ed
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         if (!categoryName.trim()) {
-            toast.add({ type: "error", description: "Category name is required" });
+            toast.error("Category name is required");
             return;
         }
 
@@ -80,10 +80,7 @@ function CategoryDiloge({ dialogeOpen, setDialogeOpen, categories, onSuccess, ed
             const editId = editCategory._id || editCategory.id;
             try {
                 const res = await axios.put(`${baseUrl}category/update/${editId}`, payload);
-                toast.add({
-                    type: "success",
-                    description: res.data?.message || "Category updated successfully!",
-                });
+                toast.success(res.data?.message || "Category updated successfully!");
                 resetForm();
                 setDialogeOpen(false);
                 if (onSuccess) onSuccess();
@@ -91,28 +88,19 @@ function CategoryDiloge({ dialogeOpen, setDialogeOpen, categories, onSuccess, ed
                 console.error("Update Category Error:", err);
                 try {
                     const res = await axios.put(`${baseUrl}category/update`, { _id: editId, id: editId, ...payload });
-                    toast.add({
-                        type: "success",
-                        description: res.data?.message || "Category updated successfully!",
-                    });
+                    toast.success(res.data?.message || "Category updated successfully!");
                     resetForm();
                     setDialogeOpen(false);
                     if (onSuccess) onSuccess();
                 } catch (fallbackErr) {
                     try {
                         const res = await axios.post(`${baseUrl}category/update/${editId}`, payload);
-                        toast.add({
-                            type: "success",
-                            description: res.data?.message || "Category updated successfully!",
-                        });
+                        toast.success(res.data?.message || "Category updated successfully!");
                         resetForm();
                         setDialogeOpen(false);
                         if (onSuccess) onSuccess();
                     } catch (postErr) {
-                        toast.add({
-                            type: "error",
-                            description: err.response?.data?.message || fallbackErr.response?.data?.message || postErr.response?.data?.message || "Failed to update category",
-                        });
+                        toast.error(err.response?.data?.message || fallbackErr.response?.data?.message || postErr.response?.data?.message || "Failed to update category");
                     }
                 }
             } finally {
@@ -121,10 +109,7 @@ function CategoryDiloge({ dialogeOpen, setDialogeOpen, categories, onSuccess, ed
         } else {
             try {
                 const res = await axios.post(`${baseUrl}category/create`, payload);
-                toast.add({
-                    type: "success",
-                    description: res.data?.message || "Category created successfully!",
-                });
+                toast.success(res.data?.message || "Category created successfully!");
                 resetForm();
                 setDialogeOpen(false);
                 if (onSuccess) onSuccess();
@@ -132,18 +117,12 @@ function CategoryDiloge({ dialogeOpen, setDialogeOpen, categories, onSuccess, ed
                 console.error("Create Category Error:", err);
                 try {
                     const res = await axios.post(`${baseUrl}category/add`, payload);
-                    toast.add({
-                        type: "success",
-                        description: res.data?.message || "Category created successfully!",
-                    });
+                    toast.success(res.data?.message || "Category created successfully!");
                     resetForm();
                     setDialogeOpen(false);
                     if (onSuccess) onSuccess();
                 } catch (fallbackErr) {
-                    toast.add({
-                        type: "error",
-                        description: err.response?.data?.message || fallbackErr.response?.data?.message || "Failed to create category",
-                    });
+                    toast.error(err.response?.data?.message || fallbackErr.response?.data?.message || "Failed to create category");
                 }
             } finally {
                 setLoading(false);

@@ -6,11 +6,10 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Header from "./Header";
-import { Toaster } from "@/components/ui/toast";
 
 export default function Layout() {
   return (
-    <SidebarProvider>
+    <SidebarProvider >
       <AppSidebar />
       <main className="flex-1 min-w-0 h-screen flex flex-col overflow-hidden">
         <Header />
@@ -18,7 +17,6 @@ export default function Layout() {
           <Outlet />
         </div>
       </main>
-      <Toaster />
     </SidebarProvider>
   );
 }

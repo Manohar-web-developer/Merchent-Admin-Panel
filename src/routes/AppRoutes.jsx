@@ -1,16 +1,15 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import ProtectedRoute from "../components/routes/ProtectedRoute";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
-import Login from "../pages/Login";
-import Register from "../pages/Register";
 
 import Dashboard from "../pages/Dashboard";
 
 // Products
 import Products from "../pages/Products";
 import NewProducts from "../pages/NewProducts";
-import Categories from "../pages/Collection";
+import Collection from "../pages/Collection";
+import AddCollection from "../pages/AddCollection";
 import Brands from "../pages/Brands";
 
 // Orders
@@ -36,78 +35,82 @@ import Shipping from "../pages/Shipping";
 import EditProducts from "@/pages/EditProducts";
 import Material from "@/pages/Material";
 import AddBrands from "@/pages/AddBrands";
-import AddCategories from "@/components/layout/AddCategories";
 import Category from "@/pages/Category";
 import Testimonials from "@/pages/Testimonials";
 import BannerSlider from "@/pages/BannerSlider";
+import Login from "@/pages/login";
+import Register from "@/pages/Register";
+import PublicRoute from "@/components/layout/PublicRoute";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Standalone Public Authentication Routes (Without Admin Layout) */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
 
-      {/* Root Path Redirect -> /login */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
-
-      {/* Protected Admin Panel Pages (Requires Token in localStorage) */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-
-          {/* Products */}
-          <Route path="/products" element={<Products />}>
-            <Route path="new" element={<NewProducts />} />
-            <Route path="edit/:handle" element={<EditProducts />} />
-
-            {/* <Route path="collection">
-              <Route index element={<Collection />} />
-              <Route path="add" element={<AddCategories />} />
-              <Route path="edit/:id" element={<AddCategories />} />
-            </Route> */}
-
-            <Route path="brands">
-              <Route index element={<Brands />} />
-              <Route path="add" element={<AddBrands />} />
-              <Route path="edit/:id" element={<AddBrands />} />
-            </Route>
-
-            <Route path="material" element={<Material />} />
-          </Route>
-
-          {/* Orders */}
-          <Route path="/orders" element={<Orders />}>
-            <Route path="pending" element={<PendingOrders />} />
-            <Route path="delivered" element={<DeliveredOrders />} />
-          </Route>
-
-          {/* Customers */}
-          <Route path="/customers" element={<Customers />} />
-
-          {/* Analytics */}
-          <Route path="/analytics" element={<Analytics />}>
-            <Route path="sales-report" element={<SalesReport />} />
-            <Route path="revenue" element={<Revenue />} />
-          </Route>
-
-          {/* Coupons */}
-          <Route path="/coupons" element={<Coupons />} />
-
-          {/* Settings */}
-          <Route path="/settings" element={<Settings />}>
-            <Route path="payment-methods" element={<PaymentMethods />} />
-            <Route path="shipping" element={<Shipping />} />
-          </Route>
-          <Route path="/category" element={<Category />} />
-
-          {/* Website */}
-          <Route path="/website" >
-            <Route path="testimonials" element={<Testimonials />} />
-            <Route path="banner-slider" element={<BannerSlider />} />
-          </Route>
-        </Route>
+      {/* LOGIN & REGISTER */}
+      <Route element={<PublicRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
+
+
+      {/* PROTECTED */}
+      <Route element={<ProtectedRoute />}>
+
+        <Route path="/" element={<Dashboard />} />
+
+        <Route path="/products" element={<Products />}>
+          <Route path="new" element={<NewProducts />} />
+          <Route path="edit/:id" element={<EditProducts />} />
+
+          <Route path="brands">
+            <Route index element={<Brands />} />
+            <Route path="add" element={<AddBrands />} />
+            <Route path="edit/:id" element={<AddBrands />} />
+          </Route>
+
+          <Route path="collection">
+            <Route index element={<Collection />} />
+            <Route path="add" element={<AddCollection />} />
+            <Route path="edit/:id" element={<AddCollection />} />
+          </Route>
+
+          <Route path="material" element={<Material />} />
+        </Route>
+
+        <Route path="/collection" element={<Navigate to="/products/collection" replace />} />
+        <Route path="/collections" element={<Navigate to="/products/collection" replace />} />
+
+        <Route path="/orders" element={<Orders />}>
+          <Route path="pending" element={<PendingOrders />} />
+          <Route path="delivered" element={<DeliveredOrders />} />
+        </Route>
+
+        <Route path="/customers" element={<Customers />} />
+
+        <Route path="/analytics" element={<Analytics />}>
+          <Route path="sales-report" element={<SalesReport />} />
+          <Route path="revenue" element={<Revenue />} />
+        </Route>
+
+        <Route path="/coupons" element={<Coupons />} />
+
+        <Route path="/settings" element={<Settings />}>
+          <Route path="payment-methods" element={<PaymentMethods />} />
+          <Route path="shipping" element={<Shipping />} />
+        </Route>
+
+        <Route path="/category" element={<Category />} />
+
+        <Route path="/website">
+          <Route path="testimonials" element={<Testimonials />} />
+          <Route path="banner-slider" element={<BannerSlider />} />
+        </Route>
+
+        {/* Unknown URL */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+
+      </Route>
+
     </Routes>
   );
 }

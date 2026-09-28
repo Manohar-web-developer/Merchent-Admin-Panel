@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Image as ImageIcon, Upload, Sliders, ListOrdered, } from "lucide-react";
 import axios from "axios";
-import { toast } from "@/components/ui/toast";
+import { toast } from "sonner";
 
 
 export default function AddBrands() {
@@ -77,40 +77,29 @@ export default function AddBrands() {
       )
         .then((res) => {
           if (res.data.result || res.status === 201) {
-            toast.add({
-              type: "success",
-              description: res.data.message,
-            })
+            toast.success(res.data.message);
             navigate("/products/brands")
           }
         }).catch((err) => {
           console.log("CREATE BRAND ERROR:", err);
 
-          toast.add({
-            type: "error",
-            description:
-              err.response?.data?.message ||
-              "Something went wrong",
-          });
+          toast.error(
+            err.response?.data?.message ||
+            "Something went wrong"
+          );
         });
     } else {
       axios.post(`${import.meta.env.VITE_API_BASE_URL}brand/create`, formData)
         .then((res) => {
           if (res.data.result || res.status === 201) {
-            toast.add({
-              type: "success",
-              description: res.data.message,
-            })
+            toast.success(res.data.message);
             navigate("/products/brands")
           }
         }).catch((err) => {
-          toast.add({
-            type: "error",
-            title: "Error",
-            description:
-              err.response?.data?.message ||
-              "Brand already exists or something went wrong",
-          });
+          toast.error(
+            err.response?.data?.message ||
+            "Brand already exists or something went wrong"
+          );
         });
 
     }
