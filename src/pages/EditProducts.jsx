@@ -140,6 +140,46 @@ export default function EditProducts() {
   const [availability, setAvailability] = useState("In Stock");
   const [errors, setErrors] = useState({});
 
+  // Memoized Name Resolvers for Select Displays
+  const selectedCategoryName = React.useMemo(() => {
+    if (!category) return "";
+    const found = categoryData.find(
+      (c) => String(c._id || c.id) === String(category)
+    );
+    if (found) return found.name || found.title || "";
+    if (typeof productDetail?.category === "object" && productDetail?.category?.name) {
+      return productDetail.category.name;
+    }
+    if (categoryData.length === 0) return "Loading...";
+    return "";
+  }, [category, categoryData, productDetail]);
+
+  const selectedBrandName = React.useMemo(() => {
+    if (!brand) return "";
+    const found = brandData.find(
+      (b) => String(b._id || b.id) === String(brand)
+    );
+    if (found) return found.name || found.title || "";
+    if (typeof productDetail?.brand === "object" && productDetail?.brand?.name) {
+      return productDetail.brand.name;
+    }
+    if (brandData.length === 0) return "Loading...";
+    return "";
+  }, [brand, brandData, productDetail]);
+
+  const selectedMaterialName = React.useMemo(() => {
+    if (!material) return "";
+    const found = materialData.find(
+      (m) => String(m._id || m.id) === String(material)
+    );
+    if (found) return found.name || found.title || "";
+    if (typeof productDetail?.material === "object" && productDetail?.material?.name) {
+      return productDetail.material.name;
+    }
+    if (materialData.length === 0) return "Loading...";
+    return "";
+  }, [material, materialData, productDetail]);
+
   // Image states
   const [existingImages, setExistingImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
@@ -460,11 +500,11 @@ export default function EditProducts() {
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Information */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+              <div className="px-5 py-1 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
                 <FileText className="w-4 h-4 text-[#5A34FD]" />
                 <h2 className="font-semibold text-gray-800">Basic Information</h2>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-5 pb-3.5 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Product Title <span className="text-red-500">*</span>
@@ -579,11 +619,11 @@ export default function EditProducts() {
 
             {/* Pricing & Inventory */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+              <div className="px-5 py-1 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
                 <IndianRupee className="w-4 h-4 text-[#5A34FD]" />
                 <h2 className="font-semibold text-gray-800">Pricing & Inventory</h2>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-5 pt-3.5 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -663,7 +703,7 @@ export default function EditProducts() {
 
             {/* Product Media / Images */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+              <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <ImageIcon className="w-4 h-4 text-[#5A34FD]" />
                   <h2 className="font-semibold text-gray-800">Product Media</h2>
@@ -672,7 +712,7 @@ export default function EditProducts() {
                   {allImages.length} Image(s)
                 </Badge>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-5 pt-3.5 space-y-4">
                 {/* Dropzone */}
                 <div
                   {...getRootProps()}
@@ -717,11 +757,11 @@ export default function EditProducts() {
           <div className="space-y-6">
             {/* Status & Visibility */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+              <div className="px-5 py-1 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
                 <Eye className="w-4 h-4 text-[#5A34FD]" />
                 <h2 className="font-semibold text-gray-800">Status & Publishing</h2>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className=" pt-0 pb-3.5 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Status
@@ -742,22 +782,24 @@ export default function EditProducts() {
 
             {/* Category & Brand Master Data */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+              <div className="px-5 py-1 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-[#5A34FD]" />
                 <h2 className="font-semibold text-gray-800">Organization</h2>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="pt-0 pb-3.5 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category <span className="text-red-500">*</span>
                   </label>
                   <Select value={category} onValueChange={(val) => { setCategory(val); removeError("category", val); }}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Category" />
+                      <SelectValue placeholder="Select Category">
+                        {selectedCategoryName || undefined}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {categoryData.map((cat) => (
-                        <SelectItem key={cat._id} value={cat._id}>
+                        <SelectItem key={cat._id || cat.id} value={cat._id || cat.id}>
                           {cat.name}
                         </SelectItem>
                       ))}
@@ -774,11 +816,13 @@ export default function EditProducts() {
                   </label>
                   <Select value={brand} onValueChange={setBrand}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Brand" />
+                      <SelectValue placeholder="Select Brand">
+                        {selectedBrandName || undefined}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {brandData.map((b) => (
-                        <SelectItem key={b._id} value={b._id}>
+                        <SelectItem key={b._id || b.id} value={b._id || b.id}>
                           {b.name}
                         </SelectItem>
                       ))}
@@ -792,11 +836,13 @@ export default function EditProducts() {
                   </label>
                   <Select value={material} onValueChange={setMaterial}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Material" />
+                      <SelectValue placeholder="Select Material">
+                        {selectedMaterialName || undefined}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {materialData.map((m) => (
-                        <SelectItem key={m._id} value={m._id}>
+                        <SelectItem key={m._id || m.id} value={m._id || m.id}>
                           {m.name}
                         </SelectItem>
                       ))}
@@ -808,11 +854,11 @@ export default function EditProducts() {
 
             {/* Specifications */}
             <Card className="border border-gray-200 shadow-2xs rounded-xl bg-white overflow-hidden">
-              <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+              <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-[#5A34FD]" />
                 <h2 className="font-semibold text-gray-800">Specifications</h2>
               </div>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-5 pt-3.5 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Dimensions

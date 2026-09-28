@@ -1,18 +1,55 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Attachment, AttachmentGroup, AttachmentMedia } from "@/components/ui/attachment";
-
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Plus, Search, Loader2 } from "lucide-react";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectGroup,
-  SelectItem, SelectTrigger, SelectValue,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Attachment,
+  AttachmentGroup,
+  AttachmentMedia,
+} from "@/components/ui/attachment";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Plus, Search, Loader2, Trash2 } from "lucide-react";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -27,7 +64,11 @@ import {
 } from "@/components/ui/pagination";
 
 const getImageUrl = (item) => {
-  if (item.image && typeof item.image === "string" && item.image.startsWith("http")) {
+  if (
+    item.image &&
+    typeof item.image === "string" &&
+    item.image.startsWith("http")
+  ) {
     return item.image;
   }
   if (Array.isArray(item.images) && item.images.length > 0) {
@@ -48,98 +89,126 @@ const getImageUrl = (item) => {
   return "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=200&q=80";
 };
 
-export function Productsheader({ setCategory, setStatus, setSort, setSearch, categories = [], statuses = [] }) {
-  return <>
-    <div className="p-5 w-full flex items-center justify-between">
-      <div>
-        <h1 className="font-bold text-2xl pb-5">Products</h1>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
+export function Productsheader({
+  setCategory,
+  setStatus,
+  setSort,
+  setSearch,
+  categories = [],
+  statuses = [],
+  selectedCount = 0,
+  onBulkDelete,
+}) {
+  return (
+    <>
+      <div className="p-5 w-full flex items-center justify-between">
+        <div>
+          <h1 className="font-bold text-2xl pb-5">Products</h1>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
 
-            <BreadcrumbItem>
-              <BreadcrumbPage>Products</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
-      <div>
-        <Link to='new' className="text-white bg-[#5A34FD] flex px-4 py-3 gap-2 rounded-lg"><Plus /> <p>Add Product</p></Link>
-      </div>
-    </div>
-    <div className="p-5 w-full flex items-center justify-between">
-      <div className="flex items-center justify-between gap-1">
-        <div>
-          <InputGroup className="w-xl">
-            <InputGroupInput placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
-            <InputGroupAddon>
-              <Search />
-            </InputGroupAddon>
-          </InputGroup>
+              <BreadcrumbItem>
+                <BreadcrumbPage>Products</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
-        <div>
-          <Select onValueChange={(value) => setCategory(value)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="all">All Categories</SelectItem>
-                {
-                  categories.map((item, idx) => {
+        <div className="flex items-center gap-3">
+          {selectedCount > 0 && (
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={onBulkDelete}
+              className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-2 px-4 py-3 rounded-lg font-medium shadow-sm transition-all cursor-pointer"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Delete ({selectedCount})</span>
+            </Button>
+          )}
+          <Link
+            to="new"
+            className="text-white bg-[#5A34FD] flex px-4 py-3 gap-2 rounded-lg"
+          >
+            <Plus /> <p>Add Product</p>
+          </Link>
+        </div>
+      </div>
+      <div className="p-5 w-full flex items-center justify-between">
+        <div className="flex items-center justify-between gap-1">
+          <div>
+            <InputGroup className="w-xl">
+              <InputGroupInput
+                placeholder="Search..."
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+            </InputGroup>
+          </div>
+          <div>
+            <Select onValueChange={(value) => setCategory(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  {categories.map((item, idx) => {
                     return (
-                      <SelectItem key={idx} value={item}>{item}</SelectItem>
-                    )
-                  })
-                }
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Select onValueChange={(value) => setStatus(value)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="all">All Status</SelectItem>
-                {
-                  statuses.map((item, idx) => {
+                      <SelectItem key={idx} value={item}>
+                        {item}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Select onValueChange={(value) => setStatus(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All Status</SelectItem>
+                  {statuses.map((item, idx) => {
                     return (
-                      <SelectItem key={idx} value={item}>{item}</SelectItem>
-
-                    )
-                  })
-                }
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+                      <SelectItem key={idx} value={item}>
+                        {item}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-
-      </div>
-      <div>
         <div>
-          <Select onValueChange={(value) => setSort(value)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort By" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="Sort-By">Sort By</SelectItem>
-                <SelectItem value="Price-low">Price: Low to High</SelectItem>
-                <SelectItem value="Price-high">Price: High to Low</SelectItem>
-                <SelectItem value="Newest">Newest</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div>
+            <Select onValueChange={(value) => setSort(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sort By" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Sort-By">Sort By</SelectItem>
+                  <SelectItem value="Price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="Price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="Newest">Newest</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
-    </div>
-  </>
+    </>
+  );
 }
 
 export default function Products() {
@@ -158,33 +227,48 @@ export default function Products() {
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [paginationInfo, setPaginationInfo] = useState(null);
 
+  // Delete & Status dialog states
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+  const [updatingStatusId, setUpdatingStatusId] = useState(null);
+
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
+      const baseUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
       const response = await axios.post(`${baseUrl}products/view`, {
         page: currentPage,
         limit: itemsPerPage,
       });
 
-      const data = response.data._data || response.data.data || response.data.products || (Array.isArray(response.data) ? response.data : []);
+      const data =
+        response.data._data ||
+        response.data.data ||
+        response.data.products ||
+        (Array.isArray(response.data) ? response.data : []);
 
       const mapped = data.map((item) => {
-        const categoryName = typeof item.category === "object" && item.category !== null 
-          ? item.category.name 
-          : (item.collectionName || item.category || "Uncategorized");
+        const categoryName =
+          typeof item.category === "object" && item.category !== null
+            ? item.category.name
+            : item.collectionName || item.category || "Uncategorized";
 
-        const brandName = typeof item.brand === "object" && item.brand !== null
-          ? item.brand.name
-          : (item.vendor || item.brand || "");
+        const brandName =
+          typeof item.brand === "object" && item.brand !== null
+            ? item.brand.name
+            : item.vendor || item.brand || "";
 
-        const materialName = typeof item.material === "object" && item.material !== null
-          ? item.material.name
-          : (item.material || "");
+        const materialName =
+          typeof item.material === "object" && item.material !== null
+            ? item.material.name
+            : item.material || "";
 
-        const price = (item.salePrice && item.salePrice > 0) 
-          ? item.salePrice 
-          : (item.RegularPrice ?? item.price ?? 0);
+        const price =
+          item.salePrice && item.salePrice > 0
+            ? item.salePrice
+            : (item.RegularPrice ?? item.price ?? 0);
 
         return {
           id: item._id || item.id,
@@ -210,7 +294,10 @@ export default function Products() {
       }
     } catch (error) {
       console.error("Error fetching products:", error);
-      toast.error(error.response?.data?.message || "Failed to fetch products from backend API");
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to fetch products from backend API",
+      );
     } finally {
       setLoading(false);
     }
@@ -218,10 +305,13 @@ export default function Products() {
 
   const fetchCategories = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
-      const response = await axios.post(`${baseUrl}products/Category-view`, { name: "" });
+      const baseUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
+      const response = await axios.post(`${baseUrl}products/Category-view`, {
+        name: "",
+      });
       const cats = response.data._data || response.data.data || [];
-      const catNames = cats.map(c => c.name).filter(Boolean);
+      const catNames = cats.map((c) => c.name).filter(Boolean);
       if (catNames.length > 0) {
         setCategoriesList(catNames);
       }
@@ -235,20 +325,126 @@ export default function Products() {
     fetchCategories();
   }, [currentPage, itemsPerPage]);
 
-  const allCategories = categoriesList.length > 0 
-    ? Array.from(new Set(categoriesList))
-    : Array.from(new Set(productsList.map((item) => item.collectionName).filter(Boolean)));
+  const handleSingleDelete = (product) => {
+    setItemToDelete(product);
+    setDeleteDialogOpen(true);
+  };
 
-  const allStatus = Array.from(new Set(["Active", "Inactive", "Draft", ...productsList.map((item) => item.status).filter(Boolean)]));
+  const handleBulkDelete = () => {
+    if (selectedRows.size === 0) return;
+    setItemToDelete(null);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    const idsToDelete = itemToDelete
+      ? [itemToDelete.id]
+      : Array.from(selectedRows);
+
+    if (idsToDelete.length === 0) return;
+
+    setDeleting(true);
+    try {
+      const baseUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
+
+      const response = await axios.put(`${baseUrl}products/delete`, {
+        ids: idsToDelete,
+      });
+
+      toast.success(
+        response.data?.message ||
+          `${idsToDelete.length} product(s) deleted successfully`
+      );
+
+      setDeleteDialogOpen(false);
+      setItemToDelete(null);
+      setSelectedRows(new Set());
+
+      // Recalculate total pages and adjust current page if needed
+      const currentTotal = paginationInfo?.totalRecords ?? productsList.length;
+      const newTotal = Math.max(0, currentTotal - idsToDelete.length);
+      const newTotalPages = Math.max(1, Math.ceil(newTotal / itemsPerPage));
+
+      if (currentPage > newTotalPages) {
+        setCurrentPage(newTotalPages);
+      } else {
+        await fetchProducts();
+      }
+    } catch (error) {
+      console.error("Delete product error:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to delete product(s)"
+      );
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleToggleStatus = async (product) => {
+    const targetStatus = product.status === "Active" ? "Inactive" : "Active";
+    setUpdatingStatusId(product.id);
+
+    try {
+      const baseUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/admin/";
+
+      const response = await axios.post(`${baseUrl}products/status`, {
+        ids: [product.id],
+        status: targetStatus,
+      });
+
+      // Update UI status locally on success
+      setProductsList((prev) =>
+        prev.map((p) => (p.id === product.id ? { ...p, status: targetStatus } : p))
+      );
+
+      toast.success(
+        response.data?.message || `Product status updated to ${targetStatus}`
+      );
+    } catch (error) {
+      console.error("Status update error:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to update product status"
+      );
+    } finally {
+      setUpdatingStatusId(null);
+    }
+  };
+
+  const allCategories =
+    categoriesList.length > 0
+      ? Array.from(new Set(categoriesList))
+      : Array.from(
+          new Set(
+            productsList.map((item) => item.collectionName).filter(Boolean),
+          ),
+        );
+
+  const allStatus = Array.from(
+    new Set([
+      "Active",
+      "Inactive",
+      "Draft",
+      ...productsList.map((item) => item.status).filter(Boolean),
+    ]),
+  );
 
   const filteredProducts = productsList.filter((item) => {
-    const categoryMatch = category === "all" ? true : item.collectionName === category;
+    const categoryMatch =
+      category === "all" ? true : item.collectionName === category;
     const statusMatch = status === "all" ? true : item.status === status;
-    const searchMatch = search === "" ? true : (
-      item.title.toLowerCase().trim().includes(search.toLowerCase().trim()) ||
-      item.sku.toLowerCase().includes(search.toLowerCase().trim()) ||
-      item.collectionName.toLowerCase().includes(search.toLowerCase().trim())
-    );
+    const searchMatch =
+      search === ""
+        ? true
+        : item.title
+            .toLowerCase()
+            .trim()
+            .includes(search.toLowerCase().trim()) ||
+          item.sku.toLowerCase().includes(search.toLowerCase().trim()) ||
+          item.collectionName
+            .toLowerCase()
+            .includes(search.toLowerCase().trim());
 
     return categoryMatch && statusMatch && searchMatch;
   });
@@ -262,14 +458,18 @@ export default function Products() {
         filteredProducts.sort((a, b) => b.price - a.price);
         break;
       case "Newest":
-        filteredProducts.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+        filteredProducts.sort((a, b) =>
+          (b.createdAt || "").localeCompare(a.createdAt || ""),
+        );
         break;
       default:
         break;
     }
   }
 
-  const totalPages = paginationInfo?.totalPages || Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage));
+  const totalPages =
+    paginationInfo?.totalPages ||
+    Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage));
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -277,13 +477,16 @@ export default function Products() {
 
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  const currentProducts = paginationInfo ? filteredProducts : filteredProducts.slice(start, end);
+  const currentProducts = paginationInfo
+    ? filteredProducts
+    : filteredProducts.slice(start, end);
 
   if (pathname !== "/products") {
     return <Outlet />;
   }
 
-  const selectAll = currentProducts.length > 0 && selectedRows.size === currentProducts.length;
+  const selectAll =
+    currentProducts.length > 0 && selectedRows.size === currentProducts.length;
   const handleSelectAll = (checked) => {
     if (checked) {
       setSelectedRows(new Set(currentProducts.map((row) => row.id)));
@@ -302,115 +505,254 @@ export default function Products() {
     setSelectedRows(newSelected);
   };
 
-  return <>
-    <Productsheader 
-      setCategory={setCategory} 
-      setStatus={setStatus} 
-      setSort={setSort} 
-      setSearch={setSearch} 
-      categories={allCategories}
-      statuses={allStatus}
-    />
-    <Table>
-      <TableHeader className='text-center'>
-        <TableRow >
-          <TableHead className="w-8">
-            <Checkbox
-              className='cursor-pointer'
-              id="select-all-checkbox"
-              name="select-all-checkbox"
-              checked={selectAll}
-              onCheckedChange={handleSelectAll}
-            />
-          </TableHead>
-          <TableHead colSpan={2} className='text-center'>Product</TableHead>
-
-          <TableHead className='text-center'>Category</TableHead>
-          <TableHead className='text-center'>Price</TableHead>
-          <TableHead className='text-center'>Sku</TableHead>
-          <TableHead className='text-center'>Status</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {loading ? (
-          <TableRow>
-            <TableCell colSpan={7} className="text-center py-12 text-gray-500">
-              <div className="flex items-center justify-center gap-2">
-                <Loader2 className="h-5 w-5 animate-spin text-[#5A34FD]" />
-                <span>Loading products...</span>
-              </div>
-            </TableCell>
-          </TableRow>
-        ) : currentProducts.length === 0 ? (
-          <TableRow>
-            <TableCell colSpan={7} className="text-center py-12 text-gray-500 font-medium">
-              No products found.
-            </TableCell>
-          </TableRow>
-        ) : (
-          currentProducts.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={selectedRows.has(row.id) ? "selected" : undefined}
-              onClick={() => navigate(`edit/${row.handle}`)}
-              className='cursor-pointer'
-            >
-              <TableCell onClick={(e) => e.stopPropagation()}>
+  return (
+    <div className="flex flex-col h-full min-h-0 w-full bg-white">
+      <Productsheader
+        setCategory={setCategory}
+        setStatus={setStatus}
+        setSort={setSort}
+        setSearch={setSearch}
+        categories={allCategories}
+        statuses={allStatus}
+        selectedCount={selectedRows.size}
+        onBulkDelete={handleBulkDelete}
+      />
+      <div className="flex-1 min-h-0 overflow-auto border-t border-slate-100">
+        <Table>
+          <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-xs text-left">
+            <TableRow>
+              <TableHead className="w-8 pl-4">
                 <Checkbox
-                  id={`row-${row.id}-checkbox`}
-                  name={`row-${row.id}-checkbox`}
-                  checked={selectedRows.has(row.id)}
-                  onCheckedChange={(checked) =>
-                    handleSelectRow(row.id, checked === true)
-                  }
+                  className="cursor-pointer"
+                  id="select-all-checkbox"
+                  name="select-all-checkbox"
+                  checked={selectAll}
+                  onCheckedChange={handleSelectAll}
                 />
-              </TableCell>
-              <TableCell className="font-medium">
-                <div className="mx-auto w-full max-w-sm">
-                  <AttachmentGroup className="w-full">
-
-                    <Attachment orientation="vertical">
-                      <AttachmentMedia variant="image">
-                        <img src={row.image} alt={row.title} />
-                      </AttachmentMedia>
-
-                    </Attachment>
-
-                  </AttachmentGroup>
-                </div>
-              </TableCell>
-              <TableCell className="max-w-[200px]">
-                <p className="truncate">
-                  {row.title}
-                </p>
-              </TableCell>
-              <TableCell className='text-center'>{row.collectionName}</TableCell>
-              <TableCell className='text-center'>{row.price}</TableCell>
-              <TableCell className='text-center'>{row.sku}</TableCell>
-              <TableCell className='text-center'>{row.status}</TableCell>
+              </TableHead>
+              <TableHead className="text-center">Images</TableHead>
+              <TableHead className="text-left">Product Name</TableHead>
+              <TableHead className="text-center">Category</TableHead>
+              <TableHead className="text-center">Price</TableHead>
+              <TableHead className="text-center">Sku</TableHead>
+              <TableHead className="text-center">Status</TableHead>
+              <TableHead className="text-center w-20">Actions</TableHead>
             </TableRow>
-          ))
-        )}
-      </TableBody>
-    </Table>
-    <PaginationBottom setCurrentPage={setCurrentPage} setItemsPerPage={setItemsPerPage} totalPages={totalPages} pages={pages} currentPage={currentPage} />
-  </>
+          </TableHeader>
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="text-center py-12 text-gray-500"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-5 w-5 animate-spin text-[#5A34FD]" />
+                    <span>Loading products...</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : currentProducts.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="text-center py-12 text-gray-500 font-medium"
+                >
+                  No products found.
+                </TableCell>
+              </TableRow>
+            ) : (
+              currentProducts.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={selectedRows.has(row.id) ? "selected" : undefined}
+                  onClick={() => navigate(`edit/${row.handle}`)}
+                  className="cursor-pointer hover:bg-slate-50/70"
+                >
+                  <TableCell onClick={(e) => e.stopPropagation()} className="pl-4">
+                    <Checkbox
+                      id={`row-${row.id}-checkbox`}
+                      name={`row-${row.id}-checkbox`}
+                      checked={selectedRows.has(row.id)}
+                      onCheckedChange={(checked) =>
+                        handleSelectRow(row.id, checked === true)
+                      }
+                    />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 mx-auto bg-slate-100 flex items-center justify-center">
+                      <img
+                        src={row.image}
+                        alt={row.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-medium max-w-60">
+                    <p className="truncate text-slate-900 text-sm">{row.title}</p>
+                  </TableCell>
+                  <TableCell className="text-center text-slate-600 text-sm">
+                    {row.collectionName}
+                  </TableCell>
+                  <TableCell className="text-center font-medium text-slate-900 text-sm">
+                    {new Intl.NumberFormat("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                      maximumFractionDigits: 0,
+                    }).format(row.price)}
+                  </TableCell>
+                  <TableCell className="text-center text-slate-600 text-sm">
+                    {row.sku}
+                  </TableCell>
+                  <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      type="button"
+                      disabled={updatingStatusId === row.id}
+                      onClick={() => handleToggleStatus(row)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:scale-105 active:scale-95 border ${
+                        row.status === "Active"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                          : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
+                      }`}
+                      title="Click to toggle status"
+                    >
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          row.status === "Active" ? "bg-emerald-500" : "bg-slate-400"
+                        }`}
+                      />
+                      <span>{row.status}</span>
+                      {updatingStatusId === row.id && (
+                        <Loader2 className="w-3 h-3 animate-spin text-slate-500 ml-0.5" />
+                      )}
+                    </button>
+                  </TableCell>
+                  <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleSingleDelete(row)}
+                      className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
+                      title="Delete Product"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="shrink-0 border-t border-slate-200 bg-white">
+        <PaginationBottom
+          setCurrentPage={setCurrentPage}
+          setItemsPerPage={setItemsPerPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      </div>
+
+      {/* Confirmation Dialog for Product Deletion */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="max-w-md bg-white rounded-xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-lg font-semibold text-gray-900">
+              Confirm Product Deletion
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-gray-500 mt-1">
+              {itemToDelete
+                ? `Are you sure you want to delete "${itemToDelete.title}"? This action cannot be undone.`
+                : `Are you sure you want to delete ${selectedRows.size} selected product(s)? This action cannot be undone.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="mt-4 gap-2 flex justify-end">
+            <AlertDialogCancel
+              disabled={deleting}
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              disabled={deleting}
+              className="bg-red-600 hover:bg-red-700 text-white cursor-pointer"
+            >
+              {deleting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin inline" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
 }
 
-export function PaginationBottom({ currentPage, setCurrentPage, setItemsPerPage, totalPages, pages }) {
+const getPaginationPages = (currentPage, totalPages) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  if (currentPage <= 4) {
+    return [1, 2, 3, 4, 5, "ellipsis", totalPages];
+  }
+
+  if (currentPage >= totalPages - 3) {
+    return [
+      1,
+      "ellipsis",
+      totalPages - 4,
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ];
+  }
+
+  return [
+    1,
+    "ellipsis",
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    "ellipsis",
+    totalPages,
+  ];
+};
+
+export function PaginationBottom({
+  currentPage,
+  setCurrentPage,
+  setItemsPerPage,
+  totalPages,
+}) {
+  const paginationPages = getPaginationPages(currentPage, totalPages);
+
   return (
-    <div className="w-full p-5">
-      <div className="flex items-center justify-between gap-4 w-[90%] mx-auto">
+    <div className="w-full p-4 border-t border-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-3">
         <Field orientation="horizontal" className="w-fit whitespace-nowrap">
-          <FieldLabel htmlFor="select-rows-per-page">Product per page</FieldLabel>
-          <Select defaultValue="25" onValueChange={(value) => {
-            setItemsPerPage(Number(value))
-            setCurrentPage(1)
-          }}>
+          <FieldLabel htmlFor="select-rows-per-page">
+            Product per page
+          </FieldLabel>
+          <Select
+            defaultValue="25"
+            onValueChange={(value) => {
+              setItemsPerPage(Number(value));
+              setCurrentPage(1);
+            }}
+          >
             <SelectTrigger className="w-20" id="select-rows-per-page">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent align="start" >
+            <SelectContent align="start">
               <SelectGroup>
                 <SelectItem value="10">10</SelectItem>
                 <SelectItem value="25">25</SelectItem>
@@ -420,41 +762,62 @@ export function PaginationBottom({ currentPage, setCurrentPage, setItemsPerPage,
             </SelectContent>
           </Select>
         </Field>
-        <Pagination>
+        <Pagination className="w-auto mx-0">
           <PaginationContent>
-            <PaginationItem className='cursor-pointer' onClick={() => {
-              if (currentPage > 1) {
-                setCurrentPage((prev) => prev - 1)
-              }
-            }}>
-              <PaginationPrevious />
+            <PaginationItem>
+              <PaginationPrevious
+                className={
+                  currentPage === 1
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+                onClick={() => {
+                  if (currentPage > 1) {
+                    setCurrentPage((prev) => prev - 1);
+                  }
+                }}
+              />
             </PaginationItem>
-            {
-              pages.map((page) => (
+
+            {paginationPages.map((page, index) => {
+              if (page === "ellipsis") {
+                return (
+                  <PaginationItem key={`ellipsis-${index}`}>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                );
+              }
+
+              return (
                 <PaginationItem key={page}>
                   <PaginationLink
+                    isActive={currentPage === page}
                     onClick={() => setCurrentPage(page)}
+                    className="cursor-pointer"
                   >
                     {page}
                   </PaginationLink>
                 </PaginationItem>
-              ))
-            }
-            {totalPages > 5 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
-            <PaginationItem className='cursor-pointer' onClick={() => {
-              if (currentPage < totalPages) {
-                setCurrentPage((prev) => prev + 1);
-              }
-            }}>
-              <PaginationNext />
+              );
+            })}
+
+            <PaginationItem>
+              <PaginationNext
+                className={
+                  currentPage >= totalPages
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+                onClick={() => {
+                  if (currentPage < totalPages) {
+                    setCurrentPage((prev) => prev + 1);
+                  }
+                }}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
       </div>
     </div>
-  )
+  );
 }

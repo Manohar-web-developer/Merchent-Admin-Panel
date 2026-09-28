@@ -40,6 +40,7 @@ import Testimonials from "@/pages/Testimonials";
 import BannerSlider from "@/pages/BannerSlider";
 import Login from "@/pages/login";
 import Register from "@/pages/Register";
+import HeaderMenu from "@/pages/HeaderMenu";
 import PublicRoute from "@/components/layout/PublicRoute";
 
 export default function AppRoutes() {
@@ -100,6 +101,12 @@ export default function AppRoutes() {
         </Route>
 
         <Route path="/category" element={<Category />} />
+
+        <Route path="/navigation">
+          <Route index element={<Navigate to="/navigation/header-menu" replace />} />
+          <Route path="header-menu" element={<HeaderMenu />} />
+        </Route>
+        <Route path="/header-menu" element={<Navigate to="/navigation/header-menu" replace />} />
 
         <Route path="/website">
           <Route path="testimonials" element={<Testimonials />} />

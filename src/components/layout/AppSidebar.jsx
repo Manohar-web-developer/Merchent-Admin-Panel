@@ -278,11 +278,40 @@ export default function AppSidebar() {
                     </div>
                   </SidebarMenuButton>
                 </Link>
-
-
               </SidebarMenuItem>
 
-              {/* Webiste Navigation */}
+              {/* Navigation */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className='cursor-pointer flex items-center justify-between'
+                  onClick={() => {
+                    if (state === "collapsed") {
+                      setOpen(true);
+                    }
+                    setOpenMenu(openMenu === "navigation" ? "" : "navigation");
+                  }}
+                >
+                  <div className='flex items-center gap-2'>
+                    <FolderTree className="w-4 h-4" />
+                    <span>Navigation</span>
+                  </div>
+                  {openMenu === 'navigation' ? <ChevronsDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                </SidebarMenuButton>
+
+                {state === "expanded" && (openMenu === 'navigation' || location.pathname.startsWith('/navigation')) && (
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton className='cursor-pointer'>
+                        <Link to="/navigation/header-menu">
+                          Header Menu
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                )}
+              </SidebarMenuItem>
+
+              {/* Website Navigation */}
 
               <SidebarMenuItem>
 
