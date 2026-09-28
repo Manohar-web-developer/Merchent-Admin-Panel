@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 
-
 import Dashboard from "../pages/Dashboard";
 
 // Products
@@ -32,31 +31,28 @@ import Coupons from "../pages/Coupons";
 import Settings from "../pages/Settings";
 import PaymentMethods from "../pages/PaymentMethods";
 import Shipping from "../pages/Shipping";
-import EditProducts from "@/pages/EditProducts";
-import Material from "@/pages/Material";
-import AddBrands from "@/pages/AddBrands";
-import Category from "@/pages/Category";
-import Testimonials from "@/pages/Testimonials";
-import BannerSlider from "@/pages/BannerSlider";
-import Login from "@/pages/login";
-import Register from "@/pages/Register";
-import HeaderMenu from "@/pages/HeaderMenu";
-import PublicRoute from "@/components/layout/PublicRoute";
+import EditProducts from "../pages/EditProducts";
+import Material from "../pages/Material";
+import AddBrands from "../pages/AddBrands";
+import Category from "../pages/Category";
+import Testimonials from "../pages/Testimonials";
+import BannerSlider from "../pages/BannerSlider";
+import Login from "../pages/login";
+import Register from "../pages/Register";
+import HeaderMenu from "../pages/HeaderMenu";
+import PublicRoute from "../components/layout/PublicRoute";
 
 export default function AppRoutes() {
   return (
     <Routes>
-
       {/* LOGIN & REGISTER */}
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
 
-
       {/* PROTECTED */}
       <Route element={<ProtectedRoute />}>
-
         <Route path="/" element={<Dashboard />} />
 
         <Route path="/products" element={<Products />}>
@@ -78,8 +74,14 @@ export default function AppRoutes() {
           <Route path="material" element={<Material />} />
         </Route>
 
-        <Route path="/collection" element={<Navigate to="/products/collection" replace />} />
-        <Route path="/collections" element={<Navigate to="/products/collection" replace />} />
+        <Route
+          path="/collection"
+          element={<Navigate to="/products/collection" replace />}
+        />
+        <Route
+          path="/collections"
+          element={<Navigate to="/products/collection" replace />}
+        />
 
         <Route path="/orders" element={<Orders />}>
           <Route path="pending" element={<PendingOrders />} />
@@ -103,10 +105,16 @@ export default function AppRoutes() {
         <Route path="/category" element={<Category />} />
 
         <Route path="/navigation">
-          <Route index element={<Navigate to="/navigation/header-menu" replace />} />
+          <Route
+            index
+            element={<Navigate to="/navigation/header-menu" replace />}
+          />
           <Route path="header-menu" element={<HeaderMenu />} />
         </Route>
-        <Route path="/header-menu" element={<Navigate to="/navigation/header-menu" replace />} />
+        <Route
+          path="/header-menu"
+          element={<Navigate to="/navigation/header-menu" replace />}
+        />
 
         <Route path="/website">
           <Route path="testimonials" element={<Testimonials />} />
@@ -115,9 +123,7 @@ export default function AppRoutes() {
 
         {/* Unknown URL */}
         <Route path="*" element={<Navigate to="/" replace />} />
-
       </Route>
-
     </Routes>
   );
 }
